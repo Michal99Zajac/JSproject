@@ -16,8 +16,8 @@ def create_db_connection(db_file):
 
     try:
         conn = sqlite3.connect(db_file)
-    except Error as e:
-        print(e)
+    except Error:
+        print(Error)
 
     return conn
 
@@ -32,9 +32,11 @@ def create_table(conn, create_table_sql):
     try:
         curs = conn.cursor()
         curs.execute(create_table_sql)
-    except Error as e:
-        print(e)
+    except Error:
+        print(Error)
 
+
+#create tables section
 
 def create_students_table_sql(conn):
     """
@@ -121,7 +123,7 @@ def create_year_group_table_sql(conn):
 
     year_group_table_sql = """CREATE TABLE IF NOT EXISTS Year_groups (
         id_year_group INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        year_group_number INTEGER NOT NULL,
+        C INTEGER NOT NULL,
         students INTEGER,
         FOREIGN KEY (students) REFERENCES Students(id_student)
     );
@@ -195,7 +197,6 @@ def create_subjects_table_sql(conn):
     else:
         print("Error! Cant create Subjects table")
     
-
 
 def create_rooms_table_sql(conn):
     """
@@ -401,3 +402,323 @@ def create_all_tabels_sql(conn):
     return 0
 
 
+#insert vlaues to tables section
+
+def create_teachers(conn, values):
+    """
+    insert data to table Teachers
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given teacher
+    """
+
+    sql = """INSERT INTO Teachers(
+        name,
+        second_name,
+        lastname,
+        pesel,
+        email,
+        academic_degree,
+        id_department,
+        place_of_residence,
+        ) VALUES (?,?,?,?,?,?,?,?)
+        """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_dean_office_emp(conn, values):
+    """
+    insert data to table Deans_office_employees
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given Dean_office_employe
+    """
+
+    sql = """INSERT INTO Deans_office_employees(
+        name,
+        second_name,
+        lastname,
+        pesel,
+        email,
+        id_department
+    ) VALUES (?,?,?,?,?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_deans(conn, values):
+    """
+    insert data to table Deans
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given dean
+    """
+
+    sql = """INSERT INTO Deans(
+        name,
+        lastname,
+        second_name,
+        pesel,
+        email,
+        place_of_residence
+    ) VALUES (?,?,?,?,?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_department(conn, values):
+    """
+    insert data to table Departments
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given department
+    """
+
+    sql = """INSERT INTO Departments(
+        id_building,
+        deans_office_start,
+        deans_office_stop,
+        id_dean
+    ) VALUES (?,?,?,?)
+    """
+    
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_building(conn, values):
+    """
+    insert data to table Buildings
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given building
+    """
+
+    sql = """INSERT INTO Buildings(
+        street_name,
+        building_name,
+        building_number
+    ) VALUES (?,?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_room(conn, values):
+    """
+    insert data to table Rooms
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given room
+    """
+    
+    sql = """INSERT INTO Rooms(
+        id_building,
+        room_number,
+        is_deans_office
+    ) VALUES (?,?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_subject(conn, values):
+    """
+    insert data to table Subjects
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given subjects
+    """
+
+    sql = """INSERT INTO Subjects(
+        id_teacher,
+        id_labolatory_group,
+        id_exercise_group,
+        id_year_group,
+        id_room,
+        day,
+        hour_start,
+        hour_end,
+        id_field_of_study,
+        name
+    ) VALUES (?,?,?,?,?,?,?,?,?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_field_of_study(conn, values):
+    """
+    insert data to table Fields_of_study
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given field_of_study
+    """
+
+    sql = """INSERT INTO Fields_of_study(
+        name,
+        id_department,
+        id_leader_of_field_of_study
+    ) VALUES (?,?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_year_group(conn,values):
+    """
+    insert data to table Year_groups
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given year_group
+    """
+
+    sql = """INSERT INTO Year_groups(
+        Year_groups,
+        students
+    ) VALUES (?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_exe_group(conn, values):
+    """
+    insert data to table Exercise_groups
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given exercise_group
+    """
+
+    sql = """INSERT INTO Exercise_groups(
+        exercise_group_number,
+        students
+    ) VALUES (?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_lab_group(conn, values):
+    """
+    insert data to table Laboratory_groups
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given laboratory_group
+    """
+
+    sql = """INSERT INTO Laboratory_groups(
+        labolatory_group_number,
+        students
+    ) VALUES (?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
+
+
+def create_student(conn, values):
+    """
+    insert data to table Students
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    :return cur.lastrowid: id of a given student
+    """
+
+    sql = """INSERT INTO Students(
+        name,
+        second_name,
+        lastname,
+        pesel,
+        email,
+        id_field_of_study,
+        place_of_residence
+    ) VALUES (?,?,?,?,?,?,?)
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql,values)
+    except Error:
+        print(Error)
+
+    return cur.lastrowid
