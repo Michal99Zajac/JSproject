@@ -27,7 +27,6 @@ def create_table(conn, create_table_sql):
     create a table from create_table_sql statement
     :param conn: Connection object
     :param create_table_sql: a CREATE TABLE statement
-    :return: 0
     """
 
     try:
@@ -35,8 +34,6 @@ def create_table(conn, create_table_sql):
         curs.execute(create_table_sql)
     except Error as e:
         print(e)
-
-    return 0
 
 
 def create_students_table_sql(conn):
@@ -46,7 +43,6 @@ def create_students_table_sql(conn):
     email, field_of_study, place_of_residence
 
     :param conn: Connection object
-    :return: 0
     """
 
     students_table_sql = """CREATE TABLE IF NOT EXISTS Students (
@@ -67,8 +63,6 @@ def create_students_table_sql(conn):
     else:
         print("Error! Cant create Students table")
 
-    return 0
-
 
 def create_lab_group_table_sql(conn):
     """
@@ -77,7 +71,6 @@ def create_lab_group_table_sql(conn):
     students
 
     :param conn: Connection object
-    :return: 0
     """
 
     lab_group_table_sql = """CREATE TABLE IF NOT EXISTS Laboratory_groups (
@@ -93,8 +86,6 @@ def create_lab_group_table_sql(conn):
     else:
         print("Error! Cant create Labolatory_groups table")
 
-    return 0
-
 
 def create_exe_group_table_sql(conn):
     """
@@ -103,7 +94,6 @@ def create_exe_group_table_sql(conn):
     students
 
     :param conn: Connection object
-    :return: 0
     """
 
     exe_group_table_sql = """CREATE TABLE IF NOT EXISTS Exercise_groups (
@@ -119,8 +109,6 @@ def create_exe_group_table_sql(conn):
     else:
         print("Error! Cant create Exercise_groups table")
 
-    return 0
-
 
 def create_year_group_table_sql(conn):
     """
@@ -129,7 +117,6 @@ def create_year_group_table_sql(conn):
     students
 
     :param conn: Connection object
-    :return: 0
     """
 
     year_group_table_sql = """CREATE TABLE IF NOT EXISTS Year_groups (
@@ -145,8 +132,6 @@ def create_year_group_table_sql(conn):
     else:
         print("Error! Cant create Year_groups table")
 
-    return 0
-
 
 def create_fields_of_study_table_sql(conn):
     """
@@ -155,7 +140,6 @@ def create_fields_of_study_table_sql(conn):
     id_leader_of_field_of_study
 
     :param conn: Connection object
-    :return: 0
     """
 
     f_of_study_table_sql = """CREATE TABLE IF NOT EXISTS Fields_of_study (
@@ -173,8 +157,6 @@ def create_fields_of_study_table_sql(conn):
     else:
         print("Error! Cant create Fields_of_study table")
 
-    return 0
-
     
 def create_subjects_table_sql(conn):
     """
@@ -185,7 +167,6 @@ def create_subjects_table_sql(conn):
     name
 
     :param conn: Connection object
-    :return: 0
     """
 
     subject_table_sql = """CREATE TABLE IF NOT EXISTS Subjects (
@@ -213,8 +194,7 @@ def create_subjects_table_sql(conn):
         create_table(conn, subject_table_sql)
     else:
         print("Error! Cant create Subjects table")
-
-    return 0
+    
 
 
 def create_rooms_table_sql(conn):
@@ -224,7 +204,6 @@ def create_rooms_table_sql(conn):
     is_deans_office
 
     :param conn: Connection object
-    :return: 0
     """
 
     room_table_sql = """CREATE TABLE IF NOT EXISTS Rooms (
@@ -241,8 +220,6 @@ def create_rooms_table_sql(conn):
     else:
         print("Error! Cant create Rooms table")
 
-    return 0
-
     
 def create_buildings_table_sql(conn):
     """
@@ -251,7 +228,6 @@ def create_buildings_table_sql(conn):
     building_number
 
     :param conn: Connection object
-    :return: 0
     """
 
     building_table_sql = """CREATE TABLE IF NOT EXISTS Buildings (
@@ -267,8 +243,6 @@ def create_buildings_table_sql(conn):
     else:
         print("Error! Cant create Buildings table")
 
-    return 0
-
 
 def create_department_table_sql(conn):
     """
@@ -278,7 +252,6 @@ def create_department_table_sql(conn):
     dean
 
     :param conn: Connection object
-    :return: 0
     """
 
     department_table_sql = """CREATE TABLE IF NOT EXISTS Departments (
@@ -297,8 +270,6 @@ def create_department_table_sql(conn):
     else:
         print("Error! Cant create Departments table")
 
-    return 0
-
 
 def create_deans_table_sql(conn):
     """
@@ -307,7 +278,6 @@ def create_deans_table_sql(conn):
     email, place_of_residence
 
     :param conn: Connection object
-    :return: 0
     """
 
     deans_table_sql = """CREATE TABLE IF NOT EXISTS Deans (
@@ -326,8 +296,6 @@ def create_deans_table_sql(conn):
     else:
         print("Error! Cant create Deans table")
 
-    return 0
-
 
 def create_dean_office_emp_table_sql(conn):
     """
@@ -336,7 +304,6 @@ def create_dean_office_emp_table_sql(conn):
     lastname, pesel, email, id_department
 
     :param conn: Connection object
-    :return: 0
     """
 
     dean_off_emp = """CREATE TABLE IF NOT EXISTS Deans_office_employees (
@@ -356,8 +323,6 @@ def create_dean_office_emp_table_sql(conn):
     else:
         print("Error! Cant create Deans_office_employees table")
 
-    return 0
-
 
 def create_teachers_table_sql(conn):
     """
@@ -367,7 +332,6 @@ def create_teachers_table_sql(conn):
     place_of_residence
 
     :param conn: Connection object
-    :return: 0
     """
 
     teacher_table_sql = """CREATE TABLE IF NOT EXISTS Teachers (
@@ -388,8 +352,6 @@ def create_teachers_table_sql(conn):
         create_table(conn, teacher_table_sql)
     else:
         print("Error! Cant create Teachers table")
-
-    return 0
 
 
 def create_all_tabels_sql(conn):
