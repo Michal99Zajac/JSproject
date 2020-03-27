@@ -35,7 +35,6 @@ def create_table(conn, create_table_sql):
     except Error:
         print(Error)
 
-
 #create tables section
 
 def create_students_table_sql(conn):
@@ -400,7 +399,6 @@ def create_all_tabels_sql(conn):
     create_subjects_table_sql(conn)
 
     return 0
-
 
 #insert vlaues to tables section
 
@@ -1057,6 +1055,236 @@ def update_teacher(conn,values):
     place_of_residence
     WHERE id_teacher = ?
     """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+#delete rows in tables section
+
+def delete_student(conn, id):
+    """
+    delete a student by id_student
+
+    :param conn: Connection object
+    :param id: student id
+    :return:
+    """
+
+    sql = "DELETE FROM Students WHERE id_student = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_lab_group(conn, id):
+    """
+    delete a laboratory_group by id_labolatory_group
+
+    :param conn: Connection object
+    :param id: labolatory_group id
+    :return:
+    """
+
+    sql = "DELETE FROM Laboratory_groups WHERE id_labolatory_group = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_exe_group(conn, id):
+    """
+    delete a exercise_group by id_exercise_group
+
+    :param conn: Connection object
+    :param id: exercise_group id
+    :return:
+    """
+
+    sql = "DELETE FROM Exercise_groups WHERE id_exercise_group = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_year_group(conn, id):
+    """
+    delete a year_group by id_year_group
+
+    :param conn: Connection object
+    :param id: year_group id
+    :return:
+    """
+
+    sql = "DELETE FROM Year_groups WHERE id_year_group = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_field_of_study(conn, id):
+    """
+    delete a fields_of_study by id_field_of_study
+
+    :param conn: Connection object
+    :param id: field_of_study id
+    :return:
+    """
+
+    sql = "DELETE FROM Fields_of_study WHERE id_field_of_study = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_subject(conn, id):
+    """
+    delete a subject by id_subject
+
+    :param conn: Connection object
+    :param id: subject id
+    :return:
+    """
+
+    sql = "DELETE FROM Subjects WHERE id_subject = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_room(conn, id):
+    """
+    delete a room by id_room
+
+    :param conn: Connection object
+    :param id: room id
+    :return:
+    """
+
+    sql = "DELETE FROM Rooms WHERE id_room = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_building(conn, id):
+    """
+    delete a building by id_building
+
+    :param conn: Connection object
+    :param id: building id
+    :return:
+    """
+
+    sql = "DELETE FROM Buildings WHERE id_building = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_department(conn, id):
+    """
+    delete a department by id_department
+
+    :param conn: Connection object
+    :param id: department id
+    :return:
+    """
+
+    sql = "DELETE FROM Departments WHERE id_department = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_dean(conn, id):
+    """
+    delete a Dean by id_dean
+
+    :param conn: Connection object
+    :param id: dean id
+    :return:
+    """
+
+    sql = "DELETE FROM Deans WHERE id_dean = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, (id,))
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def dean_office_emp(conn, id):
+    """
+    delete a deans_office_employe
+    by id_deans_office_employees
+
+    :param conn: Connection object
+    :param id: deans_office_employees id
+    :return:
+    """
+
+    sql = "DELETE FROM Deans_office_employees WHERE id_deans_office_employees = ?"
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def delete_teacher(conn, id):
+    """
+    delete a teacher by id_teacher
+
+    :param conn: Connection object
+    :param id: teacher id
+    :return:
+    """
+
+    sql = "DELETE FROM Teachers WHERE id_teacher = ?"
 
     cur = conn.cursor()
     try:
