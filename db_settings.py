@@ -123,7 +123,7 @@ def create_year_group_table_sql(conn):
 
     year_group_table_sql = """CREATE TABLE IF NOT EXISTS Year_groups (
         id_year_group INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        C INTEGER NOT NULL,
+        year_group_number INTEGER NOT NULL,
         students INTEGER,
         FOREIGN KEY (students) REFERENCES Students(id_student)
     );
@@ -428,6 +428,7 @@ def create_teachers(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -456,6 +457,7 @@ def create_dean_office_emp(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -484,6 +486,7 @@ def create_deans(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -510,6 +513,7 @@ def create_department(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -535,6 +539,7 @@ def create_building(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -560,6 +565,7 @@ def create_room(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -592,6 +598,7 @@ def create_subject(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -617,6 +624,7 @@ def create_field_of_study(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -641,6 +649,7 @@ def create_year_group(conn,values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -665,6 +674,7 @@ def create_exe_group(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -689,6 +699,7 @@ def create_lab_group(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
@@ -718,7 +729,338 @@ def create_student(conn, values):
     cur = conn.cursor()
     try:
         cur.execute(sql,values)
+        conn.commit()
     except Error:
         print(Error)
 
     return cur.lastrowid
+
+#update values in tables section
+
+def update_student(conn, values):
+    """
+    update data in table Students in order
+    name, second_name, lastname,
+    pesel, email, id_field_of_study,
+    place_of_residence WHERE id_student
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Students SET
+    name = ?,
+    second_name = ?,
+    lastname, = ?,
+    pesel = ?,
+    email = ?,
+    id_field_of_study = ?,
+    place_of_residence = ?
+    WHERE id_student = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_lab_group(conn, values):
+    """
+    update data in table Laboratory_groups in order
+    labolatory_group_number, students
+    WHERE id_labolatory_group
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Laboratory_groups SET
+    labolatory_group_number = ?,
+    students = ?
+    WHERE id_labolatory_group = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_exe_group(conn, values):
+    """
+    update data in table Exercise_groups in order
+    exercise_group_number, students
+    WHERE id_exercise_group
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Exercise_groups SET
+    exercise_group_number = ?,
+    students = ?
+    WHERE id_exercise_group = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_year_group(conn, values):
+    """
+    update data in table Year_groups in order
+    year_group_number, students
+    WHERE id_year_group
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Year_groups SET
+    year_group_number = ?,
+    students = ?
+    WHERE id_year_group = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_field_of_study(conn, values):
+    """
+    update data in table Fields_of_study in order
+    name, id_department, id_leader_of_field_of_study
+    WHERE id_field_of_study
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Fields_of_study SET
+    name = ?,
+    id_department = ?,
+    id_leader_of_field_of_study = ?
+    WHERE id_field_of_study = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_subject(conn, values):
+    """
+    update data in table Subjects in order
+    id_teacher, id_labolatory_group, id_exercise_group
+    id_year_group, id_room, day, hour_start,
+    hour_end, id_field_of_study, name
+    WHERE id_subject
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Subjects SET
+    id_teacher = ?,
+    id_labolatory_group = ?,
+    id_exercise_group = ?,
+    id_year_group = ?,
+    id_room = ?,
+    day = ?,
+    hour_start = ?,
+    hour_end = ?,
+    id_field_of_study = ?,
+    name = ?
+    WHERE id_subject = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_room(conn, values):
+    """
+    update data in table Rooms in order
+    id_building, room_number,
+    is_deans_office
+    WHERE id_room
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Rooms SET
+    id_building = ?,
+    room_number = ?,
+    is_deans_office = ?
+    WHERE id_room = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_building(conn, values):
+    """
+    update data in table Buildings in order
+    street_name, building_name, building_number
+    WHERE id_building
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Buildings SET
+    street_name = ?,
+    building_name = ?,
+    building_number = ?
+    WHERE id_building = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_department(conn, values):
+    """
+    update data in table Departments in order
+    id_building, deans_office_start,
+    deans_office_stop, id_dean
+    WHERE id_department
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Departments SET
+    id_building = ?,
+    deans_office_start = ?,
+    deans_office_stop = ?,
+    id_dean = ?
+    WHERE id_department = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_dean(conn, values):
+    """
+    update data in table Deans in order
+    name, lastname, second_name,
+    pesel, email, place_of_residence
+    WHERE id_dean
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Deans SET
+    name = ?,
+    lastname = ?,
+    second_name = ?,
+    pesel = ?,
+    email = ?,
+    place_of_residence = ?
+    WHERE id_dean = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_dean_office_emp(conn, values):
+    """
+    update data in table Deans_office_employees in order
+    name, second_name, lastname, pesel,
+    email, id_department
+    WHERE id_deans_office_employees
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Deans_office_employees SET
+    name = ?,
+    second_name = ?,
+    lastname = ?,
+    pesel = ?,
+    email = ?,
+    id_department = ?
+    WHERE id_deans_office_employees = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
+
+
+def update_teacher(conn,values):
+    """
+    update data in table Teachers in order
+    name, second_name, lastname, pesel,
+    email, academic_degree, id_department,
+    place_of_residence
+    WHERE id_teacher
+
+    :param conn: Connection object
+    :param values: tuple with informations
+    """
+
+    sql = """UPDATE Teachers SET
+    name = ?,
+    second_name = ?,
+    lastname = ?,
+    pesel = ?,
+    email = ?,
+    academic_degree = ?,
+    id_department = ?,
+    place_of_residence
+    WHERE id_teacher = ?
+    """
+
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, values)
+        conn.commit()
+    except Error:
+        print(Error)
