@@ -23,7 +23,7 @@ class Dean(object):
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM dean")
 
-        return cir.lastrowid
+        return cur.lastrowid
 
     @staticmethod
     def create_tab(db):
