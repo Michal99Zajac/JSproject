@@ -136,7 +136,7 @@ class LabGroup(object):
         else:
             print("Error! Cant delete student in laboratory_group table")
 
-    def get_id():
+    def get_id(self):
         ids = []
         for student in self.__students:
             ids.append(self.__students[student])

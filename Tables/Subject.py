@@ -6,7 +6,7 @@ class Subject(object):
     group_name = {} #{group: [name]}
 
     @staticmethod
-    def set_id(id_sub):
+    def set_idx(id_sub):
         Subject.id_subject = id_sub
 
     @staticmethod

@@ -4,7 +4,7 @@ class Building(object):
     id_bud = 0
 
     @staticmethod
-    def set_id(id_bud):
+    def set_idx(id_bud):
         Building.id_bud = id_bud
 
     @staticmethod

@@ -59,7 +59,7 @@ class ExeGroup(object):
         WHERE exercise_group_number = ? AND id_field_of_study = ?
         """
 
-        cur = cursor_conn()
+        cur = db.cursor_conn()
         cur.execute(sql, (self.__number, self.__field.get_id()))
         rows = cur.fetchall()
 
@@ -132,7 +132,7 @@ class ExeGroup(object):
         else:
             print("Error! Cant delete student in exercise_group table")
 
-    def get_id():
+    def get_id(self):
         ids = []
         for student in self.__students:
             ids.append(self.__students[student])

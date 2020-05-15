@@ -5,7 +5,7 @@ class FieldOfStudy(object):
     dep_name = {} #{dept:[names]}
 
     @staticmethod
-    def set_id(id_fie):
+    def set_idx(id_fie):
         FieldOfStudy.id_field = id_fie
 
     @staticmethod

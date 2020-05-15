@@ -5,11 +5,11 @@ class Teacher(object):
     acd_degrees = {}
 
     @staticmethod
-    def set_id(id_tea):
+    def set_idx(id_tea):
         Teacher.id_tea = id_tea
 
     @staticmethod
-    def statud_id():
+    def status_id():
         return Teacher.id_tea
 
     @staticmethod
