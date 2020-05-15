@@ -6,7 +6,7 @@ class Department(object):
     deans = []
 
     @staticmethod
-    def set_id(id_dept):
+    def set_idx(id_dept):
         Department.id_dept = id_dept
 
     @staticmethod

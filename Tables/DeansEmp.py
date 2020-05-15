@@ -4,7 +4,7 @@ class DeansEmp(object):
     id_emp = 0
 
     @staticmethod
-    def set_id(id_emp):
+    def set_idx(id_emp):
         DeansEmp.id_emp = id_emp
 
     @staticmethod

@@ -4,7 +4,7 @@ class Student(object):
     id_std = 0
 
     @staticmethod
-    def set_id(id_std):
+    def set_idx(id_std):
         """
         when program starts
         """

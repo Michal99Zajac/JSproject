@@ -21,7 +21,7 @@ class Room(object):
             print("Error! Cant create room table")
 
     @staticmethod
-    def set_id(id_room):
+    def set_idx(id_room):
         Room.id_room = id_room
 
     @staticmethod
