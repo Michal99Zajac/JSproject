@@ -14,6 +14,7 @@ from Frames import SubjectFrame
 from Frames import TeacherFrame
 from Frames import YearGroupFrame
 
+from Tables.TableDatabase import TableDatabase
 
 class App(tk.Tk):
 
@@ -114,6 +115,9 @@ class App(tk.Tk):
             self.frames[page_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
         
+        #table setting
+        self.db = TableDatabase("databases/data.db")
+
         self.show_frame("StartPage")
 
     def show_frame(self, page_name):
