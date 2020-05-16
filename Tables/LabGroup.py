@@ -19,7 +19,7 @@ class LabGroup(object):
             id_labolatory_group INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             labolatory_group_number INTEGER NOT NULL,
             id_student INTEGER,
-            id_field_of_study INTEGER NOT NULL
+            id_field_of_study INTEGER NOT NULL,
             FOREIGN KEY (id_student) REFERENCES student(id_student),
             FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
         );

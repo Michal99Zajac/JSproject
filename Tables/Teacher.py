@@ -82,7 +82,7 @@ class Teacher(object):
             email,
             academic_degree,
             id_department,
-            place_of_residence,
+            place_of_residence
         ) VALUES (?,?,?,?,?,?,?,?)
         """
 

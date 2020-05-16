@@ -6,6 +6,11 @@ class Room(object):
 
     @staticmethod
     def create_tab(db):
+        """
+        ***function must be execute after create
+        building table***\n
+        function create table room
+        """
         sql = """CREATE TABLE IF NOT EXISTS room (
             id_room INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             id_building INTEGER NOT NULL,

@@ -15,7 +15,7 @@ class YearGroup(object):
             id_year_group INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             year_group_number INTEGER NOT NULL,
             id_student INTEGER,
-            id_field_of_study INTEGER NOT NULL
+            id_field_of_study INTEGER NOT NULL,
             FOREIGN KEY (id_student) REFERENCES student(id_student),
             FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
         );
@@ -59,7 +59,7 @@ class YearGroup(object):
         WHERE year_group_number = ? AND id_field_of_study = ?
         """
 
-        cur = cursor_conn()
+        cur = db.cursor_conn()
         cur.execute(sql, (self.__number, self.__field.get_id()))
         rows = cur.fetchall()
 
@@ -130,7 +130,7 @@ class YearGroup(object):
         else:
             print("Error! Cant delete student in year_group table")
 
-    def get_id():
+    def get_id(self):
         ids = []
         for student in self.__students:
             ids.append(self.__students[student])
@@ -166,9 +166,6 @@ class YearGroup(object):
 
     def get_number(self):
         return self.__number
-
-    def get_name(self):
-        return self.__name
 
     def get_students(self):
         return self.__students.keys()

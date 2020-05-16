@@ -44,10 +44,8 @@ class Student(object):
             pesel INTEGER NOT NULL,
             email TEXT,
             id_field_of_study INTEGER NOT NULL,
-            place_of_residence TEXT NOT NULL
-            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
-            ON UPDATE CASCADE           
-            ON DELETE CASCADE                  
+            place_of_residence TEXT NOT NULL,
+            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)                
         );
         """  
 
@@ -56,7 +54,7 @@ class Student(object):
         else:
             print("Error! Cant create student table")
 
-    def __init__(self, id_student = 0, name = '', sec_name = '', lastname = '', ssn = 1000, email = '', id_field_of_study = 1, place_of_residence = ''):
+    def __init__(self, id_student = 0, name = '', sec_name = '', lastname = '', ssn = 1000, email = '', field_of_study = None, place_of_residence = ''):
         Student.id_std += 1
         #set id_student automatically or manual
         if id_student == 0:
@@ -69,7 +67,7 @@ class Student(object):
         self.__lastname = lastname
         self.__ssn = ssn #social security number
         self.__email = email
-        self.__id_field_of_study = id_field_of_study
+        self.__field_of_study = field_of_study
         self.__place_of_residence = place_of_residence
 
     def insert(self, db):
@@ -90,7 +88,7 @@ class Student(object):
             self.__lastname,
             self.__ssn,
             self.__email,
-            self.__id_field_of_study,
+            self.__field_of_study.get_id(),
             self.__place_of_residence
             )
 
@@ -118,7 +116,7 @@ class Student(object):
             self.__lastname,
             self.__ssn,
             self.__email,
-            self.__id_field_of_study,
+            self.__field_of_study.get_id(),
             self.__place_of_residence,
             self.__id_student
             )
@@ -158,7 +156,10 @@ class Student(object):
         return self.__email
 
     def get_id_field_of_study(self):
-        return self.__id_field_of_study
+        return self.__field_of_study.get_id()
+
+    def get_field_of_study(self):
+        return self.__field_of_study
 
     def get_place_of_residence(self):
         return self.__place_of_residence
@@ -182,8 +183,8 @@ class Student(object):
     def set_email(self, email):
         self.__email = email
 
-    def set_id_field_of_study(self, id_field_of_study):
-        self.__id_field_of_study = id_field_of_study
-
     def set_place_of_residence(self, place_of_residence):
         self.__place_of_residence = place_of_residence
+
+    def set_field_of_study(self, field_of_study):
+        self.__field_of_study = field_of_study
