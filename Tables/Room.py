@@ -31,7 +31,7 @@ class Room(object):
 
     @staticmethod
     def select_all(db):
-        cur = db.cursor_con()
+        cur = db.cursor_conn()
         cur.execute("SELECT * FROM room")
         
         return cur.fetchall()

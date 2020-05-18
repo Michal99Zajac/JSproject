@@ -20,6 +20,29 @@ class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+
+        #table setting
+        self.db = TableDatabase("databases/data.db")
+        self.buildings = self.db.fetch_buildings()
+        self.deans = self.db.fetch_deans()
+        self.departments = self.db.fetch_departments(self.buildings, self.deans)
+        self.deans_emps = self.db.fetch_deans_emps(self.departments)
+        self.fields = self.db.fetch_fields_of_study(self.departments, self.deans)
+        self.students = self.db.fetch_students(self.fields)
+        self.exe_groups = self.db.fetch_exe_groups(self.students, self.fields)
+        self.lab_groups = self.db.fetch_lab_groups(self.students, self.fields)
+        self.year_groups = self.db.fetch_year_groups(self.students, self.fields)
+        self.rooms = self.db.fetch_rooms(self.buildings)
+        self.teachers = self.db.fetch_teachers(self.departments)
+        self.subjects = self.db.fetch_subjects(
+            self.teachers,
+            self.lab_groups,
+            self.exe_groups,
+            self.year_groups,
+            self.rooms,
+            self.fields
+            )
+
         self.geometry("900x700")
 
         self.title_font = tkfont.Font(family="Helvetica", size=20, weight="bold", slant="italic")
@@ -114,9 +137,6 @@ class App(tk.Tk):
             frame = F(parent=mainframe, controller=self)
             self.frames[page_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
-        
-        #table setting
-        self.db = TableDatabase("databases/data.db")
 
         self.show_frame("StartPage")
 
