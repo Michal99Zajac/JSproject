@@ -366,16 +366,95 @@ class TableDatabase(object):
         return ls_year_groups
 
     def fetch_subjects(self, ls_teachers, ls_lab_groups, ls_exe_groups, ls_year_groups, ls_rooms, ls_fields_of_study):
-        ls_subjects = []
+        ls_subjects = [] #list of instances
 
+        subjects = [] #list of tuples
+
+        #leter! Change to search differently in sql!
         for row in Subject.select_all(self):
             teacher_instance = None
             room_instance = None
-            field_of_study = None
+            field_of_study_instance = None
             lab_group_instance = None
             exe_group_instance = None
             year_group_instance = None
 
-            #create later!
+            #search  correct teacher
+            for teacher in ls_teachers:
+                if row[1] == teacher.get_id():
+                    teacher_instance = teacher
+                    break
+
+            #search correct lab group
+            if row[2] != None:
+                for lab in ls_lab_groups:
+                    if row[2] in lab.get_idxes():
+                        lab_group_instance = lab
+                        break
+
+            #search correct exe group
+            if row[3] != None:
+                for exe in ls_exe_groups:
+                    if row[3] in exe.get_idxes():
+                        exe_group_instance = exe
+                        break
+
+            #search correct year group
+            if row[4] != None:
+                for year in ls_year_groups:
+                    if row[4] in year.get_idxes():
+                        year_group_instance = year
+                        break
+
+            #search correct room
+            for room in ls_rooms:
+                if row[5] == room.get_id():
+                    room_instance = room
+                    break
+
+            #search correct field of study
+            for field in ls_fields_of_study:
+                if row[6] == field.get_id():
+                    field_of_study_instance = field
+                    break
+
+            temp_subject = (
+                teacher_instance,
+                lab_group_instance,
+                exe_group_instance,
+                year_group_instance,
+                room_instance,
+                field_of_study_instance,
+                row[7],
+                row[8],
+                row[9],
+                row[10]
+            )
+
+            #chceck if this scheme has already been used
+            if temp_subject not in subjects:
+                ls_sub = Subject.get_groups_id(self, temp_subject)
+                ls_subjects.append(Subject(
+                    ls_sub,
+                    teacher_instance,
+                    lab_group_instance,
+                    exe_group_instance,
+                    year_group_instance,
+                    room_instance,
+                    field_of_study_instance,
+                    row[7],
+                    row[8],
+                    row[9],
+                    row[10]
+                ))
+                subjects.append(temp_subject)
+            
+        return ls_subjects
+
+        
+
+    
+            
+                    
             
         

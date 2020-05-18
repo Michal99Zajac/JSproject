@@ -28,6 +28,27 @@ class Subject(object):
         return cur.lastrowid
 
     @staticmethod
+    def get_groups_id(db, data):
+        sql = """SELECT * FROM subject WHERE
+        id_teacher = ? AND
+        id_labolatory_group = ? AND
+        id_exercise_group = ? AND
+        id_year_group = ? AND
+        id_room = ? AND
+        id_field_of_study = ? AND
+        day = ? AND
+        hour_start = ? AND
+        hour_end = ? AND
+        name = ?
+        """
+
+        cur = db.cursor_conn()
+        cur.execute(sql, data)
+
+        return cur.fetchall()
+
+
+    @staticmethod
     def create_tab(db):
         """
         ***function must be execute after create
@@ -104,7 +125,7 @@ class Subject(object):
     def insert(self, db):
         index = Subject.get_lastrowid(db) + 1
         if self.__lab == True:
-            for idx in self.__group.get_students():
+            for idx in self.__group.get_idxes():
                 sql = """INSERT INTO subject(
                     id_teacher,
                     id_labolatory_group,
