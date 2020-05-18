@@ -133,6 +133,9 @@ class FieldOfStudy(object):
     def get_department(self):
         return self.__department
 
+    # def get_name_department(self):
+    #     return self.__department.get_name()
+
     def get_leader(self):
         return self.__do_emp
 

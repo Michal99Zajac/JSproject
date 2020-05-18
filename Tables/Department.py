@@ -1,5 +1,7 @@
 import sqlite3
 
+#add name state
+
 class Department(object):
     id_dept = 0
     buildings = []
