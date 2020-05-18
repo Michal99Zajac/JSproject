@@ -196,6 +196,7 @@ class TableDatabase(object):
 
     def fetch_departments(self, ls_buildings, ls_deans):
         ls_departments = []
+
         for row in Department.select_all(self):
             building_instance = None
             dean_instance = None
@@ -242,6 +243,8 @@ class TableDatabase(object):
                 deans_emp_instance
             ))
 
+        return ls_fields
+
     def fetch_exe_groups(self, ls_students, ls_fields_of_study):
         ls_exe_groups = []
         field_num = {} #field_num = {field_id: [nums]}
@@ -272,7 +275,7 @@ class TableDatabase(object):
                     if field == row[3] and number == row[1]:
                         for student in ls_students:
                             if student.get_id() == row[2]:
-                                student[student] = row[0]
+                                students[student] = row[0]
                                 break
                     
                 ls_exe_groups.append(ExeGroup(
@@ -419,12 +422,12 @@ class TableDatabase(object):
                     break
 
             temp_subject = (
-                teacher_instance,
-                lab_group_instance,
-                exe_group_instance,
-                year_group_instance,
-                room_instance,
-                field_of_study_instance,
+                teacher_instance.get_id(),
+                # lab_group_instance,
+                # exe_group_instance,
+                # year_group_instance,
+                room_instance.get_id(),
+                field_of_study_instance.get_id(),
                 row[7],
                 row[8],
                 row[9],
@@ -433,7 +436,12 @@ class TableDatabase(object):
 
             #chceck if this scheme has already been used
             if temp_subject not in subjects:
-                ls_sub = Subject.get_groups_id(self, temp_subject)
+                subs = Subject.get_groups_id(self, temp_subject)
+                ls_sub = []
+                
+                for sub in subs:
+                    ls_sub.append(sub[0])
+
                 ls_subjects.append(Subject(
                     ls_sub,
                     teacher_instance,

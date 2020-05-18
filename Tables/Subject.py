@@ -29,21 +29,22 @@ class Subject(object):
 
     @staticmethod
     def get_groups_id(db, data):
-        sql = """SELECT * FROM subject WHERE
-        id_teacher = ? AND
-        id_labolatory_group = ? AND
-        id_exercise_group = ? AND
-        id_year_group = ? AND
-        id_room = ? AND
-        id_field_of_study = ? AND
-        day = ? AND
-        hour_start = ? AND
-        hour_end = ? AND
-        name = ?
+        sql = """SELECT id_subject FROM subject WHERE
+        id_teacher=? AND
+        id_room=? AND
+        id_field_of_study=? AND
+        day=? AND
+        hour_start=? AND
+        hour_end=? AND
+        name=?
         """
 
         cur = db.cursor_conn()
         cur.execute(sql, data)
+
+        # id_labolatory_group=? AND
+        # id_exercise_group=? AND
+        # id_year_group=? AND
 
         return cur.fetchall()
 

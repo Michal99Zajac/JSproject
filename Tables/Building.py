@@ -39,7 +39,7 @@ class Building(object):
 
     @staticmethod
     def get_lastrowid(db):
-        cur = db.cursor_con()
+        cur = db.cursor_conn()
         cur.execute("SELECT * FROM building")
 
         return cur.lastrowid
