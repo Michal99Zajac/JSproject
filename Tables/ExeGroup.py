@@ -172,5 +172,8 @@ class ExeGroup(object):
     def get_field(self):
         return self.__field
 
+    def get_idxes(self):
+        return self.__students.values()
+
     def get_students(self):
         return self.__students.keys()
