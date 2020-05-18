@@ -53,31 +53,100 @@ class DeleteStudentPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         self.controller = controller
+
+        self.return_buttons()
+        self.student_listbox()
+        self.submit()
+
+    def return_buttons(self):
         label = tk.Label(
             self,
             text="Delete Student",
-            font=controller.title_font
+            font=self.controller.title_font
         )
         label.pack(side=tk.TOP, fill=tk.X, pady=10)
         btn1 = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda:controller.show_frame("StartPage")
+            command=lambda:self.controller.show_frame("StartPage")
         )
         btn2 = tk.Button(
             self,
             text="return",
-            command=lambda:controller.show_frame("StudentPage")
+            command=lambda:self.controller.show_frame("StudentPage")
         )
         btn1.pack()
         btn2.pack()
+
+    def student_listbox(self):
+        self.f_student = tk.Frame(master=self)
+        self.l_student = tk.Label(master=self.f_student, text="select student")
+        self.l_student.pack()
+        self.list_students = tk.Listbox(master=self.f_student)
+
+        for i, student in enumerate(self.controller.students):
+            self.list_students.insert(
+                i,
+                (student.get_id(),
+                student.get_name(),
+                student.get_sec_name(),
+                student.get_lastname(),
+                student.get_ssn(),
+                student.get_email(),
+                student.get_field_of_study().get_name(),
+                student.get_place_of_residence())
+            )
+
+        self.list_students.pack()
+        self.f_student.pack()
+
+    def submit(self):
+        self.f_submit = tk.Frame(master=self)
+        self.sub_btn = tk.Button(
+            master=self.f_submit,
+            text="submit",
+            command=lambda : self.delete_student()
+        )
+        self.sub_btn.pack()
+        self.f_submit.pack()
+
+    def delete_student(self):
+        idx = self.list_students.index(tk.ACTIVE)
+        del_student = self.controller.students.pop(idx)
+
+        del_student.delete(self.controller.db)
+        self.controller.db.commit_conn()
+
+        del del_student
+        self.restart()
+
+    def restart(self):
+        self.refreash()
+        self.controller.show_frame("DeleteStudentPage")
+
+    def refreash(self):
+        self.list_students.delete(0, tk.END)
+        for i, student in enumerate(self.controller.students):
+            self.list_students.insert(
+                i,
+                (student.get_id(),
+                student.get_name(),
+                student.get_sec_name(),
+                student.get_lastname(),
+                student.get_ssn(),
+                student.get_email(),
+                student.get_field_of_study().get_name(),
+                student.get_place_of_residence())
+            )
+        
+        
 
 class CreateStudentPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        self.returns_buttons()
+        self.return_buttons()
         self.name_entry()
         self.sec_name_entry()
         self.lastname_entry()
@@ -87,7 +156,7 @@ class CreateStudentPage(tk.Frame):
         self.field_listbox()
         self.submit()
 
-    def returns_buttons(self):
+    def return_buttons(self):
         label = tk.Label(
             self,
             text="Create Student",
@@ -178,7 +247,6 @@ class CreateStudentPage(tk.Frame):
         self.f_submit.pack()
 
     def create_student(self):
-        print(self.controller.students)
         temp_field = None
         for field in self.controller.fields:
             if self.list_field.get(tk.ACTIVE) == field.get_name():
@@ -196,7 +264,6 @@ class CreateStudentPage(tk.Frame):
         ).insert(self.controller.db))
         
         self.controller.db.commit_conn()
-        print(self.controller.students)
 
 
 class ChangeStudentPage(tk.Frame):
