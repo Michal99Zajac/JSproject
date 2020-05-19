@@ -43,7 +43,7 @@ class App(tk.Tk):
             self.fields
             )
 
-        self.geometry("900x700")
+        self.geometry("1600x900")
 
         self.title_font = tkfont.Font(family="Helvetica", size=20, weight="bold", slant="italic")
 
@@ -58,8 +58,6 @@ class App(tk.Tk):
             #Student pages
             StudentFrame.StudentPage,
             StudentFrame.CreateStudentPage,
-            StudentFrame.DeleteStudentPage,
-            StudentFrame.ShowStudentsPage,
             StudentFrame.ChangeStudentPage,
             #Teacher pages
             TeacherFrame.TeacherPage,
