@@ -100,8 +100,8 @@ class TableDatabase(object):
                         row[7]
                     ))
                     break
-
-        Student.set_idx(Student.get_lastrowid(self))
+        else:
+            Student.set_idx(row[0])
 
         return ls_students
 
@@ -130,8 +130,8 @@ class TableDatabase(object):
                 row[5],
                 row[6]
             ))
-
-        Dean.set_idx(Dean.get_lastrowid(self))
+        else:
+            Dean.set_idx(row[0])
 
         return ls_deans
 
@@ -150,8 +150,8 @@ class TableDatabase(object):
                         dept
                     ))
                     break
-
-        DeansEmp.set_idx(DeansEmp.get_lastrowid(self))
+        else:
+            DeansEmp.set_idx(row[0])
 
         return ls_deans_emps
 
@@ -167,8 +167,8 @@ class TableDatabase(object):
                         row[3]
                     ))
                     break
-
-        Room.set_idx(Room.get_lastrowid(self))
+        else:
+            Room.set_idx(row[0])
 
         return ls_rooms
 
@@ -189,8 +189,8 @@ class TableDatabase(object):
                         row[8]
                     ))
                     break
-
-        Teacher.set_idx(Teacher.get_lastrowid(self))
+        else:
+            Teacher.set_idx(row[0])
 
         return ls_teachers
 
@@ -217,8 +217,8 @@ class TableDatabase(object):
                         row[3], 
                         dean_instance
                     ))
-
-        Department.set_idx(Department.get_lastrowid(self))
+        else:
+            Department.set_idx(row[0])
 
         return ls_departments
 
@@ -242,6 +242,8 @@ class TableDatabase(object):
                 dept_instance,
                 deans_emp_instance
             ))
+        else:
+            FieldOfStudy.set_idx(row[0])
 
         return ls_fields
 

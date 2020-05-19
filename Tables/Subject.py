@@ -97,6 +97,7 @@ class Subject(object):
         self.__day = day
         self.__start = start
         self.__end = end
+        self.__group = None
 
         for i, group in enumerate([lab_group, exe_group, year_group]):
             if group != None:
