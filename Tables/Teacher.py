@@ -2,7 +2,7 @@ import sqlite3
 
 class Teacher(object):
     id_tea = 0
-    acd_degrees = {}
+    acd_degrees = {'dr', 'mgr', 'prof', }
 
     @staticmethod
     def set_idx(id_tea):
@@ -45,6 +45,8 @@ class Teacher(object):
             id_department INTEGER NOT NULL,
             place_of_residence TEXT NOT NULL,
             FOREIGN KEY (id_department) REFERENCES department(id_department)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
         );
         """
 
@@ -68,10 +70,11 @@ class Teacher(object):
         self.__email = email
         self.__department = department
         self.__place_of_residenece = place_of_residence
+
         if acd_degree in Teacher.acd_degrees:
             self.__acd_degree = acd_degree
         else:
-            self.__acd_degree = '' #deegre const
+            self.__acd_degree = 'acd' #deegre const
 
     def insert(self, db):
         sql = """INSERT INTO teacher(
@@ -166,6 +169,9 @@ class Teacher(object):
 
     def get_place_of_residence(self):
         return self.__place_of_residenece
+
+    def get_department(self):
+        return self.__department
 
     def set_id(self, id_tea):
         self.__id_teacher = id_tea

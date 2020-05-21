@@ -16,8 +16,12 @@ class YearGroup(object):
             year_group_number INTEGER NOT NULL,
             id_student INTEGER,
             id_field_of_study INTEGER NOT NULL,
-            FOREIGN KEY (id_student) REFERENCES student(id_student),
+            FOREIGN KEY (id_student) REFERENCES student(id_student)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
             FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
         );
         """
 
@@ -169,3 +173,9 @@ class YearGroup(object):
 
     def get_students(self):
         return self.__students.keys()
+
+    def get_idxes(self):
+        return self.__students.values()
+
+    def get_all_students(self):
+        return self.__students

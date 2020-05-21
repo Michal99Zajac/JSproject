@@ -11,5 +11,6 @@ __all__ = [
     'StudentFrame',
     'SubjectFrame',
     'TeacherFrame',
-    'YearGroupFrame'
+    'YearGroupFrame',
+    'extendTk'
 ]

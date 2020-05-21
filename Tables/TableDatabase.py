@@ -86,6 +86,7 @@ class TableDatabase(object):
     #create all objects from db
     def fetch_students(self, ls_fields_of_study):
         ls_students = []
+        row = None
         for row in Student.select_all(self):
             for field in ls_fields_of_study:
                 if row[6] == field.get_id():
@@ -101,25 +102,29 @@ class TableDatabase(object):
                     ))
                     break
         else:
-            Student.set_idx(row[0])
+            if row != None:
+                Student.set_idx(row[0])
 
         return ls_students
 
     def fetch_buildings(self):
         ls_buildings = []
+        row = None
         for row in Building.select_all(self):
             ls_buildings.append(Building(
                 row[0],
                 row[1],
                 row[2]
             ))
-
-        Building.set_idx(Building.get_lastrowid(self))
+        else:
+            if row != None:
+                Building.set_idx(row[0])
 
         return ls_buildings
 
     def fetch_deans(self):
         ls_deans = []
+        row = None
         for row in Dean.select_all(self):
             ls_deans.append(Dean(
                 row[0],
@@ -131,12 +136,14 @@ class TableDatabase(object):
                 row[6]
             ))
         else:
-            Dean.set_idx(row[0])
+            if row != None:
+                Dean.set_idx(row[0])
 
         return ls_deans
 
     def fetch_deans_emps(self, ls_departments):
         ls_deans_emps = []
+        row = None
         for row in DeansEmp.select_all(self):
             for dept in ls_departments:
                 if row[6] == dept.get_id():
@@ -151,12 +158,14 @@ class TableDatabase(object):
                     ))
                     break
         else:
-            DeansEmp.set_idx(row[0])
+            if row != None:
+                DeansEmp.set_idx(row[0])
 
         return ls_deans_emps
 
     def fetch_rooms(self, ls_buildings):
         ls_rooms = []
+        row = None
         for row in Room.select_all(self):
             for building in ls_buildings:
                 if row[1] == building.get_id():
@@ -168,12 +177,14 @@ class TableDatabase(object):
                     ))
                     break
         else:
-            Room.set_idx(row[0])
+            if row != None:
+                Room.set_idx(row[0])
 
         return ls_rooms
 
     def fetch_teachers(self, ls_departments):
         ls_teachers = []
+        row = None
         for row in Teacher.select_all(self):
             for dept in ls_departments:
                 if row[7] == dept.get_id():
@@ -190,13 +201,15 @@ class TableDatabase(object):
                     ))
                     break
         else:
-            Teacher.set_idx(row[0])
+            if row != None:
+                Teacher.set_idx(row[0])
 
         return ls_teachers
 
     def fetch_departments(self, ls_buildings, ls_deans):
         ls_departments = []
 
+        row = None
         for row in Department.select_all(self):
             building_instance = None
             dean_instance = None
@@ -206,7 +219,7 @@ class TableDatabase(object):
                     break
 
             for dean in ls_deans:
-                if row[4] == dean.get_id():
+                if row[5] == dean.get_id():
                     dean_instance = dean
                     break
 
@@ -214,16 +227,19 @@ class TableDatabase(object):
                         row[0],
                         building_instance,
                         row[2],
-                        row[3], 
+                        row[3],
+                        row[4], 
                         dean_instance
                     ))
         else:
-            Department.set_idx(row[0])
+            if row != None:
+                Department.set_idx(row[0])
 
         return ls_departments
 
     def fetch_fields_of_study(self, ls_departments, ls_deans_emps):
         ls_fields = []
+        row = None
         for row in FieldOfStudy.select_all(self):
             dept_instance = None
             deans_emp_instance = None
@@ -243,7 +259,8 @@ class TableDatabase(object):
                 deans_emp_instance
             ))
         else:
-            FieldOfStudy.set_idx(row[0])
+            if row != None:
+                FieldOfStudy.set_idx(row[0])
 
         return ls_fields
 
@@ -389,6 +406,7 @@ class TableDatabase(object):
                 if row[1] == teacher.get_id():
                     teacher_instance = teacher
                     break
+            
 
             #search correct lab group
             if row[2] != None:

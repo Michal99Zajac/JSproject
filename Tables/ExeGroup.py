@@ -16,8 +16,12 @@ class ExeGroup(object):
             exercise_group_number INTEGER NOT NULL,
             id_student INTEGER,
             id_field_of_study INTEGER NOT NULL,
-            FOREIGN KEY (id_student) REFERENCES student(id_student),
+            FOREIGN KEY (id_student) REFERENCES student(id_student)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
             FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
         );
         """
 
@@ -171,6 +175,9 @@ class ExeGroup(object):
 
     def get_field(self):
         return self.__field
+
+    def get_all_students(self):
+        return self.__students
 
     def get_idxes(self):
         return self.__students.values()

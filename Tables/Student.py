@@ -45,7 +45,9 @@ class Student(object):
             email TEXT,
             id_field_of_study INTEGER NOT NULL,
             place_of_residence TEXT NOT NULL,
-            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)                
+            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE                
         );
         """  
 

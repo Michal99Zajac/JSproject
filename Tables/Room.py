@@ -17,6 +17,8 @@ class Room(object):
             room_number INTEGER NOT NULL,
             is_deans_office INTEGER NOT NULL,
             FOREIGN KEY (id_building) REFERENCES building(id_building)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
         );
         """
 
