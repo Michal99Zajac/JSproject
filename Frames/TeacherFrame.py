@@ -30,27 +30,27 @@ class TeacherPage(tk.Frame):
             text="Return to Home Page",
             command=lambda:self.controller.show_frame("StartPage")
         )
+        btn_return.pack()
         #Create Teacher Button
         btn_create = tk.Button(
             self,
             text="Create Teacher",
             command=lambda:self.controller.show_frame("CreateTeacherPage")
         )
+        btn_create.pack()
         #Delete Teacher Button
         btn_delete = tk.Button(
             self,
             text="Delete Teacher",
             command=lambda:self.delete_teacher()
         )
+        btn_delete.pack()
         #Change Teacher Button
         btn_update = tk.Button(
             self,
             text="Change Teacher",
             command=lambda: self.update_teacher()
         )
-        btn_return.pack()
-        btn_create.pack()
-        btn_delete.pack()
         btn_update.pack()
 
 

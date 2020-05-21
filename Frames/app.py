@@ -79,8 +79,6 @@ class App(tk.Tk):
             DeanFrame.DeanPage,
             DeanFrame.ChangeDeanPage,
             DeanFrame.CreateDeanPage,
-            DeanFrame.DeleteDeanPage,
-            DeanFrame.ShowDeansPage,
             #Department pages
             DepartmentFrame.DepartmentPage,
             DepartmentFrame.ChangeDepartmentPage,
