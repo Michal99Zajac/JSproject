@@ -40,8 +40,12 @@ class FieldOfStudy(object):
             name TEXT NOT NULL,
             id_department INTEGER NOT NULL,
             id_leader_of_field INTEGER NOT NULL,
-            FOREIGN KEY (id_department) REFERENCES department(id_department),
+            FOREIGN KEY (id_department) REFERENCES department(id_department)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
             FOREIGN KEY (id_leader_of_field) REFERENCES deans_office_employee(id_deans_office_employee)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
         );
         """
 

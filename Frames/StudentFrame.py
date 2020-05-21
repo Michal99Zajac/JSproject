@@ -36,28 +36,28 @@ class StudentPage(tk.Frame):
             text="Create Student",
             command=lambda: self.controller.show_frame("CreateStudentPage")
         )
+        btn_create.pack()
         #Delete Student Button
         btn_delete = tk.Button(
             self,
             text="Delete Student",
             command=lambda: self.delete_student()
         )
+        btn_delete.pack()
         #Change Student Button
         btn_change = tk.Button(
             self,
             text="Change Student",
             command=lambda: self.update_student()
         )
-        
-        btn_create.pack()
-        btn_delete.pack()
         btn_change.pack()
 
 
     def student_listbox(self):
-        self.f_student = tk.Frame(master=self)
-        self.l_student = tk.Label(master=self.f_student, text="select student")
-        self.l_student.pack()
+        f_student = tk.Frame(master=self)
+        f_student.pack()
+        l_student = tk.Label(master=f_student, text="select student")
+        l_student.pack()
 
         data = [
             ('id', 10),
@@ -70,12 +70,9 @@ class StudentPage(tk.Frame):
             ('place of residence', 40)
         ]
 
-        self.list_students = MultiListBox(master=self.f_student, data=data)
-
+        self.list_students = MultiListBox(master=f_student, data=data)
         self.refresh()
-
         self.list_students.pack()
-        self.f_student.pack()
 
 
     def delete_student(self):
@@ -83,10 +80,28 @@ class StudentPage(tk.Frame):
         del_student = self.controller.students.pop(idx)
 
         del_student.delete(self.controller.db)
+        self.delete_from_groups(del_student)
         self.controller.db.commit_conn()
 
         del del_student
         self.restart()
+
+
+    def delete_from_groups(self, student):
+        #exe group
+        for exe_group in self.controller.exe_groups:
+            if student in exe_group.get_students():
+                exe_group.delete_student(student, self.controller.db)
+
+        #lab group
+        for lab_group in self.controller.lab_groups:
+            if student in lab_group.get_students():
+                lab_group.delete_student(student, self.controller.db)
+
+        #year group
+        for year_group in self.controller.year_groups:
+            if student in year_group.get_students():
+                year_group.delete_student(student, self.controller.db)
 
 
     def update_student(self):
@@ -144,6 +159,7 @@ class CreateStudentPage(tk.Frame):
         self.field_listbox()
         self.submit()
 
+
     def main_label(self):
         label = tk.Label(
             self,
@@ -153,21 +169,41 @@ class CreateStudentPage(tk.Frame):
         label.pack(side=tk.TOP, fill=tk.X, pady=10)
 
 
-    def home_button(self):
-        btn_home = tk.Button(
-            self,
-            text="Return to Home Page",
-            command=lambda:self.controller.show_frame("StartPage")
-        )
-        btn_home.pack()
-
     def return_button(self):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda:self.controller.show_frame("StudentPage")
+            command=lambda: self.return_refresh()
         )
         btn_return.pack()
+
+
+    def home_button(self):
+        btn_home = tk.Button(
+            self,
+            text="Return to Home Page",
+            command=lambda: self.home_refresh()
+        )
+        btn_home.pack()
+
+
+    def return_refresh(self):
+        self.refresh()
+        self.controller.show_frame("StudentPage")
+
+
+    def home_refresh(self):
+        self.refresh()
+        self.controller.show_frame("StartPage")
+
+    
+    def refresh(self):
+        self.e_name.delete(0, tk.END)
+        self.e_lastname.delete(0, tk.END)
+        self.e_email.delete(0, tk.END)
+        self.e_sec_name.delete(0, tk.END)
+        self.e_place.delete(0, tk.END)
+        self.e_ssn.delete(0, tk.END)
 
 
     def name_entry(self):
@@ -180,7 +216,6 @@ class CreateStudentPage(tk.Frame):
         self.e_name = tk.Entry(master=f_name)
         self.e_name.pack()
         
-
 
     def sec_name_entry(self):
         f_sec_name = tk.Frame(master=self)
@@ -281,14 +316,14 @@ class CreateStudentPage(tk.Frame):
         
         self.controller.students[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
-        self.controller.show_frame("StudentPage")
         self.controller.frames["StudentPage"].restart()
 
 
 class ChangeStudentPage(CreateStudentPage):
     def __init__(self, parent, controller):
         CreateStudentPage.__init__(self, parent, controller)
-        self.student = controller.students[0]
+        if controller.students:
+            self.student = controller.students[0]
 
 
     def main_label(self):
@@ -298,34 +333,6 @@ class ChangeStudentPage(CreateStudentPage):
             font=self.controller.title_font
         )
         label.pack(side=tk.TOP, fill=tk.X, pady=10)
-
-
-    def return_button(self):
-        btn_return = tk.Button(
-            self,
-            text="return",
-            command=lambda: self.return_refresh()
-        )
-        btn_return.pack()
-
-
-    def home_button(self):
-        btn_home = tk.Button(
-            self,
-            text="Return to Home Page",
-            command=lambda: self.home_refresh()
-        )
-        btn_home.pack()
-
-
-    def return_refresh(self):
-        self.refresh()
-        self.controller.show_frame("StudentPage")
-
-
-    def home_refresh(self):
-        self.refresh()
-        self.controller.show_frame("StartPage")
 
 
     def submit(self):
@@ -347,15 +354,6 @@ class ChangeStudentPage(CreateStudentPage):
         self.e_sec_name.insert(tk.END, str(self.student.get_sec_name()))
         self.e_place.insert(tk.END, str(self.student.get_place_of_residence()))
         self.e_ssn.insert(tk.END, str(self.student.get_ssn()))
-
-
-    def refresh(self):
-        self.e_name.delete(0, tk.END)
-        self.e_lastname.delete(0, tk.END)
-        self.e_email.delete(0, tk.END)
-        self.e_sec_name.delete(0, tk.END)
-        self.e_place.delete(0, tk.END)
-        self.e_ssn.delete(0, tk.END)
 
 
     def set_student(self, student):

@@ -71,12 +71,24 @@ class Subject(object):
             hour_start TEXT,
             hour_end TEXT,
             name TEXT NOT NULL,
-            FOREIGN KEY (id_teacher) REFERENCES teacher(id_teacher),
-            FOREIGN KEY (id_labolatory_group) REFERENCES laboratory_group(id_labolatory_group),
-            FOREIGN KEY (id_exercise_group) REFERENCES exercise_group(id_exercise_group),
-            FOREIGN KEY (id_year_group) REFERENCES year_group(id_year_group),
-            FOREIGN KEY (id_room) REFERENCES room(id_room),
+            FOREIGN KEY (id_teacher) REFERENCES teacher(id_teacher)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+            FOREIGN KEY (id_labolatory_group) REFERENCES laboratory_group(id_labolatory_group)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+            FOREIGN KEY (id_exercise_group) REFERENCES exercise_group(id_exercise_group)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+            FOREIGN KEY (id_year_group) REFERENCES year_group(id_year_group)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+            FOREIGN KEY (id_room) REFERENCES room(id_room)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
             FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
         );
         """
 
@@ -229,7 +241,7 @@ class Subject(object):
                 index += 1
 
     def update(self, db):
-        sql = """subject SET
+        sql = """UPDATE subject SET
         id_teacher = ?,
         id_room = ?,
         day = ?,

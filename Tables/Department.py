@@ -40,6 +40,7 @@ class Department(object):
         sql = """CREATE TABLE IF NOT EXISTS department (
             id_department INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             id_building INTEGER NOT NULL,
+            name TEXT,
             deans_office_start TEXT,
             deans_office_stop TEXT,
             id_dean INTEGER NOT NULL,
@@ -55,7 +56,7 @@ class Department(object):
         else:
             print("Error! Cant create department table")
 
-    def __init__(self, id_dept = 0, building = None, off_start = '', off_stop = '', dean = None):
+    def __init__(self, id_dept = 0, building = None, name='', off_start = '', off_stop = '', dean = None):
         Department.id_dept += 1
         #set id_student automatically or manual
         if id_dept == 0:
@@ -75,20 +76,23 @@ class Department(object):
             Department.id_dept -= 1
             print("Error! Building or Dean is booked")
 
+        self.__name = name
         self.__off_start = off_start
         self.__off_stop = off_stop
 
     def insert(self, db):
         sql = """INSERT INTO department(
             id_building,
+            name,
             deans_office_start,
             deans_office_stop,
             id_dean
-        ) VALUES (?,?,?,?)
+        ) VALUES (?,?,?,?,?)
         """
 
         values = (
             self.__building.get_id(),
+            self.__name,
             self.__off_start,
             self.__off_stop,
             self.__dean.get_id()
@@ -103,6 +107,7 @@ class Department(object):
     def update(self, db):
         sql = """UPDATE department SET
         id_building = ?,
+        name = ?,
         deans_office_start = ?,
         deans_office_stop = ?,
         id_dean = ?
@@ -111,6 +116,7 @@ class Department(object):
 
         values = (
             self.__building.get_id(),
+            self.__name,
             self.__off_start,
             self.__off_stop,
             self.__dean.get_id(),
@@ -138,6 +144,9 @@ class Department(object):
     def get_building(self):
         return self.__building
 
+    def get_name(self):
+        return self.__name
+
     def get_dean(self):
         return self.__dean
 
@@ -155,6 +164,9 @@ class Department(object):
     
     def set_off_stop(self, off_stop):
         self.__off_stop = off_stop
+
+    def set_name(self, name):
+        self.__name = name
 
     def set_building(self, building):
         if building not in Department.buildings:

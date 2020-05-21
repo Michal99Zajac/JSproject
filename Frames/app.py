@@ -63,8 +63,6 @@ class App(tk.Tk):
             TeacherFrame.TeacherPage,
             TeacherFrame.ChangeTeacherPage,
             TeacherFrame.CreateTeacherPage,
-            TeacherFrame.DeleteTeacherPage,
-            TeacherFrame.ShowTeachersPage,
             #Building pages
             BuildingFrame.BuildingPage,
             BuildingFrame.ChangeBuildingPage,
