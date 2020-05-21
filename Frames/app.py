@@ -73,8 +73,6 @@ class App(tk.Tk):
             DeanEmpFrame.DeansEmpPage,
             DeanEmpFrame.ChangeDeansEmpPage,
             DeanEmpFrame.CreateDeansEmpPage,
-            DeanEmpFrame.DeleteDeansEmpPage,
-            DeanEmpFrame.ShowDeansEmpsPage,
             #Dean pages
             DeanFrame.DeanPage,
             DeanFrame.ChangeDeanPage,
