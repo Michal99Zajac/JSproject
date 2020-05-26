@@ -89,8 +89,8 @@ class DepartmentPage(tk.Frame):
         idx = self.list_depts.index(tk.ACTIVE)
         dept = self.controller.departments[idx]
 
-        self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
-        self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
+        #self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
+        #self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
         self.controller.frames["ChangeDepartmentPage"].set_dept(dept)
         self.controller.frames["ChangeDepartmentPage"].fill_entry()
         self.controller.show_frame("ChangeDepartmentPage")
@@ -104,7 +104,11 @@ class DepartmentPage(tk.Frame):
     def refresh_button(self):
         f_refresh = tk.Frame(master=self)
         f_refresh.pack()
-        btn_refresh = tk.Button(master=f_refresh, text="refresh", command=lambda : self.restart())
+        btn_refresh = tk.Button(
+            master=f_refresh,
+            text="refresh",
+            command=lambda : self.restart()
+        )
         btn_refresh.pack()
 
     def refresh(self):
@@ -306,9 +310,8 @@ class CreateDepartmentPage(tk.Frame):
             dean=temp_dean
         ))
 
-        self.refresh_building_listbox()
-        self.refresh_dean_listbox()
-
+        self.controller.frames["CreateFieldOfStudyPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeFieldOfStudyPage"].refresh_dept_listbox()
         self.controller.departments[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["DepartmentPage"].restart()
@@ -360,6 +363,8 @@ class ChangeDepartmentPage(CreateDepartmentPage):
 
         #config after update
         self.refresh()
+        self.controller.frames["CreateFieldOfStudyPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeFieldOfStudyPage"].refresh_dept_listbox()
         self.controller.frames["DepartmentPage"].restart()
 
 

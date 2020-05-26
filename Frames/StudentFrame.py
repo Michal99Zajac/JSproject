@@ -285,6 +285,12 @@ class CreateStudentPage(tk.Frame):
         self.list_field.pack()
 
 
+    def refresh_field_listbox(self):
+        self.list_field.delete(0, tk.END)
+        for i, field in enumerate(self.controller.fields):
+            self.list_field.insert(i,field.get_name())
+
+
     def submit(self):
         f_submit = tk.Frame(master=self)
         f_submit.pack()

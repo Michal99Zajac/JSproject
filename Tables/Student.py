@@ -112,13 +112,18 @@ class Student(object):
         WHERE id_student = ?
         """
 
+        try:
+            field = self.__field_of_study.get_id()
+        except AttributeError:
+            field = "NULL"
+
         values = (
             self.__name,
             self.__sec_name,
             self.__lastname,
             self.__ssn,
             self.__email,
-            self.__field_of_study.get_id(),
+            field,
             self.__place_of_residence,
             self.__id_student
             )

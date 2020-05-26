@@ -164,6 +164,7 @@ class TableDatabase(object):
 
         return ls_deans_emps
 
+
     def fetch_rooms(self, ls_buildings):
         ls_rooms = []
         row = None
@@ -244,6 +245,7 @@ class TableDatabase(object):
         for row in FieldOfStudy.select_all(self):
             dept_instance = None
             deans_emp_instance = None
+
             for dept in ls_departments:
                 if row[2] == dept.get_id():
                     dept_instance = dept

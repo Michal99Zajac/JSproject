@@ -90,8 +90,6 @@ class App(tk.Tk):
             FieldOfStudyFrame.FieldOfStudyPage,
             FieldOfStudyFrame.ChangeFieldOfStudyPage,
             FieldOfStudyFrame.CreateFieldOfStudyPage,
-            FieldOfStudyFrame.DeleteFieldOfStudyPage,
-            FieldOfStudyFrame.ShowFieldsOfStudyPage,
             #Laboratory pages
             LabGroupFrame.LabGroupPage,
             LabGroupFrame.AddStudentPage,
