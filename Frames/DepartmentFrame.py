@@ -89,9 +89,12 @@ class DepartmentPage(tk.Frame):
         idx = self.list_depts.index(tk.ACTIVE)
         dept = self.controller.departments[idx]
 
+        self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
+        self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
         self.controller.frames["ChangeDepartmentPage"].set_dept(dept)
         self.controller.frames["ChangeDepartmentPage"].fill_entry()
         self.controller.show_frame("ChangeDepartmentPage")
+
 
     def restart(self):
         self.refresh()
@@ -109,23 +112,22 @@ class DepartmentPage(tk.Frame):
         for i, dept in enumerate(self.controller.departments):
             try:
                 dean = dept.get_dean().get_name() + " " + dept.get_dean().get_lastname()
-                output = (
-                    dept.get_id(),
-                    dept.get_building().get_name(),
-                    dept.get_name(),
-                    dept.get_off_start(),
-                    dept.get_off_stop(),
-                    dean
-                )
             except AttributeError:
-                output = (
-                    dept.get_id(),
-                    dept.get_building().get_name(),
-                    dept.get_name(),
-                    dept.get_off_start(),
-                    dept.get_off_stop(),
-                    "--------------"
-                )
+                dean = "-----------"
+
+            try:
+                building = dept.get_building().get_name()
+            except AttributeError:
+                building = "-----------"
+
+            output = (
+                dept.get_id(),
+                building,
+                dept.get_name(),
+                dept.get_off_start(),
+                dept.get_off_stop(),
+                dean
+            )
                 
             self.list_depts.insert(i, output)
 
@@ -234,7 +236,8 @@ class CreateDepartmentPage(tk.Frame):
         self.list_dean = tk.Listbox(master=f_dean)
         for i, dean in enumerate(self.controller.deans):
             full_name = dean.get_name() + " " + dean.get_lastname()
-            self.list_dean.insert(i, full_name)
+            if dean not in Department.deans:
+                self.list_dean.insert(i, full_name)
         self.list_dean.pack()
 
 
@@ -242,7 +245,8 @@ class CreateDepartmentPage(tk.Frame):
         self.list_dean.delete(0, tk.END)
         for i, dean in enumerate(self.controller.deans):
             full_name = dean.get_name() + " " + dean.get_lastname()
-            self.list_dean.insert(i, full_name)
+            if dean not in Department.deans:
+                self.list_dean.insert(i, full_name)
 
     
     def building_listbox(self):
@@ -254,14 +258,16 @@ class CreateDepartmentPage(tk.Frame):
 
         self.list_building = tk.Listbox(master=f_building)
         for i, building in enumerate(self.controller.buildings):
-            self.list_building.insert(i, building.get_name())
+            if building not in Department.buildings:
+                self.list_building.insert(i, building.get_name())
         self.list_building.pack()
 
     
     def refresh_building_listbox(self):
         self.list_building.delete(0, tk.END)
         for i, building in enumerate(self.controller.buildings):
-            self.list_building.insert(i, building.get_name())
+            if building not in Department.buildings:
+                self.list_building.insert(i, building.get_name())
 
 
     def submit(self):
@@ -300,10 +306,13 @@ class CreateDepartmentPage(tk.Frame):
             dean=temp_dean
         ))
 
+        self.refresh_building_listbox()
+        self.refresh_dean_listbox()
 
         self.controller.departments[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["DepartmentPage"].restart()
+
 
 
 class ChangeDepartmentPage(CreateDepartmentPage):

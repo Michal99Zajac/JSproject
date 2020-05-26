@@ -128,4 +128,4 @@ class Building(object):
         self.__name = name
 
     def set_number(self, number):
-        self.__name = number
+        self.__number = number

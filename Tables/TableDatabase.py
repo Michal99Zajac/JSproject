@@ -114,7 +114,8 @@ class TableDatabase(object):
             ls_buildings.append(Building(
                 row[0],
                 row[1],
-                row[2]
+                row[2],
+                row[3]
             ))
         else:
             if row != None:
@@ -393,7 +394,8 @@ class TableDatabase(object):
         subjects = [] #list of tuples
 
         #ultra object
-        uteacher = Teacher(-1, "u", "u", "u", 00000, "u", "acd", None, "u")
+        uteacher = Teacher(999999, "-------", "--------", "---------", 00000, "--------", "acd", None, "----------")
+        uroom = Room(999999, None, 9999999, 0)
 
         #leter! Change to search differently in sql!
         for row in Subject.select_all(self):
@@ -439,6 +441,8 @@ class TableDatabase(object):
                 if row[5] == room.get_id():
                     room_instance = room
                     break
+            else:
+                room_instance = uroom
 
             #search correct field of study
             for field in ls_fields_of_study:
