@@ -64,17 +64,11 @@ class Department(object):
         else:
             self.__id_dept = id_dept
 
-        try:
-            if building not in Department.buildings and dean not in Department.deans:
-                self.__building = building
-                self.__dean = dean
-                Department.buildings.append(self.__building)
-                Department.deans.append(self.__dean)
-            else:
-                raise ValueError
-        except ValueError:
-            Department.id_dept -= 1
-            print("Error! Building or Dean is booked")
+        
+        self.__building = building
+        self.__dean = dean
+        Department.buildings.append(self.__building)
+        Department.deans.append(self.__dean)
 
         self.__name = name
         self.__off_start = off_start
@@ -114,12 +108,22 @@ class Department(object):
         WHERE id_department = ?
         """
 
+        try:
+            dean = self.__dean.get_id()
+        except AttributeError:
+            dean = "NULL"
+
+        try:
+            building = self.__building.get_id()
+        except AttributeError:
+            building = "NULL"
+
         values = (
-            self.__building.get_id(),
+            building,
             self.__name,
             self.__off_start,
             self.__off_stop,
-            self.__dean.get_id(),
+            dean,
             self.__id_dept
         )
 
@@ -170,14 +174,11 @@ class Department(object):
         self.__name = name
 
     def set_building(self, building):
-        if building not in Department.buildings:
-            Department.buildings.remove(self.__building)
-            self.__building = building
-            Department.buildings.append(self.__building)
+        Department.buildings.remove(self.__building)
+        self.__building = building
+        Department.buildings.append(self.__building)
 
     def set_dean(self, dean):
-        if dean not in Department.deans:
-            Department.deans.remove(self.__dean)
-            self.__dean = dean
-            Department.deans.append(self.__dean)
-
+        Department.deans.remove(self.__dean)
+        self.__dean = dean
+        Department.deans.append(self.__dean)

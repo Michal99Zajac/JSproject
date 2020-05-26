@@ -67,8 +67,6 @@ class App(tk.Tk):
             BuildingFrame.BuildingPage,
             BuildingFrame.ChangeBuildingPage,
             BuildingFrame.CreateBuildingPage,
-            BuildingFrame.DeleteBuildingPage,
-            BuildingFrame.ShowBuildingsPage,
             #Dean Employee pages
             DeanEmpFrame.DeansEmpPage,
             DeanEmpFrame.ChangeDeansEmpPage,
