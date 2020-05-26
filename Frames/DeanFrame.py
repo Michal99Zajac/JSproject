@@ -112,14 +112,30 @@ class DeanPage(tk.Frame):
         del_dean = self.controller.deans.pop(idx)
 
         del_dean.delete(self.controller.db)
+        self.del_department(del_dean)
         self.controller.db.commit_conn()
 
         del del_dean
+        self.controller.frames["CreateDepartmentPage"].refresh_dean_listbox()
+        self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
         self.restart()
+
+
+    def del_department(self, dean):
+        for i , dept in enumerate(self.controller.departments):
+            if dept.get_dean() == dean:
+                dept.delete(self.controller.db)
+                self.controller.departments.pop(i)
+                del dept
+                break
+
 
     def update_dean(self):
         idx = self.list_deans.index(tk.ACTIVE)
         dean = self.controller.deans[idx]
+
+        self.controller.frames["CreateDepartmentPage"].refresh_dean_listbox()
+        self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
 
         self.controller.frames["ChangeDeanPage"].set_dean(dean)
         self.controller.frames["ChangeDeanPage"].fill_entry()
@@ -275,6 +291,8 @@ class CreateDeanPage(tk.Frame):
 
         self.controller.deans[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
+        self.controller.frames["CreateDepartmentPage"].refresh_dean_listbox()
+        self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
         self.controller.frames["DeanPage"].restart()
 
 
