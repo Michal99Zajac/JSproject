@@ -392,6 +392,9 @@ class TableDatabase(object):
 
         subjects = [] #list of tuples
 
+        #ultra object
+        uteacher = Teacher(-1, "u", "u", "u", 00000, "u", "acd", None, "u")
+
         #leter! Change to search differently in sql!
         for row in Subject.select_all(self):
             teacher_instance = None
@@ -406,6 +409,8 @@ class TableDatabase(object):
                 if row[1] == teacher.get_id():
                     teacher_instance = teacher
                     break
+            else:
+                teacher_instance = uteacher
             
 
             #search correct lab group
@@ -477,12 +482,5 @@ class TableDatabase(object):
                 ))
                 subjects.append(temp_subject)
             
-        return ls_subjects
-
-        
-
-    
-            
-                    
-            
+        return ls_subjects         
         

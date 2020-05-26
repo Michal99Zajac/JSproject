@@ -20,9 +20,9 @@ class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+        self.db = TableDatabase("databases/data.db")
 
         #table setting
-        self.db = TableDatabase("databases/data.db")
         self.buildings = self.db.fetch_buildings()
         self.deans = self.db.fetch_deans()
         self.departments = self.db.fetch_departments(self.buildings, self.deans)
@@ -81,8 +81,6 @@ class App(tk.Tk):
             DepartmentFrame.DepartmentPage,
             DepartmentFrame.ChangeDepartmentPage,
             DepartmentFrame.CreateDepartmentPage,
-            DepartmentFrame.DeleteDepartmentPage,
-            DepartmentFrame.ShowDepartmentsPage,
             #Exercise pages
             ExeGroupFrame.ExeGroupPage,
             ExeGroupFrame.AddStudentPage,

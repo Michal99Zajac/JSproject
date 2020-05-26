@@ -129,8 +129,9 @@ class Department(object):
         else:
             print("Error! Cant update in department table")
 
+
     def delete(self, db):
-        sql = """DELETE FROM department WHERE id_department"""
+        sql = """DELETE FROM department WHERE id_department = ?"""
 
         if db.get_conn() is not None:
             cur = db.cursor_conn()
