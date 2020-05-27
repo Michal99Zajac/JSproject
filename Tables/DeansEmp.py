@@ -78,13 +78,18 @@ class DeansEmp(object):
         ) VALUES (?,?,?,?,?,?)
         """
 
+        try:
+            department_id = self.__department.get_id()
+        except AttributeError:
+            department_id = "NULL"
+        
         values = (
             self.__name,
             self.__sec_name,
             self.__lastname,
             self.__ssn,
             self.__email,
-            self.__department.get_id()
+            department_id
         )
 
         if db.get_conn() is not None:
@@ -104,13 +109,18 @@ class DeansEmp(object):
         WHERE id_deans_office_employee = ?
         """
 
+        try:
+            department_id = self.__department.get_id()
+        except AttributeError:
+            department_id = "NULL"
+
         values = (
             self.__name,
             self.__sec_name,
             self.__lastname,
             self.__ssn,
             self.__email,
-            self.__department.get_id(),
+            department_id,
             self.__id_emp
         )
 

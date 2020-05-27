@@ -209,6 +209,7 @@ class CreateFieldOfStudyPage(tk.Frame):
         self.e_name = tk.Entry(master=f_name)
         self.e_name.pack()
 
+
     def dept_listbox(self):
         f_dept = tk.Frame(master=self)
         f_dept.pack()
@@ -352,6 +353,3 @@ class ChangeFieldOfStudyPage(CreateFieldOfStudyPage):
         self.controller.frames["StudentPage"].refresh()
 
         self.controller.frames["FieldOfStudyPage"].restart()
-
-
-    

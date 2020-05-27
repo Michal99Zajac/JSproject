@@ -84,12 +84,22 @@ class Department(object):
         ) VALUES (?,?,?,?,?)
         """
 
+        try:
+            building_id = self.__building.get_id()
+        except AttributeError:
+            building_id = "NULL"
+
+        try:
+            dean_id = self.__dean.get_id()
+        except AttributeError:
+            dean_id = "NULL"
+
         values = (
-            self.__building.get_id(),
+            building_id,
             self.__name,
             self.__off_start,
             self.__off_stop,
-            self.__dean.get_id()
+            dean_id
         )
 
         if db.get_conn() is not None:

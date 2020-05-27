@@ -80,8 +80,13 @@ class Room(object):
         ) VALUES (?,?,?)
         """
 
+        try:
+            building_id = self.__building.get_id()
+        except AttributeError:
+            building_id = "NULL"
+
         values = (
-            self.__building.get_id(),
+            building_id,
             self.__number,
             self.__is_dean
         )
@@ -100,8 +105,13 @@ class Room(object):
         WHERE id_room = ?
         """
 
+        try:
+            building_id = self.__building.get_id()
+        except AttributeError:
+            building_id = "NULL"
+
         values = (
-            self.__building.get_id(),
+            building_id,
             self.__number,
             self.__is_dean,
             self.__id_room

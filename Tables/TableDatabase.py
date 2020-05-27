@@ -88,19 +88,22 @@ class TableDatabase(object):
         ls_students = []
         row = None
         for row in Student.select_all(self):
+            field_instance = None
             for field in ls_fields_of_study:
                 if row[6] == field.get_id():
-                    ls_students.append(Student(
-                        row[0],
-                        row[1],
-                        row[2],
-                        row[3],
-                        row[4],
-                        row[5],
-                        field,
-                        row[7]
-                    ))
+                    field_instance = field
                     break
+
+            ls_students.append(Student(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                field_instance,
+                row[7]
+            ))
         else:
             if row != None:
                 Student.set_idx(row[0])
@@ -146,18 +149,21 @@ class TableDatabase(object):
         ls_deans_emps = []
         row = None
         for row in DeansEmp.select_all(self):
+            dept_instance = None
             for dept in ls_departments:
                 if row[6] == dept.get_id():
-                    ls_deans_emps.append(DeansEmp(
-                        row[0],
-                        row[1],
-                        row[2],
-                        row[3],
-                        row[4],
-                        row[5],
-                        dept
-                    ))
+                    dept_instance = dept
                     break
+
+            ls_deans_emps.append(DeansEmp(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                dept_instance
+            ))
         else:
             if row != None:
                 DeansEmp.set_idx(row[0])
@@ -169,15 +175,18 @@ class TableDatabase(object):
         ls_rooms = []
         row = None
         for row in Room.select_all(self):
+            building_instance = None
             for building in ls_buildings:
                 if row[1] == building.get_id():
-                    ls_rooms.append(Room(
-                        row[0],
-                        building,
-                        row[2],
-                        row[3]
-                    ))
+                    building_instance = building
                     break
+
+            ls_rooms.append(Room(
+                row[0],
+                building_instance,
+                row[2],
+                row[3]
+            ))
         else:
             if row != None:
                 Room.set_idx(row[0])
@@ -188,20 +197,23 @@ class TableDatabase(object):
         ls_teachers = []
         row = None
         for row in Teacher.select_all(self):
+            dept_instance = None
             for dept in ls_departments:
                 if row[7] == dept.get_id():
-                    ls_teachers.append(Teacher(
-                        row[0],
-                        row[1],
-                        row[2],
-                        row[3],
-                        row[4],
-                        row[5],
-                        row[6],
-                        dept,
-                        row[8]
-                    ))
+                    dept_instance = dept
                     break
+
+            ls_teachers.append(Teacher(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                row[6],
+                dept_instance,
+                row[8]
+            ))
         else:
             if row != None:
                 Teacher.set_idx(row[0])
@@ -239,6 +251,7 @@ class TableDatabase(object):
 
         return ls_departments
 
+
     def fetch_fields_of_study(self, ls_departments, ls_deans_emps):
         ls_fields = []
         row = None
@@ -250,6 +263,7 @@ class TableDatabase(object):
                 if row[2] == dept.get_id():
                     dept_instance = dept
                     break
+
             for deans_emp in ls_deans_emps:
                 if row[3] == deans_emp.get_id():
                     deans_emp_instance = deans_emp
@@ -396,8 +410,8 @@ class TableDatabase(object):
         subjects = [] #list of tuples
 
         #ultra object
-        uteacher = Teacher(999999, "-------", "--------", "---------", 00000, "--------", "acd", None, "----------")
-        uroom = Room(999999, None, 9999999, 0)
+        # uteacher = Teacher(999999, "-------", "--------", "---------", 00000, "--------", "acd", None, "----------")
+        # uroom = Room(999999, None, 9999999, 0)
 
         #leter! Change to search differently in sql!
         for row in Subject.select_all(self):
@@ -413,8 +427,6 @@ class TableDatabase(object):
                 if row[1] == teacher.get_id():
                     teacher_instance = teacher
                     break
-            else:
-                teacher_instance = uteacher
             
 
             #search correct lab group
@@ -443,8 +455,6 @@ class TableDatabase(object):
                 if row[5] == room.get_id():
                     room_instance = room
                     break
-            else:
-                room_instance = uroom
 
             #search correct field of study
             for field in ls_fields_of_study:
@@ -452,13 +462,25 @@ class TableDatabase(object):
                     field_of_study_instance = field
                     break
 
+            try:
+                teacher_id = teacher_instance.get_id()
+            except AttributeError:
+                teacher_id = ''
+
+            try:
+                room_id = room_instance.get_id()
+            except AttributeError:
+                room_id = ''
+
+            try:
+                field_id = field_of_study_instance.get_id()
+            except AttributeError:
+                field_id = ''
+            
             temp_subject = (
-                teacher_instance.get_id(),
-                # lab_group_instance,
-                # exe_group_instance,
-                # year_group_instance,
-                room_instance.get_id(),
-                field_of_study_instance.get_id(),
+                teacher_id,
+                room_id,
+                field_id,
                 row[7],
                 row[8],
                 row[9],

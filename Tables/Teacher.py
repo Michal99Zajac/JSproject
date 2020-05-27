@@ -89,6 +89,11 @@ class Teacher(object):
         ) VALUES (?,?,?,?,?,?,?,?)
         """
 
+        try:
+            dept_id = self.__department.get_id()
+        except AttributeError:
+            dept_id = "NULL"
+
         values = (
             self.__name,
             self.__sec_name,
@@ -96,7 +101,7 @@ class Teacher(object):
             self.__ssn,
             self.__email,
             self.__acd_degree,
-            self.__department.get_id(),
+            dept_id,
             self.__place_of_residenece
         )
 
@@ -119,6 +124,11 @@ class Teacher(object):
         WHERE id_teacher = ?
         """
 
+        try:
+            dept_id = self.__department.get_id()
+        except AttributeError:
+            dept_id = "NULL"
+
         values = (
             self.__name,
             self.__sec_name,
@@ -126,7 +136,7 @@ class Teacher(object):
             self.__ssn,
             self.__email,
             self.__acd_degree,
-            self.__department.get_id(),
+            dept_id,
             self.__place_of_residenece,
             self.__id_teacher
         )

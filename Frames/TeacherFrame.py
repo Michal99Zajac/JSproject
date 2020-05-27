@@ -80,6 +80,11 @@ class TeacherPage(tk.Frame):
     def refresh(self):
         self.list_teachers.delete(0, tk.END)
         for i, teacher in enumerate(self.controller.teachers):
+            try:
+                department = teacher.get_department().get_name()
+            except AttributeError:
+                department = "---------"
+
             output = (
                 teacher.get_id(),
                 teacher.get_name(),
@@ -88,7 +93,7 @@ class TeacherPage(tk.Frame):
                 teacher.get_ssn(),
                 teacher.get_email(),
                 teacher.get_acd_degree(),
-                teacher.get_department().get_name(),
+                department,
                 teacher.get_place_of_residence()
             )
             self.list_teachers.insert(i, output)
@@ -120,6 +125,7 @@ class TeacherPage(tk.Frame):
         del del_teacher
         self.restart()
 
+
     def update_teacher(self):
         idx = self.list_teachers.index(tk.ACTIVE)
         teacher = self.controller.teachers[idx]
@@ -127,6 +133,7 @@ class TeacherPage(tk.Frame):
         self.controller.frames["ChangeTeacherPage"].set_teacher(teacher)
         self.controller.frames["ChangeTeacherPage"].fill_entry()
         self.controller.show_frame("ChangeTeacherPage")
+
 
     def delete_subject(self, teacher):
         idexes = []
@@ -294,6 +301,12 @@ class CreateTeacherPage(tk.Frame):
             self.dept_list.insert(i, dept.get_name())
         self.dept_list.pack()
 
+
+    def refresh_dept_listbox(self):
+        self.dept_list.delete(0, tk.END)
+        for i, dept in enumerate(self.controller.departments):
+            self.dept_list.insert(i, dept.get_name())
+
     
     def submit(self):
         sub_btn = tk.Button(
@@ -306,8 +319,8 @@ class CreateTeacherPage(tk.Frame):
 
     def create_teacher(self):
         temp_dept = None
-        for dept in self.controller.fields:
-            if self.dept_list.get(tk.ACTIVE) == dept.get_id():
+        for dept in self.controller.departments:
+            if self.dept_list.get(tk.ACTIVE) == dept.get_name():
                 temp_dept = dept
                 break
 
