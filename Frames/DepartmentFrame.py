@@ -83,7 +83,15 @@ class DepartmentPage(tk.Frame):
         self.controller.db.commit_conn()
 
         del del_dept
+
+        self.controller.frames["CreateFieldOfStudyPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeFieldOfStudyPage"].refresh_dept_listbox()
+        self.controller.frames["CreateDeansEmpPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeDeansEmpPage"].refresh_dept_listbox()
+        self.controller.frames["CreateTeacherPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeTeacherPage"].refresh_dept_listbox()
         self.restart()
+
 
     def update_dept(self):
         idx = self.list_depts.index(tk.ACTIVE)
@@ -312,6 +320,10 @@ class CreateDepartmentPage(tk.Frame):
 
         self.controller.frames["CreateFieldOfStudyPage"].refresh_dept_listbox()
         self.controller.frames["ChangeFieldOfStudyPage"].refresh_dept_listbox()
+        self.controller.frames["CreateDeansEmpPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeDeansEmpPage"].refresh_dept_listbox()
+        self.controller.frames["CreateTeacherPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeTeacherPage"].refresh_dept_listbox()
         self.controller.departments[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["DepartmentPage"].restart()
@@ -365,6 +377,10 @@ class ChangeDepartmentPage(CreateDepartmentPage):
         self.refresh()
         self.controller.frames["CreateFieldOfStudyPage"].refresh_dept_listbox()
         self.controller.frames["ChangeFieldOfStudyPage"].refresh_dept_listbox()
+        self.controller.frames["CreateDeansEmpPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeDeansEmpPage"].refresh_dept_listbox()
+        self.controller.frames["CreateTeacherPage"].refresh_dept_listbox()
+        self.controller.frames["ChangeTeacherPage"].refresh_dept_listbox()
         self.controller.frames["DepartmentPage"].restart()
 
 

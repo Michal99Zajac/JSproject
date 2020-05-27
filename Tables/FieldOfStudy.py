@@ -8,9 +8,11 @@ class FieldOfStudy(object):
     def set_idx(id_fie):
         FieldOfStudy.id_field = id_fie
 
+
     @staticmethod
     def status_id():
         return FieldOfStudy.id_field
+
 
     @staticmethod
     def select_all(db):
@@ -20,12 +22,14 @@ class FieldOfStudy(object):
 
         return rows
 
+
     @staticmethod
     def get_lastrowid(db):
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM field_of_study")
         
         return cur.lastrowid
+
 
     @staticmethod
     def create_tab(db):
@@ -54,6 +58,7 @@ class FieldOfStudy(object):
         else:
             print("Error! Cant create field_of_study table")
 
+
     def __init__(self, id_field = 0, name = '', department = None, do_emp = None):
         FieldOfStudy.id_field += 1
         if id_field == 0:
@@ -78,6 +83,7 @@ class FieldOfStudy(object):
 
         self.__do_emp = do_emp
 
+
     def insert(self, db):
         sql = """INSERT INTO field_of_study(
             name,
@@ -86,9 +92,14 @@ class FieldOfStudy(object):
         ) VALUES (?,?,?)
         """
 
+        try:
+            dept_id = self.__department.get_id()
+        except AttributeError:
+            dept_id = "NULL"
+
         values = (
             self.__name,
-            self.__department.get_id(),
+            dept_id,
             self.__do_emp.get_id()
         )
 
@@ -98,6 +109,7 @@ class FieldOfStudy(object):
         else:
             print("Error! Cant insert in field_of_study table")
 
+
     def update(self, db):
         sql = """UPDATE field_of_study SET
         name = ?,
@@ -106,9 +118,14 @@ class FieldOfStudy(object):
         WHERE id_field_of_study = ?
         """
 
+        try:
+            dept_id = self.__department.get_id()
+        except AttributeError:
+            dept_id = "NULL"
+
         values = (
             self.__name,
-            self.__department.get_id(),
+            dept_id,
             self.__do_emp.get_id(),
             self.__id_field
         )
@@ -119,6 +136,7 @@ class FieldOfStudy(object):
         else:
             print("Error! Cant update in field_of_study table")
 
+
     def delete(self, db):
         sql = """DELETE FROM field_of_study WHERE id_field_of_study = ?"""
 
@@ -128,20 +146,22 @@ class FieldOfStudy(object):
         else:
             print("Error! Cant delete field_of_study table")
 
+
     def get_id(self):
         return self.__id_field
-    
+
+
     def get_name(self):
         return self.__name
+
 
     def get_department(self):
         return self.__department
 
-    # def get_name_department(self):
-    #     return self.__department.get_name()
 
     def get_leader(self):
         return self.__do_emp
+
 
     def set_name(self, name):
         try:
@@ -153,6 +173,7 @@ class FieldOfStudy(object):
                 raise ValueError
         except ValueError:
             print("Name in field_of_study is booked")
+
 
     def set_department(self, department):
         try:
@@ -169,6 +190,7 @@ class FieldOfStudy(object):
                 FieldOfStudy.dep_name[self.__department] = [self.__name]
         except ValueError:
             print("Name of field of study in new department is booked")
+
 
     def set_leader(self, do_emp):
         self.__do_emp = do_emp

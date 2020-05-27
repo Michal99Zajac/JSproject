@@ -128,6 +128,11 @@ class StudentPage(tk.Frame):
     def refresh(self):
         self.list_students.delete(0, tk.END)
         for i, student in enumerate(self.controller.students):
+            try:
+                field = student.get_field_of_study().get_name()
+            except AttributeError:
+                field = "-----------"
+
             output = (
                 student.get_id(),
                 student.get_name(),
@@ -135,7 +140,7 @@ class StudentPage(tk.Frame):
                 student.get_lastname(),
                 student.get_ssn(),
                 student.get_email(),
-                student.get_field_of_study().get_name(),
+                field,
                 student.get_place_of_residence()
                 )
             self.list_students.insert(i,output)

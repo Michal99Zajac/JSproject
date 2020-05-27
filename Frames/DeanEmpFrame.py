@@ -80,6 +80,11 @@ class DeansEmpPage(tk.Frame):
     def refresh(self):
         self.list_emps.delete(0, tk.END)
         for i, emp in enumerate(self.controller.deans_emps):
+            try:
+                department = emp.get_department().get_name()
+            except AttributeError:
+                department = "-----------"
+
             output = (
                 emp.get_id(),
                 emp.get_name(),
@@ -87,7 +92,7 @@ class DeansEmpPage(tk.Frame):
                 emp.get_lastname(),
                 emp.get_ssn(),
                 emp.get_email(),
-                emp.get_department().get_name()
+                department
             )
             self.list_emps.insert(i, output)
 
@@ -116,6 +121,9 @@ class DeansEmpPage(tk.Frame):
         self.controller.db.commit_conn()
 
         del del_emp
+
+        self.controller.frames["CreateFieldOfStudyPage"].refresh_leader_listbox()
+        self.controller.frames["ChangeFieldOfStudyPage"].refresh_leader_listbox()
         self.restart()
 
 
@@ -259,6 +267,12 @@ class CreateDeansEmpPage(tk.Frame):
         self.dept_list.pack()
 
 
+    def refresh_dept_listbox(self):
+        self.dept_list.delete(0, tk.END)
+        for i, dept in enumerate(self.controller.departments):
+            self.dept_list.insert(i, dept.get_name())
+
+
     def submit(self):
         sub_btn = tk.Button(
             master=self,
@@ -284,6 +298,8 @@ class CreateDeansEmpPage(tk.Frame):
             department=temp_dept
         ))
 
+        self.controller.frames["CreateFieldOfStudyPage"].refresh_leader_listbox()
+        self.controller.frames["ChangeFieldOfStudyPage"].refresh_leader_listbox()
         self.controller.deans_emps[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["DeansEmpPage"].restart()
@@ -336,6 +352,8 @@ class ChangeDeansEmpPage(CreateDeansEmpPage):
         self.controller.commit_conn()
 
         #config after update
+        self.controller.frames["CreateFieldOfStudyPage"].refresh_leader_listbox()
+        self.controller.frames["ChangeFieldOfStudyPage"].refresh_leader_listbox()
         self.refresh()
         self.controller.frames["DeansEmpPage"].restart()
 

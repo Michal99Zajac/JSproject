@@ -83,6 +83,11 @@ class Student(object):
             place_of_residence
         ) VALUES (?,?,?,?,?,?,?)
         """
+
+        try:
+            field_id = self.__field_of_study.get_id()
+        except AttributeError:
+            field_id = "NULL"
         
         values = (
             self.__name,
@@ -90,7 +95,7 @@ class Student(object):
             self.__lastname,
             self.__ssn,
             self.__email,
-            self.__field_of_study.get_id(),
+            field_id,
             self.__place_of_residence
             )
 
@@ -113,9 +118,9 @@ class Student(object):
         """
 
         try:
-            field = self.__field_of_study.get_id()
+            field_id = self.__field_of_study.get_id()
         except AttributeError:
-            field = "NULL"
+            field_id = "NULL"
 
         values = (
             self.__name,
@@ -123,7 +128,7 @@ class Student(object):
             self.__lastname,
             self.__ssn,
             self.__email,
-            field,
+            field_id,
             self.__place_of_residence,
             self.__id_student
             )
