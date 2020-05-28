@@ -111,9 +111,14 @@ class BuildingPage(tk.Frame):
         self.controller.db.commit_conn()
 
         del del_building
+        #config
         self.controller.frames["CreateDepartmentPage"].refresh_building_listbox()
         self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
         self.controller.frames["DepartmentPage"].refresh()
+        
+        self.controller.frames["CreateRoomPage"].refresh_building_listbox()
+        self.controller.frames["ChangeRoomPage"].refresh_building_listbox()
+        self.controller.frames["RoomPage"].refresh()
         self.refresh()
 
 
@@ -249,6 +254,11 @@ class CreateBuildingPage(tk.Frame):
         self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
         self.controller.frames["DepartmentPage"].refresh()
 
+        self.controller.frames["CreateRoomPage"].refresh_building_listbox()
+        self.controller.frames["ChangeRoomPage"].refresh_building_listbox()
+        self.controller.frames["RoomPage"].refresh()
+        
+
         self.controller.frames["BuildingPage"].restart()
         
 
@@ -301,6 +311,10 @@ class ChangeBuildingPage(CreateBuildingPage):
         self.controller.frames["CreateDepartmentPage"].refresh_building_listbox()
         self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
         self.controller.frames["DepartmentPage"].refresh()
+
+        self.controller.frames["CreateRoomPage"].refresh_building_listbox()
+        self.controller.frames["ChangeRoomPage"].refresh_building_listbox()
+        self.controller.frames["RoomPage"].refresh()
 
         self.controller.frames["BuildingPage"].restart()
 

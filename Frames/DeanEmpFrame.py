@@ -124,6 +124,7 @@ class DeansEmpPage(tk.Frame):
 
         self.controller.frames["CreateFieldOfStudyPage"].refresh_leader_listbox()
         self.controller.frames["ChangeFieldOfStudyPage"].refresh_leader_listbox()
+        self.controller.frames["FieldOfStudyPage"].refresh()
         self.restart()
 
 
@@ -300,6 +301,7 @@ class CreateDeansEmpPage(tk.Frame):
 
         self.controller.frames["CreateFieldOfStudyPage"].refresh_leader_listbox()
         self.controller.frames["ChangeFieldOfStudyPage"].refresh_leader_listbox()
+        self.controller.frames["FieldOfStudyPage"].refresh()
         self.controller.deans_emps[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["DeansEmpPage"].restart()
@@ -354,6 +356,7 @@ class ChangeDeansEmpPage(CreateDeansEmpPage):
         #config after update
         self.controller.frames["CreateFieldOfStudyPage"].refresh_leader_listbox()
         self.controller.frames["ChangeFieldOfStudyPage"].refresh_leader_listbox()
+        self.controller.frames["FieldOfStudyPage"].refresh()
         self.refresh()
         self.controller.frames["DeansEmpPage"].restart()
 

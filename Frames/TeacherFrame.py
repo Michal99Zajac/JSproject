@@ -123,6 +123,10 @@ class TeacherPage(tk.Frame):
         self.controller.db.commit_conn()
 
         del del_teacher
+
+        #update 'subject create room_listbox()'
+        #update 'subject update room_listbox()'
+        #subject.refresh()
         self.restart()
 
 
@@ -335,6 +339,9 @@ class CreateTeacherPage(tk.Frame):
             place_of_residence=self.e_place.get()
         ))
 
+        #update 'subject create room_listbox()'
+        #update 'subject update room_listbox()'
+        #subject.refresh()
         self.controller.teachers[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["TeacherPage"].restart()
@@ -389,6 +396,9 @@ class ChangeTeacherPage(CreateTeacherPage):
         self.controller.commit_conn()
 
         #config after update
+        #update 'subject create room_listbox()'
+        #update 'subject update room_listbox()'
+        #subject.refresh()
         self.refresh()
         self.controller.frames["TeacherPage"].restart()
 
