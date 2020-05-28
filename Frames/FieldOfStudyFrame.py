@@ -284,6 +284,7 @@ class CreateFieldOfStudyPage(tk.Frame):
 
         self.controller.frames["CreateStudentPage"].refresh_field_listbox()
         self.controller.frames["ChangeStudentPage"].refresh_field_listbox()
+        self.controller.frames["StudentPage"].refresh()
         self.controller.fields[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["FieldOfStudyPage"].restart()

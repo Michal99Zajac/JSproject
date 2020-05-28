@@ -101,8 +101,6 @@ class App(tk.Tk):
             RoomFrame.RoomPage,
             RoomFrame.ChangeRoomPage,
             RoomFrame.CreateRoomPage,
-            RoomFrame.DeleteRoomPage,
-            RoomFrame.ShowRoomsPage,
             #Subject pages
             SubjectFrame.SubjectPage,
             SubjectFrame.ChangeSubjectPage,

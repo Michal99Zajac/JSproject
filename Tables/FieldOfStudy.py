@@ -97,10 +97,15 @@ class FieldOfStudy(object):
         except AttributeError:
             dept_id = "NULL"
 
+        try:
+            do_emp_id = self.__do_emp.get_id()
+        except AttributeError:
+            do_emp_id = "NULL"
+
         values = (
             self.__name,
             dept_id,
-            self.__do_emp.get_id()
+            do_emp_id
         )
 
         if db.get_conn() is not None:    
