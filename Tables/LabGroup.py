@@ -6,6 +6,7 @@ import sqlite3
 
 class LabGroup(object):
     field_num = {} #{field: [num]}
+    all_students = []
 
     @staticmethod
     def create_tab(db):
@@ -62,6 +63,9 @@ class LabGroup(object):
 
         self.__students = students #{student: id_lab}
 
+        for student in self.__students:
+            LabGroup.all_students.append(student)
+
     def show_group(self, db):
         sql = """SELECT * FROM laboratory_group
         WHERE labolatory_group_number = ? AND id_field_of_study = ?
@@ -81,6 +85,8 @@ class LabGroup(object):
             id_field_of_study
         ) VALUES (?,?,?)
         """
+
+        LabGroup.all_students.append(student)
 
         values = (
             self.__number,
@@ -126,17 +132,23 @@ class LabGroup(object):
             cur = db.cursor_conn()
             cur.execute(sql, (self.__number, self.__field.get_id()))
             LabGroup.field_num[self.__field].remove(self.__number)
+
+            for student in self.__students:
+                LabGroup.all_students.remove(student)
+
             self.__students = {}
         else:
             print("Error! Cant delete in laboratory_group table")
 
     #remove student
     def delete_student(self, student, db):
-        sql = """DELETE FROM laboratory_group WHERE id_labolatory_group = ?"""
+        sql = """DELETE FROM laboratory_group WHERE id_student = ?"""
 
         if db.get_conn() is not None:
             cur = db.cursor_conn()
-            cur.execute(sql, (self.__students.pop(student),))
+            LabGroup.all_students.remove(student)
+            del self.__students[student]
+            cur.execute(sql, (student.get_id(),))
         else:
             print("Error! Cant delete student in laboratory_group table")
 
@@ -177,7 +189,7 @@ class LabGroup(object):
     def get_number(self):
         return self.__number
 
-    def get_field(self, name):
+    def get_field(self):
         return self.__field
 
     def get_idxes(self):

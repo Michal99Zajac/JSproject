@@ -92,11 +92,9 @@ class App(tk.Tk):
             FieldOfStudyFrame.CreateFieldOfStudyPage,
             #Laboratory pages
             LabGroupFrame.LabGroupPage,
-            LabGroupFrame.AddStudentPage,
-            LabGroupFrame.ChangeLabGroupPage,
             LabGroupFrame.CreateLabGroupPage,
-            LabGroupFrame.DeleteLabGroupPage,
-            LabGroupFrame.ShowLabGroupsPage,
+            LabGroupFrame.LabAddStudentPage,
+            LabGroupFrame.LabStudentPage,
             #Room pages
             RoomFrame.RoomPage,
             RoomFrame.ChangeRoomPage,
