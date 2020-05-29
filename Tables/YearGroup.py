@@ -2,6 +2,7 @@ import sqlite3
 
 class YearGroup(object):
     field_num = {}
+    all_students = []
 
     @staticmethod
     def create_tab(db):
@@ -58,6 +59,9 @@ class YearGroup(object):
 
         self.__students = students #{student: id_year}
 
+        for student in self.__students:
+            YearGroup.all_students.append(student)
+
     def show_group(self, db):
         sql = """SELECT * FROM year_group
         WHERE year_group_number = ? AND id_field_of_study = ?
@@ -77,6 +81,8 @@ class YearGroup(object):
             id_field_of_study
         ) VALUES (?,?,?)
         """
+
+        YearGroup.all_students.append(student)
 
         values = (
             self.__number,
@@ -121,16 +127,23 @@ class YearGroup(object):
         if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, (self.__number, self.__field.get_id()))
+
+            for student in self.__students:
+                YearGroup.all_students.remove(student)
+
+            self.__students = {}
         else:
             print("Error! Cant delete in year_group table")
 
     #remove student
     def delete_student(self, student, db):
-        sql = """DELETE FROM year_group WHERE id_year_group = ?"""
+        sql = """DELETE FROM year_group WHERE id_student = ?"""
 
         if db.get_conn() is not None:
             cur = db.cursor_conn()
-            cur.execute(sql, (self.__students.pop(student),))
+            YearGroup.all_students.remove(student)
+            del self.__students[student]
+            cur.execute(sql, (student.get_id(),))
         else:
             print("Error! Cant delete student in year_group table")
 
@@ -170,6 +183,9 @@ class YearGroup(object):
 
     def get_number(self):
         return self.__number
+
+    def get_field(self):
+        return self.__field
 
     def get_students(self):
         return self.__students.keys()

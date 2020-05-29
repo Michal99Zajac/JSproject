@@ -2,6 +2,7 @@ import sqlite3
 
 class ExeGroup(object):
     field_num = {}
+    all_students = []
 
     @staticmethod
     def create_tab(db):
@@ -58,6 +59,9 @@ class ExeGroup(object):
 
         self.__students = students #{student: id_exe}
 
+        for student in self.__students:
+            ExeGroup.all_students.append(student)
+
     def show_group(self, db):
         sql = """SELECT * FROM exercise_group
         WHERE exercise_group_number = ? AND id_field_of_study = ?
@@ -77,6 +81,8 @@ class ExeGroup(object):
             id_field_of_study
         ) VALUES (?,?,?)
         """
+
+        ExeGroup.all_students.append(student)
 
         values = (
             self.__number,
@@ -122,17 +128,23 @@ class ExeGroup(object):
             cur = db.cursor_conn()
             cur.execute(sql, (self.__number, self.__field.get_id()))
             ExeGroup.field_num[self.__field].remove(self.__number)
+
+            for student in self.__students:
+                ExeGroup.all_students.remove(student)
+
             self.__students = {}
         else:
             print("Error! Cant delete in exercise_group table")
 
     #remove student
     def delete_student(self, student, db):
-        sql = """DELETE FROM exercise_group WHERE id_exercise_group = ?"""
+        sql = """DELETE FROM exercise_group WHERE id_student = ?"""
 
         if db.get_conn() is not None:
             cur = db.cursor_conn()
-            cur.execute(sql, (self.__students.pop(student),))
+            ExeGroup.all_students.remove(student)
+            del self.__students[student]
+            cur.execute(sql, (student.get_id(),))
         else:
             print("Error! Cant delete student in exercise_group table")
 

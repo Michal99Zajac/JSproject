@@ -92,10 +92,10 @@ class DepartmentPage(tk.Frame):
         self.controller.frames["DeansEmpPage"].refresh()
         self.controller.frames["CreateTeacherPage"].refresh_dept_listbox()
         self.controller.frames["ChangeTeacherPage"].refresh_dept_listbox()
+        self.controller.frames["TeacherPage"].refresh()
 
         self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
         self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
-        self.controller.frames["TeacherPage"].refresh()
         self.restart()
 
 

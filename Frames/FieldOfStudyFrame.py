@@ -121,9 +121,14 @@ class FieldOfStudyPage(tk.Frame):
         self.controller.db.commit_conn()
 
         del del_field
+        #students restart
         self.controller.frames["CreateStudentPage"].refresh_field_listbox()
         self.controller.frames["ChangeStudentPage"].refresh_field_listbox()
         self.controller.frames["StudentPage"].refresh()
+        #lab group restart
+        self.controller.frames["CreateLabGroupPage"].refresh_field_listbox()
+        self.controller.frames["LabGroupPage"].refresh()
+        
         self.restart()
 
 

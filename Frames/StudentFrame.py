@@ -66,7 +66,8 @@ class StudentPage(tk.Frame):
             ('lastname', 20),
             ('ssn', 20),
             ('email', 20),
-            ('field of study', 30),
+            ('field of study', 20),
+            ('department', 20),
             ('place of residence', 40)
         ]
 
@@ -84,6 +85,9 @@ class StudentPage(tk.Frame):
         self.controller.db.commit_conn()
 
         del del_student
+
+        self.controller.frames["LabAddStudentPage"].refresh_student_listbox()
+        self.controller.frames["LabStudentPage"].refresh_student_listbox()
         self.restart()
 
 
@@ -130,6 +134,10 @@ class StudentPage(tk.Frame):
         for i, student in enumerate(self.controller.students):
             try:
                 field = student.get_field_of_study().get_name()
+                try:
+                    department = student.get_field_of_study().get_department().get_name()
+                except AttributeError:
+                    department = "NULL"
             except AttributeError:
                 field = "NULL"
 
@@ -141,6 +149,7 @@ class StudentPage(tk.Frame):
                 student.get_ssn(),
                 student.get_email(),
                 field,
+                department,
                 student.get_place_of_residence()
                 )
             self.list_students.insert(i,output)
@@ -284,19 +293,30 @@ class CreateStudentPage(tk.Frame):
         l_field = tk.Label(master=f_field, text="field of study")
         l_field.pack()
 
-        self.list_field = tk.Listbox(master=f_field)  
-        for i, field in enumerate(self.controller.fields):
-            self.list_field.insert(i,field.get_name())
+        data = [
+            ('field of study', 20),
+            ('department', 20)
+        ]
+
+        self.list_field = MultiListBox(master=f_field, data=data)
         self.list_field.pack()
+        self.refresh_field_listbox()
 
 
     def refresh_field_listbox(self):
         self.list_field.delete(0, tk.END)
         for i, field in enumerate(self.controller.fields):
             try:
-                self.list_field.insert(i,field.get_name())
+                dept = field.get_department().get_name()
             except AttributeError:
-                pass
+                dept = "NULL"
+
+            output = (
+                field.get_name(),
+                dept
+            )
+
+            self.list_field.insert(i, output)
 
 
     def submit(self):
@@ -312,17 +332,19 @@ class CreateStudentPage(tk.Frame):
         
 
     def create_student(self):
-        temp_field = None
-        for field in self.controller.fields:
-            if self.list_field.get(tk.ACTIVE) == field.get_name():
-                temp_field = field
-                break
+        idx = self.list_field.index(tk.ACTIVE)
+        temp_field = self.controller.fields[idx]
+
+        try:
+            ssn = int(self.e_ssn.get())
+        except ValueError:
+            ssn = 'NULL'
         
         self.controller.students.append(Student(
             name=self.e_name.get(),
             sec_name=self.e_sec_name.get(),
             lastname=self.e_lastname.get(),
-            ssn=int(self.e_ssn.get()),
+            ssn=ssn,
             email=self.e_email.get(),
             field_of_study=temp_field,
             place_of_residence=self.e_place.get()
@@ -330,6 +352,8 @@ class CreateStudentPage(tk.Frame):
         
         self.controller.students[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
+        self.controller.frames["LabStudentPage"].refresh_student_listbox()
+        self.refresh()
         self.controller.frames["StudentPage"].restart()
 
 
@@ -380,6 +404,7 @@ class ChangeStudentPage(CreateStudentPage):
         self.controller.db.commit_conn()
 
         #config after update
+        self.controller.frames["LabStudentPage"].refresh_student_listbox()
         self.refresh()
         self.controller.frames["StudentPage"].restart()
 
