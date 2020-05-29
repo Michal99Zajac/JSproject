@@ -293,6 +293,8 @@ class CreateDeanPage(tk.Frame):
         self.controller.frames["CreateDepartmentPage"].refresh_dean_listbox()
         self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
         self.controller.frames["DepartmentPage"].refresh()
+
+        self.refresh()
         self.controller.frames["DeanPage"].restart()
 
 
@@ -348,6 +350,8 @@ class ChangeDeanPage(CreateDeanPage):
         self.controller.frames["CreateDepartmentPage"].refresh_dean_listbox()
         self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
         self.controller.frames["DepartmentPage"].refresh()
+        
+        self.refresh()
         self.controller.frames["DeanPage"].restart()
 
 

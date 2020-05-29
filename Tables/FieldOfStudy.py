@@ -79,9 +79,11 @@ class FieldOfStudy(object):
                 self.__department = department
                 FieldOfStudy.dep_name[self.__department] = [self.__name]
         except ValueError:
+            self.__name = 'NULL'
             print("Name of field of study in department is booked")
-
-        self.__do_emp = do_emp
+        finally:
+            self.__do_emp = do_emp
+        
 
 
     def insert(self, db):
@@ -128,10 +130,15 @@ class FieldOfStudy(object):
         except AttributeError:
             dept_id = "NULL"
 
+        try:
+            do_emp_id = self.__do_emp.get_id()
+        except AttributeError:
+            do_emp_id = "NULL"
+
         values = (
             self.__name,
             dept_id,
-            self.__do_emp.get_id(),
+            do_emp_id,
             self.__id_field
         )
 

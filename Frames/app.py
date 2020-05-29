@@ -27,7 +27,7 @@ class App(tk.Tk):
         self.deans = self.db.fetch_deans()
         self.departments = self.db.fetch_departments(self.buildings, self.deans)
         self.deans_emps = self.db.fetch_deans_emps(self.departments)
-        self.fields = self.db.fetch_fields_of_study(self.departments, self.deans)
+        self.fields = self.db.fetch_fields_of_study(self.departments, self.deans_emps)
         self.students = self.db.fetch_students(self.fields)
         self.exe_groups = self.db.fetch_exe_groups(self.students, self.fields)
         self.lab_groups = self.db.fetch_lab_groups(self.students, self.fields)

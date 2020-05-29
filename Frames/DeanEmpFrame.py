@@ -83,7 +83,7 @@ class DeansEmpPage(tk.Frame):
             try:
                 department = emp.get_department().get_name()
             except AttributeError:
-                department = "-----------"
+                department = "NULL"
 
             output = (
                 emp.get_id(),
