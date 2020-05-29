@@ -5,7 +5,6 @@ from Tables.LabGroup import LabGroup
 from Frames.extendTk import MultiListBox
 
 
-
 class LabGroupPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -126,10 +125,12 @@ class LabGroupPage(tk.Frame):
         for i, group in enumerate(self.controller.lab_groups):
             try:
                 field = group.get_field().get_name()
-                dept = group.get_field().get_department().get_name()
+                try:
+                    dept = group.get_field().get_department().get_name()
+                except AttributeError:
+                    dept = "NULL"
             except AttributeError:
                 field = "NULL"
-                dept = "NULL"
 
 
             output = (
@@ -262,7 +263,6 @@ class CreateLabGroupPage(tk.Frame):
 
         #update Subject
 
-        #self.controller.lab_groups[-1].insert(self.controller.db)
         self.refresh()
         self.controller.db.commit_conn()
         self.controller.frames["LabGroupPage"].restart()
@@ -514,6 +514,3 @@ class LabAddStudentPage(tk.Frame):
         self.controller.frames["LabStudentPage"].refresh_student_listbox()
         self.controller.frames["LabGroupPage"].refresh()
         self.controller.show_frame("LabStudentPage")
-        
-
-    
