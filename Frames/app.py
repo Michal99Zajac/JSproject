@@ -81,11 +81,9 @@ class App(tk.Tk):
             DepartmentFrame.CreateDepartmentPage,
             #Exercise pages
             ExeGroupFrame.ExeGroupPage,
-            ExeGroupFrame.AddStudentPage,
-            ExeGroupFrame.ChangeExeGroupPage,
             ExeGroupFrame.CreateExeGroupPage,
-            ExeGroupFrame.DeleteExeGroupPage,
-            ExeGroupFrame.ShowExeGroupsPage,
+            ExeGroupFrame.ExeAddStudentPage,
+            ExeGroupFrame.ExeStudentPage,
             #Field of Study pages
             FieldOfStudyFrame.FieldOfStudyPage,
             FieldOfStudyFrame.ChangeFieldOfStudyPage,
@@ -107,11 +105,9 @@ class App(tk.Tk):
             SubjectFrame.ShowSubjectsPage,
             #Year pages
             YearGroupFrame.YearGroupPage,
-            YearGroupFrame.AddStudentPage,
-            YearGroupFrame.ChangeYearGroupPage,
             YearGroupFrame.CreateYearGroupPage,
-            YearGroupFrame.DeleteYearGroupPage,
-            YearGroupFrame.ShowYearGroupsPage,
+            YearGroupFrame.YearAddStudentPage,
+            YearGroupFrame.YearStudentPage,
         }
 
         for F in pages:
