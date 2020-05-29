@@ -131,7 +131,7 @@ class StudentPage(tk.Frame):
             try:
                 field = student.get_field_of_study().get_name()
             except AttributeError:
-                field = "-----------"
+                field = "NULL"
 
             output = (
                 student.get_id(),
@@ -293,7 +293,10 @@ class CreateStudentPage(tk.Frame):
     def refresh_field_listbox(self):
         self.list_field.delete(0, tk.END)
         for i, field in enumerate(self.controller.fields):
-            self.list_field.insert(i,field.get_name())
+            try:
+                self.list_field.insert(i,field.get_name())
+            except AttributeError:
+                pass
 
 
     def submit(self):

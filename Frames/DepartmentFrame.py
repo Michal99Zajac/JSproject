@@ -36,7 +36,7 @@ class DepartmentPage(tk.Frame):
         btn_create = tk.Button(
             self,
             text="Create Department",
-            command=lambda : self.controller.show_frame("CreateDepartmentPage")
+            command=lambda : self.create_dept()
         )
         btn_create.pack()
         #Delete Department Button
@@ -92,6 +92,9 @@ class DepartmentPage(tk.Frame):
         self.controller.frames["DeansEmpPage"].refresh()
         self.controller.frames["CreateTeacherPage"].refresh_dept_listbox()
         self.controller.frames["ChangeTeacherPage"].refresh_dept_listbox()
+
+        self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
+        self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
         self.controller.frames["TeacherPage"].refresh()
         self.restart()
 
@@ -100,11 +103,18 @@ class DepartmentPage(tk.Frame):
         idx = self.list_depts.index(tk.ACTIVE)
         dept = self.controller.departments[idx]
 
-        #self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
-        #self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
+        self.controller.frames["ChangeDepartmentPage"].refresh_building_listbox()
+        self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
+
         self.controller.frames["ChangeDepartmentPage"].set_dept(dept)
         self.controller.frames["ChangeDepartmentPage"].fill_entry()
         self.controller.show_frame("ChangeDepartmentPage")
+
+
+    def create_dept(self):
+        self.controller.frames["CreateDepartmentPage"].refresh_building_listbox()
+        self.controller.frames["CreateDepartmentPage"].refresh_dean_listbox()
+        self.controller.show_frame("CreateDepartmentPage")
 
 
     def restart(self):
@@ -128,12 +138,12 @@ class DepartmentPage(tk.Frame):
             try:
                 dean = dept.get_dean().get_name() + " " + dept.get_dean().get_lastname()
             except AttributeError:
-                dean = "-----------"
+                dean = "NULL"
 
             try:
                 building = dept.get_building().get_name()
             except AttributeError:
-                building = "-----------"
+                building = "NULL"
 
             output = (
                 dept.get_id(),
@@ -321,15 +331,19 @@ class CreateDepartmentPage(tk.Frame):
             dean=temp_dean
         ))
 
+        #field of study page
         self.controller.frames["CreateFieldOfStudyPage"].refresh_dept_listbox()
         self.controller.frames["ChangeFieldOfStudyPage"].refresh_dept_listbox()
         self.controller.frames["FieldOfStudyPage"].refresh()
+        #deans emp page
         self.controller.frames["CreateDeansEmpPage"].refresh_dept_listbox()
         self.controller.frames["ChangeDeansEmpPage"].refresh_dept_listbox()
         self.controller.frames["DeansEmpPage"].refresh()
+        #teacher page
         self.controller.frames["CreateTeacherPage"].refresh_dept_listbox()
         self.controller.frames["ChangeTeacherPage"].refresh_dept_listbox()
         self.controller.frames["TeacherPage"].refresh()
+
         self.controller.departments[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["DepartmentPage"].restart()

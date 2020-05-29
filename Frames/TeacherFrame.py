@@ -83,7 +83,7 @@ class TeacherPage(tk.Frame):
             try:
                 department = teacher.get_department().get_name()
             except AttributeError:
-                department = "---------"
+                department = "NULL"
 
             output = (
                 teacher.get_id(),
@@ -165,7 +165,7 @@ class CreateTeacherPage(tk.Frame):
         self.ssn_entry()
         self.email_entry()
         self.place_entry()
-        self.acd_entry()
+        self.acd_listbox()
         self.dept_listbox()
         self.submit()
 
@@ -212,7 +212,6 @@ class CreateTeacherPage(tk.Frame):
         self.e_lastname.delete(0, tk.END)
         self.e_ssn.delete(0, tk.END)
         self.e_email.delete(0, tk.END)
-        self.e_acd.delete(0, tk.END)
         self.e_place.delete(0, tk.END)
 
 
@@ -271,14 +270,16 @@ class CreateTeacherPage(tk.Frame):
         self.e_email.pack()
 
 
-    def acd_entry(self):
+    def acd_listbox(self):
         f_acd = tk.Frame(master=self)
         f_acd.pack()
 
         l_acd = tk.Label(master=f_acd, text="academic degree")
         l_acd.pack()
 
-        self.e_acd = tk.Entry(master=f_acd)
+        self.e_acd = tk.Listbox(master=f_acd)
+        for i, degree in enumerate(Teacher.acd_degrees):
+            self.e_acd.insert(i, degree)
         self.e_acd.pack()
 
     
@@ -334,7 +335,7 @@ class CreateTeacherPage(tk.Frame):
             lastname=self.e_lastname.get(),
             ssn=self.e_ssn.get(),
             email=self.e_email.get(),
-            acd_degree=self.e_acd.get(),
+            acd_degree=self.e_acd.get(tk.ACTIVE),
             department=temp_dept,
             place_of_residence=self.e_place.get()
         ))
@@ -381,7 +382,6 @@ class ChangeTeacherPage(CreateTeacherPage):
         self.e_lastname.insert(tk.END, str(self.teacher.get_lastname()))
         self.e_sec_name.insert(tk.END, str(self.teacher.get_sec_name()))
         self.e_email.insert(tk.END, str(self.teacher.get_email()))
-        self.e_acd.insert(tk.END, str(self.teacher.get_acd_degree()))
         self.e_place.insert(tk.END, str(self.teacher.get_place_of_residence()))
         self.e_ssn.insert(tk.END, str(self.teacher.get_ssn()))
 
@@ -393,7 +393,7 @@ class ChangeTeacherPage(CreateTeacherPage):
     def update_teacher(self):
         self.set_attr_teacher()
         self.teacher.update(self.controller.db)
-        self.controller.commit_conn()
+        self.controller.db.commit_conn()
 
         #config after update
         #update 'subject create room_listbox()'
@@ -405,7 +405,7 @@ class ChangeTeacherPage(CreateTeacherPage):
     
     def set_attr_teacher(self):
         for dept in self.controller.departments:
-            if self.dept_list.get(tk.ACTIVE) == dept.get_id():
+            if self.dept_list.get(tk.ACTIVE) == dept.get_name():
                 self.teacher.set_department(dept)
                 break
 
@@ -414,5 +414,5 @@ class ChangeTeacherPage(CreateTeacherPage):
         self.teacher.set_lastname(self.e_lastname.get())
         self.teacher.set_ssn(self.e_ssn.get())
         self.teacher.set_email(self.e_email.get())
-        self.teacher.set_acd_degree(self.e_acd.get())
-        self.teacher.set_place_of_residence(self.e_place.get())
+        self.teacher.set_acd_degree(self.e_acd.get(tk.ACTIVE))
+        self.teacher.set_place_od_residence(self.e_place.get())

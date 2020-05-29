@@ -147,6 +147,9 @@ class Department(object):
     def delete(self, db):
         sql = """DELETE FROM department WHERE id_department = ?"""
 
+        Department.buildings.remove(self.__building)
+        Department.deans.remove(self.__dean)
+
         if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, (self.__id_dept,))

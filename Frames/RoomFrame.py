@@ -120,7 +120,7 @@ class RoomPage(tk.Frame):
             try:
                 building = room.get_building().get_name()
             except AttributeError:
-                building = "-----------"
+                building = "NULL"
 
             if room.get_is_dean():
                 is_dean = "YES"

@@ -79,12 +79,12 @@ class FieldOfStudyPage(tk.Frame):
             try:
                 department = field.get_department().get_name()
             except AttributeError:
-                department = "----------"
+                department = "NULL"
 
             try:
                 leader = field.get_leader().get_name() + " " + field.get_leader().get_lastname()
             except AttributeError:
-                leader = "-----------"
+                leader = "NULL"
 
             output = (
                 field.get_id(),
@@ -114,7 +114,7 @@ class FieldOfStudyPage(tk.Frame):
 
     def delete_field(self):
         idx = self.list_fields.index(tk.ACTIVE)
-        del_field = self.controller.deans_emps.pop(idx)
+        del_field = self.controller.fields.pop(idx)
 
         del_field.delete(self.controller.db)
         self.update_student(del_field)
@@ -129,10 +129,13 @@ class FieldOfStudyPage(tk.Frame):
 
     def update_student(self, field):
         for student in self.controller.students:
-            if student.get_field() == field:
-                student.set_field(None)
-                student.update(self.controller.db)
-                self.controller.db.commit_conn()
+            try:
+                if student.get_field() == field:
+                    student.set_field(None)
+                    student.update(self.controller.db)
+                    self.controller.db.commit_conn()
+            except AttributeError:
+                pass
 
 
     def update_field(self):
@@ -170,7 +173,7 @@ class CreateFieldOfStudyPage(tk.Frame):
     def return_button(self):
         btn_return = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Return",
             command=lambda : self.return_refresh()
         )
         btn_return.pack()
@@ -285,6 +288,8 @@ class CreateFieldOfStudyPage(tk.Frame):
         self.controller.frames["CreateStudentPage"].refresh_field_listbox()
         self.controller.frames["ChangeStudentPage"].refresh_field_listbox()
         self.controller.frames["StudentPage"].refresh()
+
+        self.refresh()
         self.controller.fields[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["FieldOfStudyPage"].restart()
@@ -353,4 +358,5 @@ class ChangeFieldOfStudyPage(CreateFieldOfStudyPage):
         self.controller.frames["ChangeStudentPage"].refresh_field_listbox()
         self.controller.frames["StudentPage"].refresh()
 
+        self.refresh()
         self.controller.frames["FieldOfStudyPage"].restart()

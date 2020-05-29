@@ -258,7 +258,7 @@ class CreateBuildingPage(tk.Frame):
         self.controller.frames["ChangeRoomPage"].refresh_building_listbox()
         self.controller.frames["RoomPage"].refresh()
         
-
+        self.refresh()
         self.controller.frames["BuildingPage"].restart()
         
 
@@ -316,6 +316,7 @@ class ChangeBuildingPage(CreateBuildingPage):
         self.controller.frames["ChangeRoomPage"].refresh_building_listbox()
         self.controller.frames["RoomPage"].refresh()
 
+        self.refresh()
         self.controller.frames["BuildingPage"].restart()
 
 
