@@ -88,6 +88,10 @@ class StudentPage(tk.Frame):
 
         self.controller.frames["LabAddStudentPage"].refresh_student_listbox()
         self.controller.frames["LabStudentPage"].refresh_student_listbox()
+        self.controller.frames["ExeAddStudentPage"].refresh_student_listbox()
+        self.controller.frames["ExeStudentPage"].refresh_student_listbox()
+        self.controller.frames["YearAddStudentPage"].refresh_student_listbox()
+        self.controller.frames["YearStudentPage"].refresh_student_listbox()
         self.restart()
 
 
@@ -353,6 +357,8 @@ class CreateStudentPage(tk.Frame):
         self.controller.students[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["LabStudentPage"].refresh_student_listbox()
+        self.controller.frames["ExeStudentPage"].refresh_student_listbox()
+        self.controller.frames["YearStudentPage"].refresh_student_listbox()
         self.refresh()
         self.controller.frames["StudentPage"].restart()
 
@@ -405,6 +411,8 @@ class ChangeStudentPage(CreateStudentPage):
 
         #config after update
         self.controller.frames["LabStudentPage"].refresh_student_listbox()
+        self.controller.frames["ExeStudentPage"].refresh_student_listbox()
+        self.controller.frames["YearStudentPage"].refresh_student_listbox()
         self.refresh()
         self.controller.frames["StudentPage"].restart()
 

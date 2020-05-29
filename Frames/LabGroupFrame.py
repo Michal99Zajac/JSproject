@@ -412,7 +412,6 @@ class LabAddStudentPage(tk.Frame):
         self.controller = controller
         if self.controller.lab_groups:
             self.group = self.controller.lab_groups[0]
-    
 
         self.main_label()
         self.return_button()
@@ -453,7 +452,6 @@ class LabAddStudentPage(tk.Frame):
 
         self.list_students = MultiListBox(master=f_student, data=data)
         self.list_students.pack()
-        #self.refresh_student_listbox()
 
 
     def return_button(self):
