@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.LabGroup import LabGroup
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 
 class LabGroupPage(tk.Frame):

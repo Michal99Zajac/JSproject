@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.YearGroup import YearGroup
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 
 class YearGroupPage(tk.Frame):

@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.ExeGroup import ExeGroup
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 
 class ExeGroupPage(tk.Frame):

@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.Student import Student
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 class StudentPage(tk.Frame):
     def __init__(self, parent, controller):

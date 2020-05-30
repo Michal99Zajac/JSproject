@@ -1,5 +1,8 @@
 import tkinter as tk
-from tkinter import font as tkfont
+
+from Tables.Subject import Subject
+
+from tk_extension.multilistBox import MultiListBox
 
 class SubjectPage(tk.Frame):
     def __init__(self, parent, controller):

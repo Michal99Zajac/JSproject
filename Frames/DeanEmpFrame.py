@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.DeansEmp import DeansEmp
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 
 class DeansEmpPage(tk.Frame):
@@ -351,7 +351,7 @@ class ChangeDeansEmpPage(CreateDeansEmpPage):
     def update_emp(self):
         self.set_attr_emp()
         self.emp.update(self.controller.db)
-        self.controller.commit_conn()
+        self.controller.db.commit_conn()
 
         #config after update
         self.controller.frames["CreateFieldOfStudyPage"].refresh_leader_listbox()
@@ -362,11 +362,9 @@ class ChangeDeansEmpPage(CreateDeansEmpPage):
 
 
     def set_attr_emp(self):
-        for dept in self.controller.departments:
-            if self.dept_list.get(tk.ACTIVE) == dept.get_id():
-                self.emp.set_department(dept)
-                break
-
+        idx = self.dept_list.index(tk.ACTIVE)
+        dept = self.controller.departments[idx]
+        self.emp.set_department(dept)
 
         self.emp.set_name(self.e_name.get())
         self.emp.set_sec_name(self.e_sec_name.get())

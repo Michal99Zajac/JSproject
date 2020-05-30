@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.Department import Department
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 class DepartmentPage(tk.Frame):
     def __init__(self, parent, controller):

@@ -119,7 +119,6 @@ class App(tk.Tk):
         self.show_frame("StartPage")
 
     def show_frame(self, page_name):
-        #zrobienie refrash
         frame = self.frames[page_name]
         frame.tkraise()
 

@@ -8,6 +8,7 @@ Wszystko wsparte prostym interfejsem graficznym.
 Wymagane:
 1. python3-tk
 2. sqlite3
+3. apply
 
 Wykonawca:
 - Michal Zajac
