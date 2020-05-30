@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.Building import Building
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 
 class BuildingPage(tk.Frame):

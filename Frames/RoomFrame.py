@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.Room import Room
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 
 class RoomPage(tk.Frame):

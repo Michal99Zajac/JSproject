@@ -1,5 +1,8 @@
 #databases files
-/databases
+databases/*
 
 #vscode directory
-/.vscode
+.vscode/*
+
+#__pycache__ dir
+*/__pycache__/

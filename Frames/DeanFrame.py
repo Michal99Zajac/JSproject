@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.Dean import Dean
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 class DeanPage(tk.Frame):
     def __init__(self, parent, controller):

@@ -2,7 +2,7 @@ import tkinter as tk
 
 from Tables.FieldOfStudy import FieldOfStudy
 
-from Frames.extendTk import MultiListBox
+from tk_extension.multilistBox import MultiListBox
 
 class FieldOfStudyPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -128,6 +128,12 @@ class FieldOfStudyPage(tk.Frame):
         #lab group restart
         self.controller.frames["CreateLabGroupPage"].refresh_field_listbox()
         self.controller.frames["LabGroupPage"].refresh()
+        #exe group restart
+        self.controller.frames["CreateExeGroupPage"].refresh_field_listbox()
+        self.controller.frames["ExeGroupPage"].refresh()
+        #year group restart
+        self.controller.frames["CreateYearGroupPage"].refresh_field_listbox()
+        self.controller.frames["YearGroupPage"].refresh()
         
         self.restart()
 
@@ -290,8 +296,16 @@ class CreateFieldOfStudyPage(tk.Frame):
             do_emp=temp_leader
         ))
 
-        self.controller.frames["CreateStudentPage"].refresh_field_listbox()
-        self.controller.frames["ChangeStudentPage"].refresh_field_listbox()
+        #lab group restart
+        self.controller.frames["CreateLabGroupPage"].refresh_field_listbox()
+        self.controller.frames["LabGroupPage"].refresh()
+        #exe group restart
+        self.controller.frames["CreateExeGroupPage"].refresh_field_listbox()
+        self.controller.frames["ExeGroupPage"].refresh()
+        #year group restart
+        self.controller.frames["CreateYearGroupPage"].refresh_field_listbox()
+        self.controller.frames["YearGroupPage"].refresh()
+        #student page restart
         self.controller.frames["StudentPage"].refresh()
 
         self.refresh()
@@ -358,10 +372,19 @@ class ChangeFieldOfStudyPage(CreateFieldOfStudyPage):
         self.controller.db.commit_conn()
 
         #config after update
-        self.refresh()
+        #student page refresh
         self.controller.frames["CreateStudentPage"].refresh_field_listbox()
         self.controller.frames["ChangeStudentPage"].refresh_field_listbox()
         self.controller.frames["StudentPage"].refresh()
+        #lab group restart
+        self.controller.frames["CreateLabGroupPage"].refresh_field_listbox()
+        self.controller.frames["LabGroupPage"].refresh()
+        #exe group restart
+        self.controller.frames["CreateExeGroupPage"].refresh_field_listbox()
+        self.controller.frames["ExeGroupPage"].refresh()
+        #year group restart
+        self.controller.frames["CreateYearGroupPage"].refresh_field_listbox()
+        self.controller.frames["YearGroupPage"].refresh()
 
         self.refresh()
         self.controller.frames["FieldOfStudyPage"].restart()

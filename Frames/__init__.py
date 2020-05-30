@@ -1,5 +1,4 @@
 __all__ = [
-    'app',
     'BuildingFrame',
     'DeanEmpFrame',
     'DeanFrame',
@@ -12,5 +11,4 @@ __all__ = [
     'SubjectFrame',
     'TeacherFrame',
     'YearGroupFrame',
-    'extendTk'
 ]
