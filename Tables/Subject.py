@@ -97,7 +97,7 @@ class Subject(object):
         else:
             print("Error! Cant create subject table")
 
-    def __init__(self, id_sub = [], teacher = None, lab_group = None, exe_group = None, year_group = None, room = None, field = None, day = '', start = '', end = '', name = ''):
+    def __init__(self, id_sub = [0,], teacher = None, lab_group = None, exe_group = None, year_group = None, room = None, field = None, day = '', start = '', end = '', name = ''):
         self.__lab = False
         self.__exe = False
         self.__year = False
@@ -138,6 +138,7 @@ class Subject(object):
     #add all rows of group
     def insert(self, db):
         index = Subject.get_lastrowid(db) + 1
+
         if self.__lab == True:
             for idx in self.__group.get_idxes():
                 sql = """INSERT INTO subject(
@@ -173,7 +174,7 @@ class Subject(object):
                 index += 1
 
         if self.__exe == True:
-            for idx in self.__group.get_students():
+            for idx in self.__group.get_idxes():
                 sql = """INSERT INTO subject(
                     id_teacher,
                     id_exercise_group,
@@ -207,7 +208,7 @@ class Subject(object):
                 index += 1
 
         if self.__year == True:
-            for idx in self.__group.get_students():
+            for idx in self.__group.get_idxes():
                 sql = """INSERT INTO subject(
                     id_teacher,
                     id_year_group,
@@ -271,14 +272,33 @@ class Subject(object):
                 print("Error! Cant update in subject table")
 
     def delete(self, db):
-        sql = """DELETE FROM subject WHERE id_subject = ?"""
+        sql = """DELETE FROM subject WHERE
+        id_teacher = ? AND
+        id_room = ? AND
+        id_field_of_study = ? AND
+        name = ? AND
+        day = ? AND
+        hour_start = ? AND
+        hour_end = ?
+        """
 
-        for idx in self.__id_sub:
-            if db.get_conn() is not None:
-                cur = db.cursor_conn()
-                cur.execute(sql, (idx,))
-            else:
-                print("Error! Cant delete field_of_study table")
+        values = (
+            self.__teacher.get_id(),
+            self.__room.get_id(),
+            self.__field.get_id(),
+            self.__name,
+            self.__day,
+            self.__start,
+            self.__end,
+        )
+
+        if db.get_conn() is not None:
+            cur = db.cursor_conn()
+            cur.execute(sql, values)
+        else:
+            print("Error! Cant delete field_of_study table")
+
+        self.__id_sub = []
 
     def get_id(self):
         return self.__id_sub
