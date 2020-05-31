@@ -87,9 +87,8 @@ class LabGroupPage(tk.Frame):
 
         del del_group
 
-        #refresh create subject lab group listbox
-        #refresh update subject lab group listbox
-        #refresh subject
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_lab_listbox()
 
         self.controller.frames["LabAddStudentPage"].refresh_student_listbox()
         self.restart()
@@ -261,7 +260,8 @@ class CreateLabGroupPage(tk.Frame):
             field=field
         ))
 
-        #update Subject
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_lab_listbox()
 
         self.refresh()
         self.controller.db.commit_conn()
@@ -508,6 +508,9 @@ class LabAddStudentPage(tk.Frame):
         student = self.avi_students()[idx]
         self.group.insert(student, self.controller.db)
         self.controller.db.commit_conn()
+
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_lab_listbox()
 
         self.controller.frames["LabStudentPage"].refresh_student_listbox()
         self.controller.frames["LabGroupPage"].refresh()

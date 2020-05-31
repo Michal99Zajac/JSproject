@@ -87,9 +87,8 @@ class YearGroupPage(tk.Frame):
 
         del del_group
 
-        #refresh create subject lab group listbox
-        #refresh update subject lab group listbox
-        #refresh subject
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_year_listbox()
 
         self.controller.frames["YearAddStudentPage"].refresh_student_listbox()
         self.restart()
@@ -262,6 +261,8 @@ class CreateYearGroupPage(tk.Frame):
         ))
 
         #update Subject
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_year_listbox()
 
         self.refresh()
         self.controller.db.commit_conn()
@@ -506,6 +507,9 @@ class YearAddStudentPage(tk.Frame):
         student = self.avi_students()[idx]
         self.group.insert(student, self.controller.db)
         self.controller.db.commit_conn()
+
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_year_listbox()
 
         self.controller.frames["YearStudentPage"].refresh_student_listbox()
         self.controller.frames["YearGroupPage"].refresh()

@@ -134,6 +134,13 @@ class FieldOfStudyPage(tk.Frame):
         #year group restart
         self.controller.frames["CreateYearGroupPage"].refresh_field_listbox()
         self.controller.frames["YearGroupPage"].refresh()
+        #subject restarts
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_field_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_field_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_field_listbox()
         
         self.restart()
 
@@ -308,6 +315,13 @@ class CreateFieldOfStudyPage(tk.Frame):
         #student page restart
         self.controller.frames["StudentPage"].refresh()
 
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_field_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_field_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_field_listbox()
+
         self.refresh()
         self.controller.fields[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
@@ -385,6 +399,13 @@ class ChangeFieldOfStudyPage(CreateFieldOfStudyPage):
         #year group restart
         self.controller.frames["CreateYearGroupPage"].refresh_field_listbox()
         self.controller.frames["YearGroupPage"].refresh()
+        #subjects restarts
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_field_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_field_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_field_listbox()
 
         self.refresh()
         self.controller.frames["FieldOfStudyPage"].restart()
