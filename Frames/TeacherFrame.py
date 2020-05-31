@@ -124,9 +124,14 @@ class TeacherPage(tk.Frame):
 
         del del_teacher
 
-        #update 'subject create room_listbox()'
-        #update 'subject update room_listbox()'
-        #subject.refresh()
+        #config after delete
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_teacher_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_teacher_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_teacher_listbox()
+
         self.restart()
 
 
@@ -340,9 +345,14 @@ class CreateTeacherPage(tk.Frame):
             place_of_residence=self.e_place.get()
         ))
 
-        #update 'subject create room_listbox()'
-        #update 'subject update room_listbox()'
-        #subject.refresh()
+        #config after create
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_teacher_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_teacher_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_teacher_listbox()
+
         self.controller.teachers[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["TeacherPage"].restart()
@@ -396,9 +406,13 @@ class ChangeTeacherPage(CreateTeacherPage):
         self.controller.db.commit_conn()
 
         #config after update
-        #update 'subject create room_listbox()'
-        #update 'subject update room_listbox()'
-        #subject.refresh()
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_teacher_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_teacher_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_teacher_listbox()
+        
         self.refresh()
         self.controller.frames["TeacherPage"].restart()
 

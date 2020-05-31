@@ -83,9 +83,13 @@ class RoomPage(tk.Frame):
 
         del del_room
 
-        #update 'create subject.listbox()'
-        #update 'update subject.listbox()'
-        #subject.refresh()
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_room_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_room_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_room_listbox()
+
         self.restart()
 
 
@@ -267,9 +271,14 @@ class CreateRoomPage(tk.Frame):
             is_dean=temp_is_dean
         ))
 
-        #update 'subject create room_listbox()'
-        #update 'subject update room_listbox()'
-        #subject.refresh()
+        #config after create
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_room_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_room_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_room_listbox()
+
         self.controller.rooms[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
         self.controller.frames["RoomPage"].restart()
@@ -318,10 +327,14 @@ class ChangeRoomPage(CreateRoomPage):
         self.controller.db.commit_conn()
 
         #config after update
+        self.controller.frames["YearSubjectPage"].refresh()
+        self.controller.frames["CreateYearSubjectPage"].refresh_room_listbox()
+        self.controller.frames["ExeSubjectPage"].refresh()
+        self.controller.frames["CreateExeSubjectPage"].refresh_room_listbox()
+        self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_room_listbox()
+        
         self.refresh()
-        #update 'subject create room_listbox()'
-        #update 'subject update room_listbox()'
-        #subject.refresh()
         self.controller.frames["RoomPage"].restart()
 
 
