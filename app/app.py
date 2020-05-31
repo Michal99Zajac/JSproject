@@ -99,10 +99,12 @@ class App(tk.Tk):
             RoomFrame.CreateRoomPage,
             #Subject pages
             SubjectFrame.SubjectPage,
-            SubjectFrame.ChangeSubjectPage,
-            SubjectFrame.CreateSubjectPage,
-            SubjectFrame.DeleteSubjectPage,
-            SubjectFrame.ShowSubjectsPage,
+            SubjectFrame.YearSubjectPage,
+            SubjectFrame.ExeSubjectPage,
+            SubjectFrame.LabSubjectPage,
+            SubjectFrame.CreateYearSubjectPage,
+            SubjectFrame.CreateExeSubjectPage,
+            SubjectFrame.CreateLabSubjectPage,
             #Year pages
             YearGroupFrame.YearGroupPage,
             YearGroupFrame.CreateYearGroupPage,
