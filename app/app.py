@@ -43,12 +43,13 @@ class App(tk.Tk):
             self.fields
             )
 
-        self.geometry("1600x900")
+        self.geometry("1750x900")
 
         self.title_font = tkfont.Font(family="Helvetica", size=20, weight="bold", slant="italic")
 
         mainframe = tk.Frame(self)
-        mainframe.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        mainframe.grid()
+        #mainframe.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
         mainframe.grid_rowconfigure(0, weight=1)
         mainframe.grid_columnconfigure(0, weight=1)
 
