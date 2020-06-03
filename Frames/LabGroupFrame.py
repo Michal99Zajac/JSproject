@@ -83,13 +83,16 @@ class LabGroupPage(tk.Frame):
         idx = self.list_groups.index(tk.ACTIVE)
         del_group = self.controller.lab_groups.pop(idx)
 
-        del_group.delete(self.controller.db)
-        self.controller.db.commit_conn()
+        try:
+            del_group.delete(self.controller.db)
+            self.controller.db.commit_conn()
+        except AttributeError:
+            pass
 
         del del_group
 
         self.controller.frames["LabSubjectPage"].refresh()
-        self.controller.frames["CreateExeSubjectPage"].refresh_lab_listbox()
+        self.controller.frames["CreateLabSubjectPage"].refresh_lab_listbox()
 
         self.controller.frames["LabAddStudentPage"].refresh_student_listbox()
         self.restart()
@@ -130,6 +133,7 @@ class LabGroupPage(tk.Frame):
                     dept = "NULL"
             except AttributeError:
                 field = "NULL"
+                dept = "NULL"
 
 
             output = (
@@ -251,9 +255,11 @@ class CreateLabGroupPage(tk.Frame):
 
 
     def create_group(self):
-        idx = self.list_fields.index(tk.ACTIVE)
-        
-        field = self.controller.fields[idx]
+        try:
+            idx = self.list_fields.index(tk.ACTIVE)
+            field = self.controller.fields[idx]
+        except IndexError:
+            field = None
 
         self.controller.lab_groups.append(LabGroup(
             number=self.e_number.get(),
@@ -262,7 +268,6 @@ class CreateLabGroupPage(tk.Frame):
         ))
 
         self.controller.frames["LabSubjectPage"].refresh()
-#        self.controller.frames["CreateExeSubjectPage"].refresh_lab_listbox()
 
         self.refresh()
         self.controller.db.commit_conn()
@@ -352,6 +357,7 @@ class LabStudentPage(tk.Frame):
                         department = "NULL"
                 except AttributeError:
                     field = "NULL"
+                    department = "NULL"
 
                 output = (
                     student.get_id(),
@@ -416,6 +422,8 @@ class LabAddStudentPage(tk.Frame):
         self.controller = controller
         if self.controller.lab_groups:
             self.group = self.controller.lab_groups[0]
+        else:
+            self.group = None
 
         self.main_label()
         self.return_button()
@@ -475,6 +483,7 @@ class LabAddStudentPage(tk.Frame):
                         department = "NULL"
                 except AttributeError:
                     field = "NULL"
+                    department = "NULL"
 
                 output = (
                     student.get_id(),
@@ -491,8 +500,10 @@ class LabAddStudentPage(tk.Frame):
 
     
     def avi_students(self):
-        return [student for student in self.controller.students if student not in LabGroup.all_students and student.get_field_of_study() == self.group.get_field()]
-
+        if self.group != None:
+            return [student for student in self.controller.students if student not in LabGroup.all_students and student.get_field_of_study() == self.group.get_field()]
+        else:
+            return []
 
     def submit(self):
         sub_btn = tk.Button(
@@ -505,14 +516,17 @@ class LabAddStudentPage(tk.Frame):
 
 
     def add_student(self):
-        idx = self.list_students.index(tk.ACTIVE)
-        student = self.avi_students()[idx]
-        self.group.insert(student, self.controller.db)
-        self.controller.db.commit_conn()
+        try:
+            idx = self.list_students.index(tk.ACTIVE)
+            student = self.avi_students()[idx]
+            self.group.insert(student, self.controller.db)
+            self.controller.db.commit_conn()
 
-        self.controller.frames["LabSubjectPage"].refresh()
-        self.controller.frames["CreateExeSubjectPage"].refresh_lab_listbox()
+            self.controller.frames["LabSubjectPage"].refresh()
+            self.controller.frames["CreateExeSubjectPage"].refresh_lab_listbox()
 
-        self.controller.frames["LabStudentPage"].refresh_student_listbox()
-        self.controller.frames["LabGroupPage"].refresh()
-        self.controller.show_frame("LabStudentPage")
+            self.controller.frames["LabStudentPage"].refresh_student_listbox()
+            self.controller.frames["LabGroupPage"].refresh()
+            self.controller.show_frame("LabStudentPage")
+        except IndexError:
+            self.controller.show_frame("LabStudentPage")

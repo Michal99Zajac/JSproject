@@ -148,6 +148,7 @@ class StudentPage(tk.Frame):
                     department = "NULL"
             except AttributeError:
                 field = "NULL"
+                department = "NULL"
 
             output = (
                 student.get_id(),
@@ -321,8 +322,11 @@ class CreateStudentPage(tk.Frame):
         
 
     def create_student(self):
-        idx = self.list_field.index(tk.ACTIVE)
-        temp_field = self.controller.fields[idx]
+        try:
+            idx = self.list_field.index(tk.ACTIVE)
+            temp_field = self.controller.fields[idx]
+        except IndexError:
+            temp_field = None
 
         try:
             ssn = int(self.e_ssn.get())
@@ -400,10 +404,12 @@ class ChangeStudentPage(CreateStudentPage):
         self.controller.frames["StudentPage"].restart()
 
     def set_attr_student(self):
-        for field in self.controller.fields:
-            if self.list_field.get(tk.ACTIVE) == field.get_name():
-                self.student.set_field_of_study(field)
-                break
+        try:
+            idx = self.list_field.index(tk.ACTIVE)
+            field = self.controller.fields[idx]
+            self.student.set_field_of_study(field)
+        except IndexError:
+            pass
 
         self.student.set_name(self.e_name.get())
         self.student.set_sec_name(self.e_sec_name.get())

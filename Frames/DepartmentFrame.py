@@ -305,11 +305,17 @@ class CreateDepartmentPage(tk.Frame):
 
 
     def create_dept(self):
-        idx = self.list_dean.index(tk.ACTIVE)
-        temp_dean = self.controller.deans[idx]
+        try:
+            idx = self.list_dean.index(tk.ACTIVE)
+            temp_dean = self.controller.deans[idx]
+        except IndexError:
+            temp_dean = None
 
-        idx = self.list_building.index(tk.ACTIVE)
-        temp_building = self.controller.buildings[idx]
+        try:
+            idx = self.list_building.index(tk.ACTIVE)
+            temp_building = self.controller.buildings[idx]
+        except IndexError:
+            temp_building = None
 
 
         self.controller.departments.append(Department(
@@ -399,13 +405,19 @@ class ChangeDepartmentPage(CreateDepartmentPage):
 
 
     def set_attr_dept(self):
-        idx = self.list_dean.index(tk.ACTIVE)
-        temp_dean = self.controller.deans[idx]
-        self.dept.set_dean(temp_dean)
+        try:
+            idx = self.list_dean.index(tk.ACTIVE)
+            temp_dean = self.controller.deans[idx]
+            self.dept.set_dean(temp_dean)
+        except IndexError:
+            pass
 
-        idx = self.list_building.index(tk.ACTIVE)
-        temp_building = self.controller.buildings[idx]
-        self.dept.set_building(temp_building)
+        try:
+            idx = self.list_building.index(tk.ACTIVE)
+            temp_building = self.controller.buildings[idx]
+            self.dept.set_building(temp_building)
+        except IndexError:
+            pass
         
         self.dept.set_name(self.e_name.get())
         self.dept.set_off_start(self.e_off_start.get())

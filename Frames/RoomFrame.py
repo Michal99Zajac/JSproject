@@ -255,8 +255,11 @@ class CreateRoomPage(tk.Frame):
 
 
     def create_room(self):
-        idx = self.list_building.index(tk.ACTIVE)
-        temp_building = self.controller.buildings[idx]
+        try:
+            idx = self.list_building.index(tk.ACTIVE)
+            temp_building = self.controller.buildings[idx]
+        except IndexError:
+            temp_building = None
 
         temp_is_dean = None
         if self.list_dean_off.index(tk.ACTIVE) == 0:
@@ -337,11 +340,14 @@ class ChangeRoomPage(CreateRoomPage):
 
 
     def set_attr_room(self):
-        idx = self.list_building.index(tk.ACTIVE)
-        temp_building = self.controller.buildings[idx]
-        self.room.set_building(temp_building)
+        try:
+            idx = self.list_building.index(tk.ACTIVE)
+            temp_building = self.controller.buildings[idx]
+            self.room.set_building(temp_building)
+        except IndexError:
+            pass
 
-        if self.list_dean_off.get(tk.ACTIVE) == "YES":
+        if self.list_dean_off.index(tk.ACTIVE) == 0:
             temp_is_dean = 1
         else:
             temp_is_dean = 0

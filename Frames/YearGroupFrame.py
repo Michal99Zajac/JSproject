@@ -83,8 +83,11 @@ class YearGroupPage(tk.Frame):
         idx = self.list_groups.index(tk.ACTIVE)
         del_group = self.controller.year_groups.pop(idx)
 
-        del_group.delete(self.controller.db)
-        self.controller.db.commit_conn()
+        try:
+            del_group.delete(self.controller.db)
+            self.controller.db.commit_conn()
+        except AttributeError:
+            pass
 
         del del_group
 
@@ -130,6 +133,7 @@ class YearGroupPage(tk.Frame):
                     dept = "NULL"
             except AttributeError:
                 field = "NULL"
+                dept = "NULL"
                 
 
             output = (
@@ -251,8 +255,11 @@ class CreateYearGroupPage(tk.Frame):
 
 
     def create_group(self):
-        idx = self.list_fields.index(tk.ACTIVE)
-        field = self.controller.fields[idx]
+        try:
+            idx = self.list_fields.index(tk.ACTIVE)
+            field = self.controller.fields[idx]
+        except IndexError:
+            field = None
 
         self.controller.year_groups.append(YearGroup(
             number=self.e_number.get(),
@@ -351,6 +358,7 @@ class YearStudentPage(tk.Frame):
                         department = "NULL"
                 except AttributeError:
                     field = "NULL"
+                    department = "NULL"
 
                 output = (
                     student.get_id(),
@@ -473,6 +481,7 @@ class YearAddStudentPage(tk.Frame):
                             department = "NULL"
                     except AttributeError:
                         field = "NULL"
+                        department = "NULL"
 
                     output = (
                         student.get_id(),
@@ -505,14 +514,18 @@ class YearAddStudentPage(tk.Frame):
 
 
     def add_student(self):
-        idx = self.list_students.index(tk.ACTIVE)
-        student = self.avi_students()[idx]
-        self.group.insert(student, self.controller.db)
-        self.controller.db.commit_conn()
+        try:
+            idx = self.list_students.index(tk.ACTIVE)
+            student = self.avi_students()[idx]
 
-        self.controller.frames["YearSubjectPage"].refresh()
-        self.controller.frames["CreateYearSubjectPage"].refresh_year_listbox()
+            self.group.insert(student, self.controller.db)
+            self.controller.db.commit_conn()
 
-        self.controller.frames["YearStudentPage"].refresh_student_listbox()
-        self.controller.frames["YearGroupPage"].refresh()
-        self.controller.show_frame("YearStudentPage")
+            self.controller.frames["YearSubjectPage"].refresh()
+            self.controller.frames["CreateYearSubjectPage"].refresh_year_listbox()
+
+            self.controller.frames["YearStudentPage"].refresh_student_listbox()
+            self.controller.frames["YearGroupPage"].refresh()
+            self.controller.show_frame("YearStudentPage")
+        except IndexError:
+            self.controller.show_frame("YearStudentPage")
