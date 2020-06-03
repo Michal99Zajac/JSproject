@@ -50,7 +50,7 @@ class SubjectPage(tk.Frame):
     def return_button(self):
         return_btn = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.controller.show_frame("StartPage"),
             font=self.controller.normal_font,
         )
@@ -83,7 +83,7 @@ class YearSubjectPage(tk.Frame):
         #Return Home Page
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.controller.show_frame("StartPage"),
             font=self.controller.normal_font,
         )
@@ -286,7 +286,7 @@ class CreateYearSubjectPage(tk.Frame):
         l_day = tk.Label(master=self, text="day", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_day.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_day = tk.Entry(master=self)
+        self.e_day = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_day.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -294,7 +294,7 @@ class CreateYearSubjectPage(tk.Frame):
         l_start = tk.Label(master=self, text="start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_start = tk.Entry(master=self)
+        self.e_start = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_start.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -302,7 +302,7 @@ class CreateYearSubjectPage(tk.Frame):
         l_stop = tk.Label(master=self, text="stop",font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_stop = tk.Entry(master=self)
+        self.e_stop = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_stop.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -310,7 +310,7 @@ class CreateYearSubjectPage(tk.Frame):
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_name = tk.Entry(master=self)
+        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_name.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -364,8 +364,13 @@ class CreateYearSubjectPage(tk.Frame):
             except AttributeError:
                 building = "NULL"
 
+            try:
+                room_number = room.get_number()
+            except AttributeError:
+                room_number = "NULL"
+
             output = (
-                room.get_number(),
+                room_number,
                 building
             )
 
@@ -512,7 +517,7 @@ class ExeSubjectPage(tk.Frame):
         #Return Home Page
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.controller.show_frame("StartPage"),
             font=self.controller.normal_font,
         )
@@ -687,7 +692,7 @@ class CreateExeSubjectPage(tk.Frame):
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.home_refresh(),
             font=self.controller.normal_font,
         )
@@ -715,7 +720,7 @@ class CreateExeSubjectPage(tk.Frame):
         l_day = tk.Label(master=self, text="day", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_day.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_day = tk.Entry(master=self)
+        self.e_day = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_day.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -723,7 +728,7 @@ class CreateExeSubjectPage(tk.Frame):
         l_start = tk.Label(master=self, text="start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_start = tk.Entry(master=self)
+        self.e_start = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_start.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -731,7 +736,7 @@ class CreateExeSubjectPage(tk.Frame):
         l_stop = tk.Label(master=self, text="stop", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_stop = tk.Entry(master=self)
+        self.e_stop = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_stop.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -739,7 +744,7 @@ class CreateExeSubjectPage(tk.Frame):
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_name = tk.Entry(master=self)
+        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_name.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -942,7 +947,7 @@ class LabSubjectPage(tk.Frame):
         #Return Home Page
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.controller.show_frame("StartPage"),
             font=self.controller.normal_font,
         )
@@ -1117,7 +1122,7 @@ class CreateLabSubjectPage(tk.Frame):
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.home_refresh(),
             font=self.controller.normal_font,
         )
@@ -1145,7 +1150,7 @@ class CreateLabSubjectPage(tk.Frame):
         l_day = tk.Label(master=self, text="day", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_day.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_day = tk.Entry(master=self)
+        self.e_day = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_day.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -1153,7 +1158,7 @@ class CreateLabSubjectPage(tk.Frame):
         l_start = tk.Label(master=self, text="start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_start = tk.Entry(master=self)
+        self.e_start = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_start.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -1161,7 +1166,7 @@ class CreateLabSubjectPage(tk.Frame):
         l_stop = tk.Label(master=self, text="stop", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_stop = tk.Entry(master=self)
+        self.e_stop = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_stop.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -1169,7 +1174,7 @@ class CreateLabSubjectPage(tk.Frame):
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_name = tk.Entry(master=self)
+        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_name.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 

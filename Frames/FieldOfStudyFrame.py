@@ -208,7 +208,7 @@ class CreateFieldOfStudyPage(tk.Frame):
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.home_refresh(),
             font=self.controller.normal_font,
         )
@@ -228,7 +228,7 @@ class CreateFieldOfStudyPage(tk.Frame):
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_name = tk.Entry(master=self)
+        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_name.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 

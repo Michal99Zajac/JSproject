@@ -30,7 +30,7 @@ class TeacherPage(tk.Frame):
         #Return Home Button
         btn_return = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda:self.controller.show_frame("StartPage"),
             font=self.controller.normal_font,
         )
@@ -190,7 +190,7 @@ class CreateTeacherPage(tk.Frame):
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.home_refresh(),
             font=self.controller.normal_font,
         )
@@ -230,7 +230,7 @@ class CreateTeacherPage(tk.Frame):
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_name = tk.Entry(master=self)
+        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_name.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
     
@@ -238,7 +238,7 @@ class CreateTeacherPage(tk.Frame):
         l_sec_name = tk.Label(master=self, text="second name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_sec_name.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_sec_name = tk.Entry(master=self)
+        self.e_sec_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_sec_name.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -246,7 +246,7 @@ class CreateTeacherPage(tk.Frame):
         l_lastname = tk.Label(master=self, text="lastname", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_lastname.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_lastname = tk.Entry(master=self)
+        self.e_lastname = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_lastname.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
     
@@ -254,7 +254,7 @@ class CreateTeacherPage(tk.Frame):
         l_ssn = tk.Label(master=self, text="ssn", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_ssn.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_ssn = tk.Entry(master=self)
+        self.e_ssn = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_ssn.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -262,7 +262,7 @@ class CreateTeacherPage(tk.Frame):
         l_email = tk.Label(master=self, text="email", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_email.grid(row=9, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_email = tk.Entry(master=self)
+        self.e_email = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_email.grid(row=10, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -281,7 +281,7 @@ class CreateTeacherPage(tk.Frame):
         l_place = tk.Label(master=self, text="place of residence", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_place.grid(row=11, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_place = tk.Entry(master=self)
+        self.e_place = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_place.grid(row=12, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
     
@@ -353,6 +353,7 @@ class CreateTeacherPage(tk.Frame):
 
         self.controller.teachers[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
+        self.refresh()
         self.controller.frames["TeacherPage"].restart()
 
 

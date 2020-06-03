@@ -33,7 +33,7 @@ class YearGroupPage(tk.Frame):
             self,
             text="Home",
             command=lambda : self.controller.show_frame("StartPage"),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_return.grid(row=4, column=6, sticky="news", padx=5, pady=5)
         #Create Year Group Button
@@ -41,7 +41,7 @@ class YearGroupPage(tk.Frame):
             self,
             text="Create Group",
             command=lambda : self.create_group(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_create.grid(row=1, column=6, sticky="news", padx=5, pady=5)
         #Delete Year Group Button
@@ -49,7 +49,7 @@ class YearGroupPage(tk.Frame):
             self,
             text="Delete Group",
             command=lambda : self.delete_group(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_delete.grid(row=2, column=6, sticky="news", padx=5, pady=5)
         #Show Year Group Button
@@ -57,7 +57,7 @@ class YearGroupPage(tk.Frame):
             self,
             text="Show Group",
             command=lambda : self.show_group(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_show.grid(row=3, column=6, sticky="news", padx=5, pady=5)
 
@@ -114,7 +114,7 @@ class YearGroupPage(tk.Frame):
             master=self,
             text="refresh",
             command=lambda : self.restart(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_refresh.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
@@ -173,7 +173,7 @@ class CreateYearGroupPage(tk.Frame):
             self,
             text="return",
             command=lambda : self.return_refresh(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
@@ -183,7 +183,7 @@ class CreateYearGroupPage(tk.Frame):
             self,
             text="Home",
             command=lambda : self.home_refresh(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
@@ -206,7 +206,7 @@ class CreateYearGroupPage(tk.Frame):
         l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_number = tk.Entry(master=self)
+        self.e_number = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_number.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -245,7 +245,7 @@ class CreateYearGroupPage(tk.Frame):
             master=self,
             text="submit",
             command=lambda : self.create_group(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
 
@@ -307,7 +307,7 @@ class YearStudentPage(tk.Frame):
             self,
             text="return",
             command=lambda : self.controller.show_frame("YearGroupPage"),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_return.grid(row=7, column=6, sticky="news", padx=5, pady=5)
 
@@ -317,7 +317,7 @@ class YearStudentPage(tk.Frame):
             self,
             text="Home",
             command=lambda : self.controller.show_frame("StartPage"),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_home.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
@@ -373,7 +373,7 @@ class YearStudentPage(tk.Frame):
             master=self,
             text="add Student",
             command=lambda : self.add_student(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         add_btn.grid(row=1, column=6, sticky="news", padx=5, pady=5)
 
@@ -383,7 +383,7 @@ class YearStudentPage(tk.Frame):
             master=self,
             text="del Student",
             command=lambda : self.del_student(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         delete_btn.grid(row=2, column=6, sticky="news", padx=5, pady=5)
 
@@ -456,7 +456,7 @@ class YearAddStudentPage(tk.Frame):
             self,
             text="return",
             command=lambda : self.controller.show_frame("YearStudentPage"),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         btn_return.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
@@ -499,7 +499,7 @@ class YearAddStudentPage(tk.Frame):
             master=self,
             text="submit",
             command=lambda : self.add_student(),
-            font=self.controller.title_font,
+            font=self.controller.normal_font,
         )
         sub_btn.grid(row=1, column=6, sticky="news", padx=5, pady=5)
 

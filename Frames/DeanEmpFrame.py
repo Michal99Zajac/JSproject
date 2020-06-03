@@ -208,7 +208,7 @@ class CreateDeansEmpPage(tk.Frame):
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_name = tk.Entry(master=self)
+        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_name.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -216,7 +216,7 @@ class CreateDeansEmpPage(tk.Frame):
         l_sec_name = tk.Label(master=self, text="second name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_sec_name.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_sec_name = tk.Entry(master=self)
+        self.e_sec_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_sec_name.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -224,7 +224,7 @@ class CreateDeansEmpPage(tk.Frame):
         l_lastname = tk.Label(master=self, text="lastname", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_lastname.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_lastname = tk.Entry(master=self)
+        self.e_lastname = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_lastname.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -232,7 +232,7 @@ class CreateDeansEmpPage(tk.Frame):
         l_ssn = tk.Label(master=self, text="ssn", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_ssn.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_ssn = tk.Entry(master=self)
+        self.e_ssn = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_ssn.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -240,7 +240,7 @@ class CreateDeansEmpPage(tk.Frame):
         l_email = tk.Label(master=self, text="email", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_email.grid(row=9, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_email = tk.Entry(master=self)
+        self.e_email = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_email.grid(row=10, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -253,8 +253,6 @@ class CreateDeansEmpPage(tk.Frame):
         ]
 
         self.dept_list = MultiListBox(master=self, data=data)
-        # for i, dept in enumerate(self.controller.departments):
-        #     self.dept_list.insert(i, dept.get_name())
         self.dept_list.grid(row=1, column=4, rowspan=18, columnspan=3, sticky="nswe", pady=5, padx=5)
         self.refresh_dept_listbox()
 
@@ -276,11 +274,8 @@ class CreateDeansEmpPage(tk.Frame):
 
     
     def create_emp(self):
-        temp_dept = None
-        for dept in self.controller.fields:
-            if self.dept_list.get(tk.ACTIVE) == dept.get_id():
-                temp_dept = dept
-                break
+        idx = self.dept_list.index(tk.ACTIVE)
+        temp_dept = self.controller.departments[idx]
 
         self.controller.deans_emps.append(DeansEmp(
             name=self.e_name.get(),
@@ -296,6 +291,7 @@ class CreateDeansEmpPage(tk.Frame):
         self.controller.frames["FieldOfStudyPage"].refresh()
         self.controller.deans_emps[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
+        self.refresh()
         self.controller.frames["DeansEmpPage"].restart()
 
 
