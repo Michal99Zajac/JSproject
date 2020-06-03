@@ -8,6 +8,8 @@ from tk_extension.multilistBox import MultiListBox
 class DeansEmpPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=241)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
 
@@ -22,46 +24,45 @@ class DeansEmpPage(tk.Frame):
             text="Deans Employee Page",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row = 0, column = 6, sticky="nsew", padx=5, pady=5)
 
 
     def buttons(self):
         #Return Home Button
         btn_return = tk.Button(
             self,
-            text="Return to Home Page",
-            command=lambda : self.controller.show_frame("StartPage")
+            text="Home",
+            command=lambda : self.controller.show_frame("StartPage"),
+            font=self.controller.normal_font
         )
-        btn_return.pack()
+        btn_return.grid(row=4, column=6, sticky="nsew", padx=5, pady=5)
         #Create Dean Emp Button
         btn_create = tk.Button(
             self,
             text="Create Dean Employee",
-            command=lambda : self.controller.show_frame("CreateDeansEmpPage")
+            command=lambda : self.controller.show_frame("CreateDeansEmpPage"),
+            font=self.controller.normal_font
         )
-        btn_create.pack()
+        btn_create.grid(row=1, column=6, sticky="nsew", padx=5, pady=5)
         #Delete Dean Emp Button
         btn_delete = tk.Button(
             self,
             text="Delete Dean Employee",
-            command=lambda : self.delete_emp()
+            command=lambda : self.delete_emp(),
+            font=self.controller.normal_font
         )
-        btn_delete.pack()
+        btn_delete.grid(row=2, column=6, sticky="nsew", padx=5, pady=5)
         #Change Dean Emp Button
         btn_update = tk.Button(
             self,
             text="Change Dean Employee",
-            command=lambda : self.update_emp()
+            command=lambda : self.update_emp(),
+            font=self.controller.normal_font
         )
-        btn_update.pack()
+        btn_update.grid(row=3, column=6, sticky="nsew", padx=5, pady=5)
 
 
     def dean_emp_listbox(self):
-        f_emp = tk.Frame(master=self)
-        f_emp.pack()
-        l_emp = tk.Label(master=f_emp, text="select dean employee")
-        l_emp.pack()
-
         data = [
             ('id', 10),
             ('name', 20),
@@ -72,9 +73,9 @@ class DeansEmpPage(tk.Frame):
             ('department', 20)
         ]
 
-        self.list_emps = MultiListBox(master=f_emp, data=data)
+        self.list_emps = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_emps.pack()
+        self.list_emps.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="nswe", padx=5, pady=5)
 
 
     def refresh(self):
@@ -98,14 +99,13 @@ class DeansEmpPage(tk.Frame):
 
 
     def refresh_button(self):
-        f_refresh = tk.Frame(master=self)
-        f_refresh.pack()
         btn_refresh = tk.Button(
-            master=f_refresh,
+            master=self,
             text="refresh",
-            command=lambda : self.restart()
+            command=lambda : self.restart(),
+            font=self.controller.normal_font
         )
-        btn_refresh.pack()
+        btn_refresh.grid(row=8, column=6, sticky="nsew", padx=5, pady=5)
 
 
     def restart(self):
@@ -141,6 +141,8 @@ class DeansEmpPage(tk.Frame):
 class CreateDeansEmpPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(9)], minsize=250)
+        self.rowconfigure([x for x in range(18)], minsize=50)
         self.controller = controller
         
         self.main_label()
@@ -161,16 +163,17 @@ class CreateDeansEmpPage(tk.Frame):
             text="Create Dean Employee",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
-            command=lambda : self.home_refresh()
+            text="Home",
+            command=lambda : self.home_refresh(),
+            font=self.controller.normal_font
         )
-        btn_home.pack()
+        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def home_refresh(self):
@@ -182,9 +185,10 @@ class CreateDeansEmpPage(tk.Frame):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh()
+            command=lambda : self.return_refresh(),
+            font=self.controller.normal_font
         )
-        btn_return.pack()
+        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def return_refresh(self):
@@ -201,86 +205,74 @@ class CreateDeansEmpPage(tk.Frame):
 
 
     def name_entry(self):
-        f_name = tk.Frame(master=self)
-        f_name.pack()
+        l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_name = tk.Label(master=f_name, text="name")
-        l_name.pack()
-
-        self.e_name = tk.Entry(master=f_name)
-        self.e_name.pack()
+        self.e_name = tk.Entry(master=self)
+        self.e_name.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def sec_name_entry(self):
-        f_sec_name = tk.Frame(master=self)
-        f_sec_name.pack()
+        l_sec_name = tk.Label(master=self, text="second name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_sec_name.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_sec_name = tk.Label(master=f_sec_name, text="second name")
-        l_sec_name.pack()
-
-        self.e_sec_name = tk.Entry(master=f_sec_name)
-        self.e_sec_name.pack()
+        self.e_sec_name = tk.Entry(master=self)
+        self.e_sec_name.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def lastname_entry(self):
-        f_lastname = tk.Frame(master=self)
-        f_lastname.pack()
+        l_lastname = tk.Label(master=self, text="lastname", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_lastname.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_lastname = tk.Label(master=f_lastname, text="lastname")
-        l_lastname.pack()
-
-        self.e_lastname = tk.Entry(master=f_lastname)
-        self.e_lastname.pack()
+        self.e_lastname = tk.Entry(master=self)
+        self.e_lastname.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def ssn_entry(self):
-        f_ssn = tk.Frame(master=self)
-        f_ssn.pack()
+        l_ssn = tk.Label(master=self, text="ssn", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_ssn.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_ssn = tk.Label(master=f_ssn, text="ssn")
-        l_ssn.pack()
-
-        self.e_ssn = tk.Entry(master=f_ssn)
-        self.e_ssn.pack()
+        self.e_ssn = tk.Entry(master=self)
+        self.e_ssn.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def email_entry(self):
-        f_email = tk.Frame(master=self)
-        f_email.pack()
+        l_email = tk.Label(master=self, text="email", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_email.grid(row=9, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_email = tk.Label(master=f_email, text="email")
-        l_email.pack()
-
-        self.e_email = tk.Entry(master=f_email)
-        self.e_email.pack()
+        self.e_email = tk.Entry(master=self)
+        self.e_email.grid(row=10, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def dept_listbox(self):
-        f_dept = tk.Frame(master=self)
-        f_dept.pack()
+        l_dept = tk.Label(master=self, text="department", font=self.controller.normal_font, relief=tk.RAISED)
+        l_dept.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
-        l_dept = tk.Label(master=f_dept, text="department")
-        l_dept.pack()
+        data = [
+            ('department', 20)
+        ]
 
-        self.dept_list = tk.Listbox(master=f_dept)
-        for i, dept in enumerate(self.controller.departments):
-            self.dept_list.insert(i, dept.get_name())
-        self.dept_list.pack()
+        self.dept_list = MultiListBox(master=self, data=data)
+        # for i, dept in enumerate(self.controller.departments):
+        #     self.dept_list.insert(i, dept.get_name())
+        self.dept_list.grid(row=1, column=4, rowspan=18, columnspan=3, sticky="nswe", pady=5, padx=5)
+        self.refresh_dept_listbox()
 
 
     def refresh_dept_listbox(self):
         self.dept_list.delete(0, tk.END)
         for i, dept in enumerate(self.controller.departments):
-            self.dept_list.insert(i, dept.get_name())
+            self.dept_list.insert(i, (dept.get_name(),))
 
 
     def submit(self):
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.create_emp()
+            command=lambda : self.create_emp(),
+            font=self.controller.normal_font
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
 
     
     def create_emp(self):
@@ -319,21 +311,19 @@ class ChangeDeansEmpPage(CreateDeansEmpPage):
         label = tk.Label(
             self,
             text="Change Dean Employee",
-            font=self.controller.title_font
+            font=self.controller.title_font,
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.update_emp()
+            command=lambda : self.update_emp(),
+            font=self.controller.normal_font, relief=tk.RAISED
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def fill_entry(self):

@@ -8,6 +8,8 @@ from tk_extension.multilistBox import MultiListBox
 class YearGroupPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
 
@@ -22,46 +24,45 @@ class YearGroupPage(tk.Frame):
             text="Year Group Page",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column = 6, sticky="news", padx=5, pady=5)
 
 
     def buttons(self):
         #Return Home Page
         btn_return = tk.Button(
             self,
-            text="Return to Home Page",
-            command=lambda : self.controller.show_frame("StartPage")
+            text="Home",
+            command=lambda : self.controller.show_frame("StartPage"),
+            font=self.controller.title_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=4, column=6, sticky="news", padx=5, pady=5)
         #Create Year Group Button
         btn_create = tk.Button(
             self,
             text="Create Group",
-            command=lambda : self.create_group()
+            command=lambda : self.create_group(),
+            font=self.controller.title_font,
         )
-        btn_create.pack()
+        btn_create.grid(row=1, column=6, sticky="news", padx=5, pady=5)
         #Delete Year Group Button
         btn_delete = tk.Button(
             self,
             text="Delete Group",
-            command=lambda : self.delete_group()
+            command=lambda : self.delete_group(),
+            font=self.controller.title_font,
         )
-        btn_delete.pack()
+        btn_delete.grid(row=2, column=6, sticky="news", padx=5, pady=5)
         #Show Year Group Button
         btn_show = tk.Button(
             self,
             text="Show Group",
-            command=lambda : self.show_group()
+            command=lambda : self.show_group(),
+            font=self.controller.title_font,
         )
-        btn_show.pack()
+        btn_show.grid(row=3, column=6, sticky="news", padx=5, pady=5)
 
 
     def group_listbox(self):
-        f_group = tk.Frame(master=self)
-        f_group.pack()
-        l_group = tk.Label(master=f_group, text="select group")
-        l_group.pack()
-
         data = [
             ('number',10),
             ('field of study', 20),
@@ -69,9 +70,9 @@ class YearGroupPage(tk.Frame):
             ('students', 10) #numbers of students
         ]
 
-        self.list_groups = MultiListBox(master=f_group, data=data)
+        self.list_groups = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_groups.pack()
+        self.list_groups.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="news", padx=5, pady=5)
 
 
     def create_group(self):
@@ -109,14 +110,13 @@ class YearGroupPage(tk.Frame):
 
 
     def refresh_button(self):
-        f_refresh = tk.Frame(master=self)
-        f_refresh.pack()
         btn_refresh = tk.Button(
-            master=f_refresh,
+            master=self,
             text="refresh",
-            command=lambda : self.restart()
+            command=lambda : self.restart(),
+            font=self.controller.title_font,
         )
-        btn_refresh.pack()
+        btn_refresh.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
 
     def refresh(self):
@@ -146,6 +146,8 @@ class YearGroupPage(tk.Frame):
 class CreateYearGroupPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(9)], minsize=250)
+        self.rowconfigure([x for x in range(18)], minsize=50)
         self.controller = controller
 
         self.main_label()
@@ -163,25 +165,27 @@ class CreateYearGroupPage(tk.Frame):
             text="Create Group",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def return_button(self):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh()
+            command=lambda : self.return_refresh(),
+            font=self.controller.title_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
-            command=lambda : self.home_refresh()
+            text="Home",
+            command=lambda : self.home_refresh(),
+            font=self.controller.title_font,
         )
-        btn_home.pack()
+        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def return_refresh(self):
@@ -199,26 +203,24 @@ class CreateYearGroupPage(tk.Frame):
 
 
     def number_entry(self):
-        f_number = tk.Frame(master=self)
-        f_number.pack()
+        l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_number = tk.Label(master=f_number, text="number")
-        l_number.pack()
-
-        self.e_number = tk.Entry(master=f_number)
-        self.e_number.pack()
+        self.e_number = tk.Entry(master=self)
+        self.e_number.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def field_listbox(self):
-        f_field = tk.Frame(master=self)
-        f_field.pack()
+        l_field = tk.Label(master=self, text="field of study", font=self.controller.normal_font, relief=tk.RAISED)
+        l_field.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
         
         data = [
             ('field of study', 20),
             ('department', 20)
         ]
-        self.list_fields = MultiListBox(master=f_field, data=data)
-        self.list_fields.pack()
+
+        self.list_fields = MultiListBox(master=self, data=data)
+        self.list_fields.grid(row=1, column=4, rowspan=17, columnspan=3, sticky="nswe", pady=5, padx=5)
         self.refresh_field_listbox()
 
 
@@ -239,30 +241,28 @@ class CreateYearGroupPage(tk.Frame):
 
     
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.create_group()
+            command=lambda : self.create_group(),
+            font=self.controller.title_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
 
 
     def create_group(self):
         idx = self.list_fields.index(tk.ACTIVE)
-        
         field = self.controller.fields[idx]
 
         self.controller.year_groups.append(YearGroup(
             number=self.e_number.get(),
-            field=field
+            field=field,
+            students={}
         ))
 
         #update Subject
         self.controller.frames["YearSubjectPage"].refresh()
-        self.controller.frames["CreateYearSubjectPage"].refresh_year_listbox()
+        #self.controller.frames["CreateYearSubjectPage"].refresh_year_listbox()
 
         self.refresh()
         self.controller.db.commit_conn()
@@ -273,8 +273,10 @@ class CreateYearGroupPage(tk.Frame):
 class YearStudentPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         if controller.year_groups:
-            self.group = controller.year_groups[0]
+            self.group = controller.year_groups[-1]
 
         self.controller = controller
         
@@ -297,33 +299,29 @@ class YearStudentPage(tk.Frame):
             text="Year Group",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column = 6, sticky="news", padx=5, pady=5)
 
 
     def return_button(self):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.controller.show_frame("YearGroupPage")
+            command=lambda : self.controller.show_frame("YearGroupPage"),
+            font=self.controller.title_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=7, column=6, sticky="news", padx=5, pady=5)
 
     
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
-            command=lambda : self.controller.show_frame("StartPage")
+            text="Home",
+            command=lambda : self.controller.show_frame("StartPage"),
+            font=self.controller.title_font,
         )
-        btn_home.pack()
-
+        btn_home.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
     def student_listbox(self):
-        f_student = tk.Frame(master=self)
-        f_student.pack()
-        l_student = tk.Label(master=f_student, text="select student")
-        l_student.pack()
-
         data = [
             ('id', 10),
             ('name', 20),
@@ -331,13 +329,13 @@ class YearStudentPage(tk.Frame):
             ('lastname', 20),
             ('ssn', 20),
             ('email', 20),
-            ('field of study', 30),
+            ('field of study', 20),
             ('department', 20),
-            ('place of residence', 40)
+            ('place of residence', 30)
         ]
 
-        self.list_students = MultiListBox(master=f_student, data=data)
-        self.list_students.pack()
+        self.list_students = MultiListBox(master=self, data=data)
+        self.list_students.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="news", padx=5, pady=5)
         self.refresh_student_listbox()
 
 
@@ -374,18 +372,20 @@ class YearStudentPage(tk.Frame):
         add_btn = tk.Button(
             master=self,
             text="add Student",
-            command=lambda : self.add_student()
+            command=lambda : self.add_student(),
+            font=self.controller.title_font,
         )
-        add_btn.pack()
+        add_btn.grid(row=1, column=6, sticky="news", padx=5, pady=5)
 
 
     def delete_button(self):
         delete_btn = tk.Button(
             master=self,
             text="del Student",
-            command=lambda : self.del_student()
+            command=lambda : self.del_student(),
+            font=self.controller.title_font,
         )
-        delete_btn.pack()
+        delete_btn.grid(row=2, column=6, sticky="news", padx=5, pady=5)
 
 
     def add_student(self):
@@ -409,9 +409,11 @@ class YearStudentPage(tk.Frame):
 class YearAddStudentPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         if self.controller.lab_groups:
-            self.group = self.controller.lab_groups[0]
+            self.group = self.controller.lab_groups[-1]
 
         self.main_label()
         self.return_button()
@@ -429,15 +431,10 @@ class YearAddStudentPage(tk.Frame):
             text="Add Student",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column = 6, sticky="news", padx=5, pady=5)
 
 
     def student_listbox(self):
-        f_student = tk.Frame(master=self)
-        f_student.pack()
-        l_student = tk.Label(master=f_student, text="select student")
-        l_student.pack()
-
         data = [
             ('id', 10),
             ('name', 20),
@@ -445,48 +442,52 @@ class YearAddStudentPage(tk.Frame):
             ('lastname', 20),
             ('ssn', 20),
             ('email', 20),
-            ('field of study', 30),
+            ('field of study', 20),
             ('department', 20),
-            ('place of residence', 40)
+            ('place of residence', 30)
         ]
 
-        self.list_students = MultiListBox(master=f_student, data=data)
-        self.list_students.pack()
+        self.list_students = MultiListBox(master=self, data=data)
+        self.list_students.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="news", padx=5, pady=5)
 
 
     def return_button(self):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.controller.show_frame("YearStudentPage")
+            command=lambda : self.controller.show_frame("YearStudentPage"),
+            font=self.controller.title_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
 
     def refresh_student_listbox(self):
         self.list_students.delete(0, tk.END)
-        for i, student in enumerate(self.avi_students()):
-                try:
-                    field = student.get_field_of_study().get_name()
+        try:
+            for i, student in enumerate(self.avi_students()):
                     try:
-                        department = student.get_field_of_study().get_department().get_name()
+                        field = student.get_field_of_study().get_name()
+                        try:
+                            department = student.get_field_of_study().get_department().get_name()
+                        except AttributeError:
+                            department = "NULL"
                     except AttributeError:
-                        department = "NULL"
-                except AttributeError:
-                    field = "NULL"
+                        field = "NULL"
 
-                output = (
-                    student.get_id(),
-                    student.get_name(),
-                    student.get_sec_name(),
-                    student.get_lastname(),
-                    student.get_ssn(),
-                    student.get_email(),
-                    field,
-                    department,
-                    student.get_place_of_residence()
-                    )
-                self.list_students.insert(i,output)
+                    output = (
+                        student.get_id(),
+                        student.get_name(),
+                        student.get_sec_name(),
+                        student.get_lastname(),
+                        student.get_ssn(),
+                        student.get_email(),
+                        field,
+                        department,
+                        student.get_place_of_residence()
+                        )
+                    self.list_students.insert(i,output)
+        except AttributeError:
+            pass
 
 
     def avi_students(self):
@@ -497,9 +498,10 @@ class YearAddStudentPage(tk.Frame):
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.add_student()
+            command=lambda : self.add_student(),
+            font=self.controller.title_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=1, column=6, sticky="news", padx=5, pady=5)
 
 
     def add_student(self):

@@ -42,6 +42,7 @@ class YearGroup(object):
     def __init__(self, number = 10, field = None, students = {}):
         self.__number = None
         self.__field = None
+        self.__students = None
         try:
             if field in YearGroup.field_num.keys():
                 if number not in YearGroup.field_num[field]:
@@ -94,10 +95,10 @@ class YearGroup(object):
         if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, values)
+            self.__students[student] = cur.lastrowid
         else:
             print("Error! Cant insert in year_group table")
 
-        self.__students[student] = cur.lastrowid
 
     def update(self, db):
         sql = """UPDATE year_group SET

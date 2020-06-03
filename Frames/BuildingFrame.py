@@ -8,6 +8,8 @@ from tk_extension.multilistBox import MultiListBox
 class BuildingPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
 
@@ -22,46 +24,45 @@ class BuildingPage(tk.Frame):
             text="Building Page",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column = 6, sticky="news", padx=5, pady=5)
 
     
     def buttons(self):
         #Return Home Button
         btn_return = tk.Button(
             self,
-            text="Return to Home Page",
-            command=lambda : self.controller.show_frame("StartPage")
+            text="Home",
+            command=lambda : self.controller.show_frame("StartPage"),
+            font=self.controller.normal_font
         )
-        btn_return.pack()
+        btn_return.grid(row=4, column=6, sticky="news", padx=5, pady=5)
         #Create Building Button
         btn_create = tk.Button(
             self,
             text="Create Building",
-            command=lambda : self.controller.show_frame("CreateBuildingPage")
+            command=lambda : self.controller.show_frame("CreateBuildingPage"),
+            font=self.controller.normal_font
         )
-        btn_create.pack()
+        btn_create.grid(row=1, column=6, sticky="news", padx=5, pady=5)
         #Delete Building Button
         btn_delete = tk.Button(
             self,
             text="Delete Building",
-            command=lambda : self.delete_building()
+            command=lambda : self.delete_building(),
+            font=self.controller.normal_font
         )
-        btn_delete.pack()
+        btn_delete.grid(row=2, column=6, sticky="news", padx=5, pady=5)
         #Change Building Button
         btn_update = tk.Button(
             self,
             text="Change Building",
-            command=lambda : self.update_building()
+            command=lambda : self.update_building(),
+            font=self.controller.normal_font
         )
-        btn_update.pack()
+        btn_update.grid(row=3, column=6, sticky="news", padx=5, pady=5)
 
 
     def building_listbox(self):
-        f_building = tk.Frame(master=self)
-        f_building.pack()
-        l_building = tk.Label(master=f_building, text="select building")
-        l_building.pack()
-
         data = [
             ('id', 10),
             ('street', 20),
@@ -69,9 +70,9 @@ class BuildingPage(tk.Frame):
             ('number', 10)
         ]
 
-        self.list_buildings = MultiListBox(master=f_building, data=data)
+        self.list_buildings = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_buildings.pack()
+        self.list_buildings.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="news", padx=5, pady=5)
 
 
     def refresh(self):
@@ -87,14 +88,13 @@ class BuildingPage(tk.Frame):
 
 
     def refresh_button(self):
-        f_refresh = tk.Frame(master=self)
-        f_refresh.pack()
         btn_refresh = tk.Button(
-            master=f_refresh,
+            master=self,
             text="refresh",
-            command=lambda : self.restart()
+            command=lambda : self.restart(),
+            font=self.controller.normal_font
         )
-        btn_refresh.pack()
+        btn_refresh.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
 
     def restart(self):
@@ -144,9 +144,12 @@ class BuildingPage(tk.Frame):
 class CreateBuildingPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(9)], minsize=250)
+        self.rowconfigure([x for x in range(18)], minsize=50)
         self.controller = controller
         
         self.main_label()
+        self.empty_space()
         self.return_button()
         self.home_button()
         self.name_entry()
@@ -161,16 +164,17 @@ class CreateBuildingPage(tk.Frame):
             text="Create Building",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
-            command=lambda : self.home_refresh()
+            text="Home",
+            command=lambda : self.home_refresh(),
+            font=self.controller.normal_font
         )
-        btn_home.pack()
+        btn_home.grid(row=16, column=2, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def home_refresh(self):
@@ -182,9 +186,10 @@ class CreateBuildingPage(tk.Frame):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh()
+            command=lambda : self.return_refresh(),
+            font=self.controller.normal_font
         )
-        btn_return.pack()
+        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def refresh(self):
@@ -197,47 +202,49 @@ class CreateBuildingPage(tk.Frame):
         self.refresh()
         self.controller.show_frame("BuildingPage")
 
+    
+    def empty_space(self):
+        frame = tk.Frame(
+            master=self,
+            relief=tk.SUNKEN,
+            borderwidth=5,
+            bg="gray"
+        )
+        frame.grid(row=0, column=4, rowspan=18, columnspan=3, sticky="news", pady=5, padx=5)
+
 
     def name_entry(self):
-        f_name = tk.Frame(master=self)
-        f_name.pack()
+        l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_name.grid(row=1, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
-        l_name = tk.Label(master=f_name, text="name")
-        l_name.pack()
-
-        self.e_name = tk.Entry(master=f_name)
-        self.e_name.pack()
+        self.e_name = tk.Entry(master=self)
+        self.e_name.grid(row=2, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
 
     def street_name_entry(self):
-        f_street = tk.Frame(master=self)
-        f_street.pack()
+        l_street = tk.Label(master=self, text="street name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_street.grid(row=3, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
-        l_street = tk.Label(master=f_street, text="street name")
-        l_street.pack()
-
-        self.e_street = tk.Entry(master=f_street)
-        self.e_street.pack()
+        self.e_street = tk.Entry(master=self)
+        self.e_street.grid(row=4, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
 
     def number_entry(self):
-        f_number = tk.Frame(master=self)
-        f_number.pack()
+        l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_number.grid(row=5, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
-        l_number = tk.Label(master=f_number, text="number")
-        l_number.pack()
-
-        self.e_number = tk.Entry(master=f_number)
-        self.e_number.pack()
+        self.e_number = tk.Entry(master=self)
+        self.e_number.grid(row=6, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
 
     def submit(self):
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.create_building()
+            command=lambda : self.create_building(),
+            font=self.controller.normal_font
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", pady=5, padx=5)
 
 
     def create_building(self):
@@ -276,19 +283,17 @@ class ChangeBuildingPage(CreateBuildingPage):
             text="Change Building",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", pady=5, padx=5)
 
 
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.update_building()
+            command=lambda : self.update_building(),
+            font=self.controller.normal_font
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", pady=5, padx=5)
 
 
     def fill_entry(self):

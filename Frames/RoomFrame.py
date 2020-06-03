@@ -8,6 +8,8 @@ from tk_extension.multilistBox import MultiListBox
 class RoomPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
 
@@ -22,7 +24,7 @@ class RoomPage(tk.Frame):
             text="Room Page",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column = 6, sticky="news", padx=5, pady=5)
 
     
     def buttons(self):
@@ -30,38 +32,37 @@ class RoomPage(tk.Frame):
         btn_return = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda: self.controller.show_frame("StartPage")
+            command=lambda: self.controller.show_frame("StartPage"),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=4, column=6, sticky="news", padx=5, pady=5)
         #Create Room Button
         btn_create = tk.Button(
             self,
             text="Create Room",
-            command=lambda : self.controller.show_frame("CreateRoomPage")
+            command=lambda : self.controller.show_frame("CreateRoomPage"),
+            font=self.controller.normal_font,
         )
-        btn_create.pack()
+        btn_create.grid(row=1, column=6, sticky="news", padx=5, pady=5)
         #Delete Room Button
         btn_delete = tk.Button(
             self,
             text="Delete Room",
-            command=lambda : self.delete_room()
+            command=lambda : self.delete_room(),
+            font=self.controller.normal_font,
         )
-        btn_delete.pack()
+        btn_delete.grid(row=2, column=6, sticky="news", padx=5, pady=5)
         #Change Room Button
         btn_update = tk.Button(
             self,
             text="Change Room",
-            command=lambda : self.update_room()
+            command=lambda : self.update_room(),
+            font=self.controller.normal_font,
         )
-        btn_update.pack()
+        btn_update.grid(row=3, column=6, sticky="news", padx=5, pady=5)
 
 
     def room_listbox(self):
-        f_room = tk.Frame(master=self)
-        f_room.pack()
-        l_room = tk.Label(master=f_room, text="select room")
-        l_room.pack()
-
         data = [
             ('id', 10),
             ('building', 20),
@@ -69,9 +70,9 @@ class RoomPage(tk.Frame):
             ('is dean office', 10)
         ]
 
-        self.list_rooms = MultiListBox(master=f_room, data=data)
+        self.list_rooms = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_rooms.pack()
+        self.list_rooms.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="news", padx=5, pady=5)
 
 
     def delete_room(self):
@@ -108,14 +109,13 @@ class RoomPage(tk.Frame):
 
 
     def refresh_button(self):
-        f_refresh = tk.Frame(master=self)
-        f_refresh.pack()
         btn_refresh = tk.Button(
-            master=f_refresh,
+            master=self,
             text="refresh",
-            command=lambda : self.restart()
+            command=lambda : self.restart(),
+            font=self.controller.normal_font,
         )
-        btn_refresh.pack()
+        btn_refresh.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
 
     def refresh(self):
@@ -144,6 +144,8 @@ class RoomPage(tk.Frame):
 class CreateRoomPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(9)], minsize=250)
+        self.rowconfigure([x for x in range(18)], minsize=49)
         self.controller = controller
 
         self.main_label()
@@ -162,25 +164,27 @@ class CreateRoomPage(tk.Frame):
             text="Create Room",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def return_button(self):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh()
+            command=lambda : self.return_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def home_button(self):
         btn_home = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda : self.home_refresh()
+            command=lambda : self.home_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_home.pack()
+        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def return_refresh(self):
@@ -198,66 +202,61 @@ class CreateRoomPage(tk.Frame):
 
     
     def number_entry(self):
-        f_number = tk.Frame(master=self)
-        f_number.pack()
+        l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_number = tk.Label(master=f_number, text="number")
-        l_number.pack()
-
-        self.e_number = tk.Entry(master=f_number)
-        self.e_number.pack()
+        self.e_number = tk.Entry(master=self)
+        self.e_number.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def dean_off_listbox(self):
-        f_dean_off = tk.Frame(master=self)
-        f_dean_off.pack()
+        data = [
+            ('is dean office?', 10),
+        ]
 
-        l_dean_off = tk.Label(master=f_dean_off, text="is dean office?")
-        l_dean_off.pack()
 
-        self.list_dean_off = tk.Listbox(master=f_dean_off)
-        self.list_dean_off.insert(0, "YES")
-        self.list_dean_off.insert(1, "NO")
-        self.list_dean_off.pack()
+        self.list_dean_off = MultiListBox(master=self, data=data)
+        self.list_dean_off.insert(0, ("YES",))
+        self.list_dean_off.insert(1, ("NO",))
+        self.list_dean_off.grid(row=0, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
 
 
     def building_listbox(self):
-        f_building = tk.Frame(master=self)
-        f_building.pack()
+        l_building = tk.Label(master=self, text="building", font=self.controller.normal_font, relief=tk.RAISED)
+        l_building.grid(row=4, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
-        l_building = tk.Label(master=f_building, text="building")
-        l_building.pack()
+        data = [
+            ('name', 10),
+        ]
 
-        self.list_building = tk.Listbox(master=f_building)
-        for i, building in enumerate(self.controller.buildings):
-            self.list_building.insert(i, building.get_name())
-        self.list_building.pack()
+        self.list_building = MultiListBox(master=self, data=data)
+        self.list_building.grid(row=5, column=4, rowspan=13, columnspan=3, sticky="nswe", pady=5, padx=5)
+        self.refresh_building_listbox()
 
 
     def refresh_building_listbox(self):
         self.list_building.delete(0, tk.END)
         for i, building in enumerate(self.controller.buildings):
-            self.list_building.insert(i, building.get_name())
+            output = (
+                building.get_name(),
+            )
+            
+            self.list_building.insert(i, output)
 
 
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.create_room()
+            command=lambda : self.create_room(),
+            font=self.controller.normal_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
 
 
     def create_room(self):
-        temp_building = None
-        for building in self.controller.buildings:
-            if self.list_building.get(tk.ACTIVE) == building.get_name():
-                temp_building = building
-                break
+        idx = self.list_building.index(tk.ACTIVE)
+        temp_building = self.controller.buildings[idx]
 
         temp_is_dean = None
         if self.list_dean_off.get(tk.ACTIVE) == "YES":
@@ -281,6 +280,7 @@ class CreateRoomPage(tk.Frame):
 
         self.controller.rooms[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
+        self.refresh()
         self.controller.frames["RoomPage"].restart()
 
 
@@ -298,19 +298,17 @@ class ChangeRoomPage(CreateRoomPage):
             text="Change Room",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.update_room()
+            command=lambda : self.update_room(),
+            font=self.controller.normal_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def fill_entry(self):
@@ -339,10 +337,9 @@ class ChangeRoomPage(CreateRoomPage):
 
 
     def set_attr_room(self):
-        for building in self.controller.buildings:
-            if self.list_building.get(tk.ACTIVE) == building.get_name():
-                self.room.set_building(building)
-                break
+        idx = self.list_building.index(tk.ACTIVE)
+        temp_building = self.controller.buildings[idx]
+        self.room.set_building(temp_building)
 
         if self.list_dean_off.get(tk.ACTIVE) == "YES":
             temp_is_dean = 1

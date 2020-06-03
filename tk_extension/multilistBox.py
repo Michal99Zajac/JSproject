@@ -24,7 +24,7 @@ class MultiListBox(tk.Frame):
             lb = tk.Listbox(
                 master=temp_frame,
                 width=width,
-                height=45,
+                #height=45,
                 borderwidth=0,
                 selectborderwidth=0,
                 relief=tk.FLAT,

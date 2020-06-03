@@ -7,8 +7,9 @@ from tk_extension.multilistBox import MultiListBox
 class SubjectPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(2)], minsize=875)
+        self.rowconfigure([x for x in range(4)], minsize=225)
         self.controller = controller
-        self.main_label()
 
         self.year_button()
         self.exe_button()
@@ -16,54 +17,51 @@ class SubjectPage(tk.Frame):
         self.return_button()
 
 
-    def main_label(self):
-        label = tk.Label(
-            self,
-            text="Subject Page",
-            font=self.controller.title_font
-        )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
-
-
     def year_button(self):
         year_btn = tk.Button(
             master=self,
             text="Show Year Subject",
-            command=lambda : self.controller.show_frame("YearSubjectPage")
+            command=lambda : self.controller.show_frame("YearSubjectPage"),
+            font=self.controller.normal_font,
         )
-        year_btn.pack()
+        year_btn.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
 
     def exe_button(self):
         exe_btn = tk.Button(
             master=self,
             text="Show Exe Subject",
-            command=lambda : self.controller.show_frame("ExeSubjectPage")
+            command=lambda : self.controller.show_frame("ExeSubjectPage"),
+            font=self.controller.normal_font,
         )
-        exe_btn.pack()
+        exe_btn.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
 
 
     def lab_button(self):
         lab_btn = tk.Button(
             master=self,
             text="Show Lab Subject",
-            command=lambda : self.controller.show_frame("LabSubjectPage")
+            command=lambda : self.controller.show_frame("LabSubjectPage"),
+            font=self.controller.normal_font,
         )
-        lab_btn.pack()
+        lab_btn.grid(row=2, column=0, sticky="nsew", padx=5, pady=5)
 
 
     def return_button(self):
         return_btn = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda : self.controller.show_frame("StartPage")
+            command=lambda : self.controller.show_frame("StartPage"),
+            font=self.controller.normal_font,
         )
-        return_btn.pack()
+        return_btn.grid(row=3, column=0, sticky="nsew", padx=5, pady=5)
         
 
 class YearSubjectPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
 
@@ -75,58 +73,65 @@ class YearSubjectPage(tk.Frame):
     def main_label(self):
         label = tk.Label(
             master=self,
-            text="Year Subjects Page",
+            text="Year Subjects",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row = 0, column = 6, sticky="nsew", padx=5, pady=5)
 
     
     def buttons(self):
         #Return Home Page
-        btn_return = tk.Button(
+        btn_home = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda : self.controller.show_frame("StartPage")
+            command=lambda : self.controller.show_frame("StartPage"),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_home.grid(row=3, column=6, sticky="nsew", padx=5, pady=5)
         #Create Year Subject
         btn_create = tk.Button(
             self,
             text="Create Subject",
-            command=lambda : self.create_subject()
+            command=lambda : self.create_subject(),
+            font=self.controller.normal_font,
         )
-        btn_create.pack()
+        btn_create.grid(row=1, column=6, sticky="nsew", padx=5, pady=5)
         #Delete Year Subject
         btn_delete = tk.Button(
             self,
             text="Delete Subject",
-            command=lambda : self.delete_subject()
+            command=lambda : self.delete_subject(),
+            font=self.controller.normal_font,
         )
-        btn_delete.pack()
+        btn_delete.grid(row=2, column=6, sticky="nsew", padx=5, pady=5)
+        #Return button
+        btn_return = tk.Button(
+            self,
+            text="Return",
+            command=lambda : self.controller.show_frame("SubjectPage"),
+            font=self.controller.normal_font,
+        )
+        btn_return.grid(row=4, column=6, sticky="nsew", padx=5, pady=5)
 
 
     def subject_listbox(self):
-        f_subject = tk.Frame(master=self)
-        f_subject.pack()
-        l_subject = tk.Label(master=f_subject, text="select subject")
-        l_subject.pack()
 
         data = [
-            ('name', 20),
-            ('teacher', 20),
-            ('room', 20),
+            ('name', 10),
+            ('teacher', 10),
+            ('room', 5),
             ('building', 10), #from room
-            ('field', 20),
-            ('department', 20), #from field
+            ('field', 10),
+            ('department', 10), #from field
             ('day', 10),
-            ('start', 10),
-            ('stop', 10),
-            ('group number', 10)
+            ('start', 5),
+            ('stop', 5),
+            ('group number', 5)
         ]
 
-        self.list_subjects = MultiListBox(master=f_subject, data=data)
+        self.list_subjects = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_subjects.pack()
+        self.list_subjects.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="nswe", padx=5, pady=5)
 
     
     def create_subject(self):
@@ -147,14 +152,13 @@ class YearSubjectPage(tk.Frame):
 
 
     def refresh_button(self):
-        f_refresh = tk.Frame(master=self)
-        f_refresh.pack()
         btn_refresh = tk.Button(
-            master=f_refresh,
+            master=self,
             text="refresh",
-            command=lambda : self.restart()
+            command=lambda : self.restart(),
+            font=self.controller.normal_font,
         )
-        btn_refresh.pack()
+        btn_refresh.grid(row=8, column=6, sticky="nsew", padx=5, pady=5)
 
 
     def restart(self):
@@ -214,6 +218,8 @@ class YearSubjectPage(tk.Frame):
 class CreateYearSubjectPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(9)], minsize=250)
+        self.rowconfigure([x for x in range(18)], minsize=40)
         self.controller = controller
         
         self.main_label()
@@ -237,24 +243,26 @@ class CreateYearSubjectPage(tk.Frame):
             text="Create Subject",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def return_button(self):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh()
+            command=lambda : self.return_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
-            command=lambda : self.home_refresh()
+            text="Home",
+            command=lambda : self.home_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_home.pack()
+        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def return_refresh(self):
@@ -275,59 +283,47 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def day_entry(self):
-        f_day = tk.Frame(master=self)
-        f_day.pack()
+        l_day = tk.Label(master=self, text="day", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_day.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_day = tk.Label(master=f_day, text="day")
-        l_day.pack()
-
-        self.e_day = tk.Entry(master=f_day)
-        self.e_day.pack()
+        self.e_day = tk.Entry(master=self)
+        self.e_day.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def start_entry(self):
-        f_start = tk.Frame(master=self)
-        f_start.pack()
+        l_start = tk.Label(master=self, text="start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_start = tk.Label(master=f_start, text="start")
-        l_start.pack()
-
-        self.e_start = tk.Entry(master=f_start)
-        self.e_start.pack()
+        self.e_start = tk.Entry(master=self)
+        self.e_start.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def stop_entry(self):
-        f_stop = tk.Frame(master=self)
-        f_stop.pack()
+        l_stop = tk.Label(master=self, text="stop",font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_stop = tk.Label(master=f_stop, text="stop")
-        l_stop.pack()
-
-        self.e_stop = tk.Entry(master=f_stop)
-        self.e_stop.pack()
+        self.e_stop = tk.Entry(master=self)
+        self.e_stop.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def name_entry(self):
-        f_name = tk.Frame(master=self)
-        f_name.pack()
+        l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_name.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_name = tk.Label(master=f_name, text="name")
-        l_name.pack()
-
-        self.e_name = tk.Entry(master=f_name)
-        self.e_name.pack()
+        self.e_name = tk.Entry(master=self)
+        self.e_name.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def field_listbox(self):
-        f_field = tk.Frame(master=self)
-        f_field.pack()
+        l_field = tk.Label(master=self, text="field", font=self.controller.normal_font, relief=tk.RAISED)
+        l_field.grid(row=9, column=0, rowspan=1, columnspan=4, sticky="nswe", pady=5, padx=5)
         
         data = [
             ('field of study', 20),
             ('department', 20)
         ]
-        self.list_fields = MultiListBox(master=f_field, data=data)
-        self.list_fields.pack()
+        self.list_fields = MultiListBox(master=self, data=data)
+        self.list_fields.grid(row=10, column=0, rowspan=4, columnspan=4, sticky="nswe", pady=5, padx=5)
         self.refresh_field_listbox()
 
 
@@ -348,15 +344,15 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def room_listbox(self):
-        f_room = tk.Frame(master=self)
-        f_room.pack()
+        l_room = tk.Label(master=self, text="room", font=self.controller.normal_font, relief=tk.RAISED)
+        l_room.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
         data = [
             ('room number', 10),
             ('building', 20)
         ]
-        self.list_rooms = MultiListBox(master=f_room, data=data)
-        self.list_rooms.pack()
+        self.list_rooms = MultiListBox(master=self, data=data)
+        self.list_rooms.grid(row=1, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
         self.refresh_room_listbox()
 
 
@@ -377,8 +373,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def year_listbox(self):
-        f_group = tk.Frame(master=self)
-        f_group.pack()
+        l_group = tk.Label(master=self, text="year groups", font=self.controller.normal_font, relief=tk.RAISED)
+        l_group.grid(row=6, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
         
         data = [
             ('number',10),
@@ -387,9 +383,9 @@ class CreateYearSubjectPage(tk.Frame):
             ('students', 10) #numbers of students
         ]
 
-        self.list_groups = MultiListBox(master=f_group, data=data)
+        self.list_groups = MultiListBox(master=self, data=data)
         self.refresh_year_listbox()
-        self.list_groups.pack()
+        self.list_groups.grid(row=7, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
 
 
     def refresh_year_listbox(self):
@@ -416,16 +412,16 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def teacher_listbox(self):
-        f_teacher = tk.Frame(master=self)
-        f_teacher.pack()
+        l_teacher = tk.Label(master=self, text="teacher", font=self.controller.normal_font, relief=tk.RAISED)
+        l_teacher.grid(row=12, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
         data = [
             ('name', 10),
             ('lastname', 10)
         ]
 
-        self.list_teachers = MultiListBox(master=f_teacher, data=data)
-        self.list_teachers.pack()
+        self.list_teachers = MultiListBox(master=self, data=data)
+        self.list_teachers.grid(row=13, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
         self.refresh_teacher_listbox()
 
 
@@ -451,15 +447,13 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.create_subject()
+            command=lambda : self.create_subject(),
+            font=self.controller.normal_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
 
 
     def create_subject(self):
@@ -495,6 +489,8 @@ class CreateYearSubjectPage(tk.Frame):
 class ExeSubjectPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
 
@@ -509,39 +505,45 @@ class ExeSubjectPage(tk.Frame):
             text="Exe Subjects Page",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row = 0, column = 6, sticky="nsew", padx=5, pady=5)
 
 
     def buttons(self):
         #Return Home Page
-        btn_return = tk.Button(
+        btn_home = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda : self.controller.show_frame("StartPage")
+            command=lambda : self.controller.show_frame("StartPage"),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_home.grid(row=3, column=6, sticky="nsew", padx=5, pady=5)
         #Create Exe Subject
         btn_create = tk.Button(
             self,
             text="Create Subject",
-            command=lambda : self.create_subject()
+            command=lambda : self.create_subject(),
+            font=self.controller.normal_font,
         )
-        btn_create.pack()
+        btn_create.grid(row=1, column=6, sticky="nsew", padx=5, pady=5)
         #Delete Exe Subject
         btn_delete = tk.Button(
             self,
             text="Delete Subject",
-            command=lambda : self.delete_subject()
+            command=lambda : self.delete_subject(),
+            font=self.controller.normal_font,
         )
-        btn_delete.pack()
+        btn_delete.grid(row=2, column=6, sticky="nsew", padx=5, pady=5)
+        #Return button
+        btn_return = tk.Button(
+            self,
+            text="Return",
+            command=lambda : self.controller.show_frame("SubjectPage"),
+            font=self.controller.normal_font,
+        )
+        btn_return.grid(row=4, column=6, sticky="nsew", padx=5, pady=5)
 
 
     def subject_listbox(self):
-        f_subject = tk.Frame(master=self)
-        f_subject.pack()
-        l_subject = tk.Label(master=f_subject, text="select subject")
-        l_subject.pack()
-
         data = [
             ('name', 20),
             ('teacher', 20),
@@ -555,9 +557,9 @@ class ExeSubjectPage(tk.Frame):
             ('group number', 10)
         ]
 
-        self.list_subjects = MultiListBox(master=f_subject, data=data)
+        self.list_subjects = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_subjects.pack()
+        self.list_subjects.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="nswe", padx=5, pady=5)
 
 
     def create_subject(self):
@@ -578,14 +580,13 @@ class ExeSubjectPage(tk.Frame):
 
 
     def refresh_button(self):
-        f_refresh = tk.Frame(master=self)
-        f_refresh.pack()
         btn_refresh = tk.Button(
-            master=f_refresh,
+            master=self,
             text="refresh",
-            command=lambda : self.restart()
+            command=lambda : self.restart(),
+            font=self.controller.normal_font,
         )
-        btn_refresh.pack()
+        btn_refresh.grid(row=8, column=6, sticky="nsew", padx=5, pady=5)
 
 
     def restart(self):
@@ -645,6 +646,8 @@ class ExeSubjectPage(tk.Frame):
 class CreateExeSubjectPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(9)], minsize=250)
+        self.rowconfigure([x for x in range(18)], minsize=40)
         self.controller = controller
 
         self.main_label()
@@ -668,25 +671,27 @@ class CreateExeSubjectPage(tk.Frame):
             text="Create Subject",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def return_button(self):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh()
+            command=lambda : self.return_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def home_button(self):
         btn_home = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda : self.home_refresh()
+            command=lambda : self.home_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_home.pack()
+        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def return_refresh(self):
@@ -707,59 +712,48 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def day_entry(self):
-        f_day = tk.Frame(master=self)
-        f_day.pack()
+        l_day = tk.Label(master=self, text="day", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_day.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_day = tk.Label(master=f_day, text="day")
-        l_day.pack()
-
-        self.e_day = tk.Entry(master=f_day)
-        self.e_day.pack()
+        self.e_day = tk.Entry(master=self)
+        self.e_day.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def start_entry(self):
-        f_start = tk.Frame(master=self)
-        f_start.pack()
+        l_start = tk.Label(master=self, text="start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_start = tk.Label(master=f_start, text="start")
-        l_start.pack()
-
-        self.e_start = tk.Entry(master=f_start)
-        self.e_start.pack()
+        self.e_start = tk.Entry(master=self)
+        self.e_start.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def stop_entry(self):
-        f_stop = tk.Frame(master=self)
-        f_stop.pack()
+        l_stop = tk.Label(master=self, text="stop", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_stop = tk.Label(master=f_stop, text="stop")
-        l_stop.pack()
-
-        self.e_stop = tk.Entry(master=f_stop)
-        self.e_stop.pack()
+        self.e_stop = tk.Entry(master=self)
+        self.e_stop.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def name_entry(self):
-        f_name = tk.Frame(master=self)
-        f_name.pack()
+        l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_name.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_name = tk.Label(master=f_name, text="name")
-        l_name.pack()
-
-        self.e_name = tk.Entry(master=f_name)
-        self.e_name.pack()
+        self.e_name = tk.Entry(master=self)
+        self.e_name.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def field_listbox(self):
-        f_field = tk.Frame(master=self)
-        f_field.pack()
+        l_field = tk.Label(master=self, text="field", font=self.controller.normal_font, relief=tk.RAISED)
+        l_field.grid(row=9, column=0, rowspan=1, columnspan=4, sticky="nswe", pady=5, padx=5)
         
         data = [
             ('field of study', 20),
             ('department', 20)
         ]
-        self.list_fields = MultiListBox(master=f_field, data=data)
-        self.list_fields.pack()
+
+        self.list_fields = MultiListBox(master=self, data=data)
+        self.list_fields.grid(row=10, column=0, rowspan=4, columnspan=4, sticky="nswe", pady=5, padx=5)
         self.refresh_field_listbox()
 
 
@@ -780,15 +774,15 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def room_listbox(self):
-        f_room = tk.Frame(master=self)
-        f_room.pack()
+        l_room = tk.Label(master=self, text="room", font=self.controller.normal_font, relief=tk.RAISED)
+        l_room.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
         data = [
             ('room number', 10),
             ('building', 20)
         ]
-        self.list_rooms = MultiListBox(master=f_room, data=data)
-        self.list_rooms.pack()
+        self.list_rooms = MultiListBox(master=self, data=data)
+        self.list_rooms.grid(row=1, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
         self.refresh_room_listbox()
 
 
@@ -809,8 +803,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def exe_listbox(self):
-        f_group = tk.Frame(master=self)
-        f_group.pack()
+        l_group = tk.Label(master=self, text="exe groups", font=self.controller.normal_font, relief=tk.RAISED)
+        l_group.grid(row=6, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
         
         data = [
             ('number',10),
@@ -819,9 +813,9 @@ class CreateExeSubjectPage(tk.Frame):
             ('students', 10) #numbers of students
         ]
 
-        self.list_groups = MultiListBox(master=f_group, data=data)
+        self.list_groups = MultiListBox(master=self, data=data)
         self.refresh_exe_listbox()
-        self.list_groups.pack()
+        self.list_groups.grid(row=7, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
 
 
     def refresh_exe_listbox(self):
@@ -848,16 +842,16 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def teacher_listbox(self):
-        f_teacher = tk.Frame(master=self)
-        f_teacher.pack()
+        l_teacher = tk.Label(master=self, text="teacher", font=self.controller.normal_font, relief=tk.RAISED)
+        l_teacher.grid(row=12, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
         data = [
             ('name', 10),
             ('lastname', 10)
         ]
 
-        self.list_teachers = MultiListBox(master=f_teacher, data=data)
-        self.list_teachers.pack()
+        self.list_teachers = MultiListBox(master=self, data=data)
+        self.list_teachers.grid(row=13, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
         self.refresh_teacher_listbox()
 
 
@@ -883,15 +877,13 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.create_subject()
+            command=lambda : self.create_subject(),
+            font=self.controller.normal_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
 
 
     def create_subject(self):
@@ -927,6 +919,8 @@ class CreateExeSubjectPage(tk.Frame):
 class LabSubjectPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
 
@@ -941,39 +935,45 @@ class LabSubjectPage(tk.Frame):
             text="Lab Subjects Page",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row = 0, column = 6, sticky="nsew", padx=5, pady=5)
 
 
     def buttons(self):
         #Return Home Page
-        btn_return = tk.Button(
+        btn_home = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda : self.controller.show_frame("StartPage")
+            command=lambda : self.controller.show_frame("StartPage"),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_home.grid(row=3, column=6, sticky="nsew", padx=5, pady=5)
         #Create Year Subject
         btn_create = tk.Button(
             self,
             text="Create Subject",
-            command=lambda : self.create_subject()
+            command=lambda : self.create_subject(),
+            font=self.controller.normal_font,
         )
-        btn_create.pack()
+        btn_create.grid(row=1, column=6, sticky="nsew", padx=5, pady=5)
         #Delete Year Subject
         btn_delete = tk.Button(
             self,
             text="Delete Subject",
-            command=lambda : self.delete_subject()
+            command=lambda : self.delete_subject(),
+            font=self.controller.normal_font,
         )
-        btn_delete.pack()
+        btn_delete.grid(row=2, column=6, sticky="nsew", padx=5, pady=5)
+        #Return button
+        btn_return = tk.Button(
+            self,
+            text="Return",
+            command=lambda : self.controller.show_frame("SubjectPage"),
+            font=self.controller.normal_font,
+        )
+        btn_return.grid(row=4, column=6, sticky="nsew", padx=5, pady=5)
 
 
     def subject_listbox(self):
-        f_subject = tk.Frame(master=self)
-        f_subject.pack()
-        l_subject = tk.Label(master=f_subject, text="select subject")
-        l_subject.pack()
-
         data = [
             ('name', 20),
             ('teacher', 20),
@@ -987,9 +987,9 @@ class LabSubjectPage(tk.Frame):
             ('group number', 10)
         ]
 
-        self.list_subjects = MultiListBox(master=f_subject, data=data)
+        self.list_subjects = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_subjects.pack()
+        self.list_subjects.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="nswe", padx=5, pady=5)
 
 
     def create_subject(self):
@@ -1010,14 +1010,13 @@ class LabSubjectPage(tk.Frame):
 
 
     def refresh_button(self):
-        f_refresh = tk.Frame(master=self)
-        f_refresh.pack()
         btn_refresh = tk.Button(
-            master=f_refresh,
+            master=self,
             text="refresh",
-            command=lambda : self.restart()
+            command=lambda : self.restart(),
+            font=self.controller.normal_font,
         )
-        btn_refresh.pack()
+        btn_refresh.grid(row=8, column=6, sticky="nsew", padx=5, pady=5)
 
 
     def restart(self):
@@ -1077,6 +1076,8 @@ class LabSubjectPage(tk.Frame):
 class CreateLabSubjectPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(9)], minsize=250)
+        self.rowconfigure([x for x in range(18)], minsize=40)
         self.controller = controller
 
         self.main_label()
@@ -1100,25 +1101,27 @@ class CreateLabSubjectPage(tk.Frame):
             text="Create Subject",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def return_button(self):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh()
+            command=lambda : self.return_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def home_button(self):
         btn_home = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda : self.home_refresh()
+            command=lambda : self.home_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_home.pack()
+        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def return_refresh(self):
@@ -1139,59 +1142,47 @@ class CreateLabSubjectPage(tk.Frame):
 
     
     def day_entry(self):
-        f_day = tk.Frame(master=self)
-        f_day.pack()
+        l_day = tk.Label(master=self, text="day", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_day.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_day = tk.Label(master=f_day, text="day")
-        l_day.pack()
-
-        self.e_day = tk.Entry(master=f_day)
-        self.e_day.pack()
+        self.e_day = tk.Entry(master=self)
+        self.e_day.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def start_entry(self):
-        f_start = tk.Frame(master=self)
-        f_start.pack()
+        l_start = tk.Label(master=self, text="start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_start = tk.Label(master=f_start, text="start")
-        l_start.pack()
-
-        self.e_start = tk.Entry(master=f_start)
-        self.e_start.pack()
+        self.e_start = tk.Entry(master=self)
+        self.e_start.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def stop_entry(self):
-        f_stop = tk.Frame(master=self)
-        f_stop.pack()
+        l_stop = tk.Label(master=self, text="stop", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_stop = tk.Label(master=f_stop, text="stop")
-        l_stop.pack()
-
-        self.e_stop = tk.Entry(master=f_stop)
-        self.e_stop.pack()
+        self.e_stop = tk.Entry(master=self)
+        self.e_stop.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def name_entry(self):
-        f_name = tk.Frame(master=self)
-        f_name.pack()
+        l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_name.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_name = tk.Label(master=f_name, text="name")
-        l_name.pack()
-
-        self.e_name = tk.Entry(master=f_name)
-        self.e_name.pack()
+        self.e_name = tk.Entry(master=self)
+        self.e_name.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def field_listbox(self):
-        f_field = tk.Frame(master=self)
-        f_field.pack()
+        l_field = tk.Label(master=self, text="field", font=self.controller.normal_font, relief=tk.RAISED)
+        l_field.grid(row=9, column=0, rowspan=1, columnspan=4, sticky="nswe", pady=5, padx=5)
         
         data = [
             ('field of study', 20),
             ('department', 20)
         ]
-        self.list_fields = MultiListBox(master=f_field, data=data)
-        self.list_fields.pack()
+        self.list_fields = MultiListBox(master=self, data=data)
+        self.list_fields.grid(row=10, column=0, rowspan=4, columnspan=4, sticky="nswe", pady=5, padx=5)
         self.refresh_field_listbox()
 
 
@@ -1212,15 +1203,15 @@ class CreateLabSubjectPage(tk.Frame):
 
 
     def room_listbox(self):
-        f_room = tk.Frame(master=self)
-        f_room.pack()
+        l_room = tk.Label(master=self, text="room", font=self.controller.normal_font, relief=tk.RAISED)
+        l_room.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
         data = [
             ('room number', 10),
             ('building', 20)
         ]
-        self.list_rooms = MultiListBox(master=f_room, data=data)
-        self.list_rooms.pack()
+        self.list_rooms = MultiListBox(master=self, data=data)
+        self.list_rooms.grid(row=1, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
         self.refresh_room_listbox()
 
 
@@ -1241,8 +1232,8 @@ class CreateLabSubjectPage(tk.Frame):
 
 
     def lab_listbox(self):
-        f_group = tk.Frame(master=self)
-        f_group.pack()
+        l_group = tk.Label(master=self, text="lab groups", font=self.controller.normal_font, relief=tk.RAISED)
+        l_group.grid(row=6, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
         
         data = [
             ('number',10),
@@ -1251,9 +1242,9 @@ class CreateLabSubjectPage(tk.Frame):
             ('students', 10) #numbers of students
         ]
 
-        self.list_groups = MultiListBox(master=f_group, data=data)
+        self.list_groups = MultiListBox(master=self, data=data)
         self.refresh_lab_listbox()
-        self.list_groups.pack()
+        self.list_groups.grid(row=7, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
 
 
     def refresh_lab_listbox(self):
@@ -1280,16 +1271,16 @@ class CreateLabSubjectPage(tk.Frame):
 
 
     def teacher_listbox(self):
-        f_teacher = tk.Frame(master=self)
-        f_teacher.pack()
+        l_teacher = tk.Label(master=self, text="teacher", font=self.controller.normal_font, relief=tk.RAISED)
+        l_teacher.grid(row=12, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
         data = [
             ('name', 10),
             ('lastname', 10)
         ]
 
-        self.list_teachers = MultiListBox(master=f_teacher, data=data)
-        self.list_teachers.pack()
+        self.list_teachers = MultiListBox(master=self, data=data)
+        self.list_teachers.grid(row=13, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
         self.refresh_teacher_listbox()
 
 
@@ -1315,15 +1306,13 @@ class CreateLabSubjectPage(tk.Frame):
 
 
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.create_subject()
+            command=lambda : self.create_subject(),
+            font=self.controller.normal_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
 
 
     def create_subject(self):

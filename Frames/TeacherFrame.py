@@ -7,6 +7,8 @@ from tk_extension.multilistBox import MultiListBox
 class TeacherPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(7)], minsize=250)
+        self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
 
@@ -14,13 +16,14 @@ class TeacherPage(tk.Frame):
         self.refresh_button()
         self.buttons()
 
+
     def main_label(self):
         label = tk.Label(
             self,
             text="Teacher Page",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column = 6, sticky="news", padx=5, pady=5)
 
 
     def buttons(self):
@@ -28,38 +31,37 @@ class TeacherPage(tk.Frame):
         btn_return = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda:self.controller.show_frame("StartPage")
+            command=lambda:self.controller.show_frame("StartPage"),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=4, column=6, sticky="news", padx=5, pady=5)
         #Create Teacher Button
         btn_create = tk.Button(
             self,
             text="Create Teacher",
-            command=lambda:self.controller.show_frame("CreateTeacherPage")
+            command=lambda:self.controller.show_frame("CreateTeacherPage"),
+            font=self.controller.normal_font,
         )
-        btn_create.pack()
+        btn_create.grid(row=1, column=6, sticky="news", padx=5, pady=5)
         #Delete Teacher Button
         btn_delete = tk.Button(
             self,
             text="Delete Teacher",
-            command=lambda:self.delete_teacher()
+            command=lambda:self.delete_teacher(),
+            font=self.controller.normal_font,
         )
-        btn_delete.pack()
+        btn_delete.grid(row=2, column=6, sticky="news", padx=5, pady=5)
         #Change Teacher Button
         btn_update = tk.Button(
             self,
             text="Change Teacher",
-            command=lambda: self.update_teacher()
+            command=lambda: self.update_teacher(),
+            font=self.controller.normal_font,
         )
-        btn_update.pack()
+        btn_update.grid(row=3, column=6, sticky="news", padx=5, pady=5)
 
 
     def teacher_listbox(self):
-        f_teacher = tk.Frame(master=self)
-        f_teacher.pack()
-        l_teacher = tk.Label(master=f_teacher, text="select teacher")
-        l_teacher.pack()
-
         data = [
             ('id', 10),
             ('name', 20),
@@ -69,12 +71,12 @@ class TeacherPage(tk.Frame):
             ('email', 20),
             ('academic degree', 10),
             ('department name', 20),
-            ('place of residence', 40)
+            ('place of residence', 30)
         ]
 
-        self.list_teachers = MultiListBox(master=f_teacher, data=data)
+        self.list_teachers = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_teachers.pack()
+        self.list_teachers.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="news", padx=5, pady=5)
 
     
     def refresh(self):
@@ -99,14 +101,13 @@ class TeacherPage(tk.Frame):
             self.list_teachers.insert(i, output)
 
     def refresh_button(self):
-        f_refresh = tk.Frame(master=self)
-        f_refresh.pack()
         btn_refresh = tk.Button(
-            master=f_refresh,
+            master=self,
             text="refresh",
-            command=lambda : self.restart()
+            command=lambda : self.restart(),
+            font=self.controller.normal_font,
         )
-        btn_refresh.pack()
+        btn_refresh.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
 
     def restart(self):
@@ -159,6 +160,8 @@ class TeacherPage(tk.Frame):
 class CreateTeacherPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.columnconfigure([x for x in range(9)], minsize=250)
+        self.rowconfigure([x for x in range(18)], minsize=49)
         self.controller = controller
 
         self.main_label()
@@ -174,22 +177,24 @@ class CreateTeacherPage(tk.Frame):
         self.dept_listbox()
         self.submit()
 
+
     def main_label(self):
         label = tk.Label(
             self,
             text="Create Teacher",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
     
     def home_button(self):
         btn_home = tk.Button(
             self,
             text="Return to Home Page",
-            command=lambda : self.home_refresh()
+            command=lambda : self.home_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_home.pack()
+        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
     
     def home_refresh(self):
@@ -201,9 +206,10 @@ class CreateTeacherPage(tk.Frame):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh()
+            command=lambda : self.return_refresh(),
+            font=self.controller.normal_font,
         )
-        btn_return.pack()
+        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
 
     def return_refresh(self):
@@ -221,118 +227,110 @@ class CreateTeacherPage(tk.Frame):
 
 
     def name_entry(self):
-        f_name = tk.Frame(master=self)
-        f_name.pack()
+        l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_name = tk.Label(master=f_name, text="name")
-        l_name.pack()
-
-        self.e_name = tk.Entry(master=f_name)
-        self.e_name.pack()
+        self.e_name = tk.Entry(master=self)
+        self.e_name.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
     
     def sec_name_entry(self):
-        f_sec_name = tk.Frame(master=self)
-        f_sec_name.pack()
+        l_sec_name = tk.Label(master=self, text="second name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_sec_name.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_sec_name = tk.Label(master=f_sec_name, text="second name")
-        l_sec_name.pack()
-
-        self.e_sec_name = tk.Entry(master=f_sec_name)
-        self.e_sec_name.pack()
+        self.e_sec_name = tk.Entry(master=self)
+        self.e_sec_name.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def lastname_entry(self):
-        f_lastname = tk.Frame(master=self)
-        f_lastname.pack()
+        l_lastname = tk.Label(master=self, text="lastname", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_lastname.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_lastname = tk.Label(master=f_lastname, text="lastname")
-        l_lastname.pack()
-
-        self.e_lastname = tk.Entry(master=f_lastname)
-        self.e_lastname.pack()
+        self.e_lastname = tk.Entry(master=self)
+        self.e_lastname.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
     
     def ssn_entry(self):
-        f_ssn = tk.Frame(master=self)
-        f_ssn.pack()
+        l_ssn = tk.Label(master=self, text="ssn", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_ssn.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_ssn = tk.Label(master=f_ssn, text="ssn")
-        l_ssn.pack()
-
-        self.e_ssn = tk.Entry(master=f_ssn)
-        self.e_ssn.pack()
+        self.e_ssn = tk.Entry(master=self)
+        self.e_ssn.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def email_entry(self):
-        f_email = tk.Frame(master=self)
-        f_email.pack()
+        l_email = tk.Label(master=self, text="email", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_email.grid(row=9, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        l_email = tk.Label(master=f_email, text="email")
-        l_email.pack()
-
-        self.e_email = tk.Entry(master=f_email)
-        self.e_email.pack()
+        self.e_email = tk.Entry(master=self)
+        self.e_email.grid(row=10, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
     def acd_listbox(self):
-        f_acd = tk.Frame(master=self)
-        f_acd.pack()
+        data = [
+            ('academic degree', 10),
+        ]
 
-        l_acd = tk.Label(master=f_acd, text="academic degree")
-        l_acd.pack()
-
-        self.e_acd = tk.Listbox(master=f_acd)
+        self.e_acd = MultiListBox(master=self, data=data)
         for i, degree in enumerate(Teacher.acd_degrees):
-            self.e_acd.insert(i, degree)
-        self.e_acd.pack()
+            self.e_acd.insert(i, (degree,))
+        self.e_acd.grid(row=0, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
 
     
     def place_entry(self):
-        f_place = tk.Frame(master=self)
-        f_place.pack()
-
-        l_place = tk.Label(master=f_place, text="place of residence")
-        l_place.pack()
+        l_place = tk.Label(master=self, text="place of residence", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
+        l_place.grid(row=11, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
         self.e_place = tk.Entry(master=self)
-        self.e_place.pack()
+        self.e_place.grid(row=12, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
     
     def dept_listbox(self):
-        f_dept = tk.Frame(master=self)
-        f_dept.pack()
+        l_dept = tk.Label(master=self, text="department", font=self.controller.normal_font, relief=tk.RAISED)
+        l_dept.grid(row=4, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
-        l_dept = tk.Label(master=f_dept, text="department")
-        l_dept.pack()
+        data = [
+            ('name', 10),
+            ('dean', 10)
+        ]
 
-        self.dept_list = tk.Listbox(master=f_dept)
-        for i, dept in enumerate(self.controller.departments):
-            self.dept_list.insert(i, dept.get_name())
-        self.dept_list.pack()
+        self.list_dept = MultiListBox(master=self, data=data)
+        self.list_dept.grid(row=5, column=4, rowspan=14, columnspan=3, sticky="nswe", pady=5, padx=5)
+        self.refresh_dept_listbox()
 
 
     def refresh_dept_listbox(self):
-        self.dept_list.delete(0, tk.END)
+        self.list_dept.delete(0, tk.END)
         for i, dept in enumerate(self.controller.departments):
-            self.dept_list.insert(i, dept.get_name())
+            try:
+                dean = dept.get_dean().get_name()
+            except AttributeError:
+                dean = "NULL"
+
+            output = (
+                dept.get_name(),
+                dean
+            )
+
+            self.list_dept.insert(i, output)
 
     
     def submit(self):
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.create_teacher()
+            command=lambda : self.create_teacher(),
+            font=self.controller.normal_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def create_teacher(self):
-        temp_dept = None
-        for dept in self.controller.departments:
-            if self.dept_list.get(tk.ACTIVE) == dept.get_name():
-                temp_dept = dept
-                break
+        idx = self.list_dept.index(tk.ACTIVE)
+        temp_dept = self.controller.departments[idx]
+
+        idx = self.e_acd.index(tk.ACTIVE)
+        temp_acd = list(Teacher.acd_degrees)[idx]
 
         self.controller.teachers.append(Teacher(
             name=self.e_name.get(),
@@ -340,7 +338,7 @@ class CreateTeacherPage(tk.Frame):
             lastname=self.e_lastname.get(),
             ssn=self.e_ssn.get(),
             email=self.e_email.get(),
-            acd_degree=self.e_acd.get(tk.ACTIVE),
+            acd_degree=temp_acd,
             department=temp_dept,
             place_of_residence=self.e_place.get()
         ))
@@ -372,19 +370,17 @@ class ChangeTeacherPage(CreateTeacherPage):
             text="Change Teacher",
             font=self.controller.title_font
         )
-        label.pack(side=tk.TOP, fill=tk.X, pady=10)
+        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
 
 
     def submit(self):
-        f_submit = tk.Frame(master=self)
-        f_submit.pack()
-
         sub_btn = tk.Button(
-            master=f_submit,
+            master=self,
             text="submit",
-            command=lambda : self.update_teacher()
+            command=lambda : self.update_teacher(),
+            font=self.controller.normal_font,
         )
-        sub_btn.pack()
+        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
 
 
     def fill_entry(self):
@@ -418,15 +414,17 @@ class ChangeTeacherPage(CreateTeacherPage):
 
     
     def set_attr_teacher(self):
-        for dept in self.controller.departments:
-            if self.dept_list.get(tk.ACTIVE) == dept.get_name():
-                self.teacher.set_department(dept)
-                break
+        idx = self.list_dept.index(tk.ACTIVE)
+        temp_dept = self.controller.departments[idx]
+        self.teacher.set_department(temp_dept)
+
+        idx = self.e_acd.index(tk.ACTIVE)
+        temp_acd = list(Teacher.acd_degrees)[idx]
+        self.teacher.set_acd_degree(temp_acd)
 
         self.teacher.set_name(self.e_name.get())
         self.teacher.set_sec_name(self.e_sec_name.get())
         self.teacher.set_lastname(self.e_lastname.get())
         self.teacher.set_ssn(self.e_ssn.get())
         self.teacher.set_email(self.e_email.get())
-        self.teacher.set_acd_degree(self.e_acd.get(tk.ACTIVE))
         self.teacher.set_place_od_residence(self.e_place.get())

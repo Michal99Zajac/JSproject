@@ -20,6 +20,7 @@ class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+        self.resizable(False, False)
         self.db = TableDatabase("databases/data.db")
 
         #table setting
@@ -46,6 +47,7 @@ class App(tk.Tk):
         self.geometry("1750x900")
 
         self.title_font = tkfont.Font(family="Helvetica", size=20, weight="bold", slant="italic")
+        self.normal_font = tkfont.Font(family="Helvetica", size=15, weight=tkfont.BOLD)
 
         mainframe = tk.Frame(self)
         mainframe.grid()
@@ -129,120 +131,135 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(
-            self, text="START",
-            font=controller.title_font,
-        )
-        label.pack(side="top", fill=tk.X, pady=10)
+        self.columnconfigure([x for x in range(2)], minsize=875)
+        self.rowconfigure([x for x in range(7)], minsize=128)
 
-        btns = []
+        font = tkfont.Font(family="Helvetica", size=20, weight=tkfont.BOLD)
+        title_font = tkfont.Font(family="Helvetica", size=36, weight=tkfont.BOLD)
+
+        label = tk.Label(
+            self, text="MENU",
+            font=title_font,
+        )
+        label.grid(row=0, column=0, columnspan=2, sticky="nswe", padx=5, pady=5)
+
+        #btns = []
         #Teacher Page Button
-        btn_1 = tk.Button(
+        btn_teacher = tk.Button(
                 self,
                 text="Teacher Page",
                 command=lambda: controller.show_frame("TeacherPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_1)
+        btn_teacher.grid(row=2, column=1, sticky="nswe", padx=5, pady=5)
 
         #Building Page Button
-        btn_2 = tk.Button(
+        btn_building = tk.Button(
                 self,
                 text="Building Page",
                 command=lambda: controller.show_frame("BuildingPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_2)
+        btn_building.grid(row=5, column=1, sticky="nswe", padx=5, pady=5)
 
         #Deans Employee Page Button
-        btn_3 = tk.Button(
+        btn_deans_emp = tk.Button(
                 self,
                 text="Deans Employee Page",
                 command=lambda: controller.show_frame("DeansEmpPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_3)
+        btn_deans_emp.grid(row=4, column=1, sticky="nswe", padx=5, pady=5)
 
         #Dean Page Button
-        btn_4 = tk.Button(
+        btn_dean = tk.Button(
                 self,
                 text="Dean Page",
                 command=lambda: controller.show_frame("DeanPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_4)
+        btn_dean.grid(row=3, column=1, sticky="nswe", padx=5, pady=5)
 
         #Department Page Button
-        btn_5 = tk.Button(
+        btn_dept = tk.Button(
                 self,
                 text="Department Page",
                 command=lambda: controller.show_frame("DepartmentPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_5)
+        btn_dept.grid(row=1, column=0, sticky="nswe", padx=5, pady=5)
 
         #Exercise Group Page Button
-        btn_6 = tk.Button(
+        btn_exe = tk.Button(
                 self,
                 text="Exercise Group Page",
                 command=lambda: controller.show_frame("ExeGroupPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_6)
+        btn_exe.grid(row=5, column=0, sticky="nswe", padx=5, pady=5)
 
         #Field Of Study Page
-        btn_7 = tk.Button(
+        btn_field = tk.Button(
                 self,
                 text="Field of Study Page",
                 command=lambda: controller.show_frame("FieldOfStudyPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_7)
+        btn_field.grid(row=2, column=0, sticky="nswe", padx=5, pady=5)
 
         #Laboratory Group Page Button
-        btn_8 = tk.Button(
+        btn_lab = tk.Button(
                 self,
                 text="Laboratory Group Page",
                 command=lambda: controller.show_frame("LabGroupPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_8)
+        btn_lab.grid(row=6, column=0, sticky="nswe", padx=5, pady=5)
 
         #Room Page Button
-        btn_9 = tk.Button(
+        btn_room = tk.Button(
                 self,
                 text="Room Page",
                 command=lambda: controller.show_frame("RoomPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_9)
+        btn_room.grid(row=6, column=1, sticky="nswe", padx=5, pady=5)
 
         #Subject Page Button
-        btn_10 = tk.Button(
+        btn_subject = tk.Button(
                 self,
                 text="Subject Page",
                 command=lambda: controller.show_frame("SubjectPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_10)
+        btn_subject.grid(row=3, column=0, sticky="nswe", padx=5, pady=5)
 
         #Year Group Page Button
-        btn_11 = tk.Button(
+        btn_year = tk.Button(
                 self,
                 text="Year Group Page",
                 command=lambda: controller.show_frame("YearGroupPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_11)
+        btn_year.grid(row=4, column=0, sticky="nswe", padx=5, pady=5)
 
         #Student Page Button
-        btn_12 = tk.Button(
+        btn_student = tk.Button(
                 self,
                 text="Student Page",
                 command=lambda: controller.show_frame("StudentPage"),
                 height=2,
+                font=font
             )
-        btns.append(btn_12)
-        
-        for btn in btns:
-            btn.pack(fill=tk.BOTH, pady=0.5)
+        btn_student.grid(row=1, column=1, sticky="nswe", padx=5, pady=5)
