@@ -1,5 +1,5 @@
 #databases files
-databases/*
+data.db
 
 #vscode directory
 .vscode/*
