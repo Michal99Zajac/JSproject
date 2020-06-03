@@ -326,8 +326,11 @@ class CreateTeacherPage(tk.Frame):
 
 
     def create_teacher(self):
-        idx = self.list_dept.index(tk.ACTIVE)
-        temp_dept = self.controller.departments[idx]
+        try:
+            idx = self.list_dept.index(tk.ACTIVE)
+            temp_dept = self.controller.departments[idx]
+        except IndexError:
+            temp_dept = None
 
         idx = self.e_acd.index(tk.ACTIVE)
         temp_acd = list(Teacher.acd_degrees)[idx]
@@ -415,13 +418,19 @@ class ChangeTeacherPage(CreateTeacherPage):
 
     
     def set_attr_teacher(self):
-        idx = self.list_dept.index(tk.ACTIVE)
-        temp_dept = self.controller.departments[idx]
-        self.teacher.set_department(temp_dept)
+        try:
+            idx = self.list_dept.index(tk.ACTIVE)
+            temp_dept = self.controller.departments[idx]
+            self.teacher.set_department(temp_dept)
+        except IndexError:
+            pass
 
-        idx = self.e_acd.index(tk.ACTIVE)
-        temp_acd = list(Teacher.acd_degrees)[idx]
-        self.teacher.set_acd_degree(temp_acd)
+        try:
+            idx = self.e_acd.index(tk.ACTIVE)
+            temp_acd = list(Teacher.acd_degrees)[idx]
+            self.teacher.set_acd_degree(temp_acd)
+        except IndexError:
+            pass
 
         self.teacher.set_name(self.e_name.get())
         self.teacher.set_sec_name(self.e_sec_name.get())

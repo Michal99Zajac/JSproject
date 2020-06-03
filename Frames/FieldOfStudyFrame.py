@@ -298,11 +298,17 @@ class CreateFieldOfStudyPage(tk.Frame):
 
 
     def create_field(self):
-        idx = self.list_dept.index(tk.ACTIVE)
-        temp_dept = self.controller.departments[idx]
+        try:
+            idx = self.list_dept.index(tk.ACTIVE)
+            temp_dept = self.controller.departments[idx]
+        except IndexError:
+            temp_dept = None
 
-        idx = self.list_leader.index(tk.ACTIVE)
-        temp_leader = self.controller.deans_emps[idx]
+        try:
+            idx = self.list_leader.index(tk.ACTIVE)
+            temp_leader = self.controller.deans_emps[idx]
+        except IndexError:
+            temp_leader = None
 
         self.controller.fields.append(FieldOfStudy(
             name=self.e_name.get(),
@@ -321,6 +327,7 @@ class CreateFieldOfStudyPage(tk.Frame):
         self.controller.frames["YearGroupPage"].refresh()
         #student page restart
         self.controller.frames["StudentPage"].refresh()
+        self.controller.frames["CreateStudentPage"].refresh_field_listbox()
 
         self.controller.frames["YearSubjectPage"].refresh()
         self.controller.frames["CreateYearSubjectPage"].refresh_field_listbox()
@@ -371,13 +378,19 @@ class ChangeFieldOfStudyPage(CreateFieldOfStudyPage):
 
 
     def set_attr_field(self):
-        idx = self.list_dept.index(tk.ACTIVE)
-        temp_dept = self.controller.departments[idx]
-        self.field.set_department(temp_dept)
+        try:
+            idx = self.list_dept.index(tk.ACTIVE)
+            temp_dept = self.controller.departments[idx]
+            self.field.set_department(temp_dept)
+        except IndexError:
+            pass
 
-        idx = self.list_leader.index(tk.ACTIVE)
-        temp_emp = self.controller.deans_emps[idx]
-        self.field.set_leader(temp_emp)
+        try:
+            idx = self.list_leader.index(tk.ACTIVE)
+            temp_emp = self.controller.deans_emps[idx]
+            self.field.set_leader(temp_emp)
+        except IndexError:
+            pass
 
         self.field.set_name(self.e_name.get())
 

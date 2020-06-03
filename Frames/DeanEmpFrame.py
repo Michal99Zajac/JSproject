@@ -274,8 +274,11 @@ class CreateDeansEmpPage(tk.Frame):
 
     
     def create_emp(self):
-        idx = self.dept_list.index(tk.ACTIVE)
-        temp_dept = self.controller.departments[idx]
+        try:
+            idx = self.dept_list.index(tk.ACTIVE)
+            temp_dept = self.controller.departments[idx]
+        except IndexError:
+            temp_dept = None
 
         self.controller.deans_emps.append(DeansEmp(
             name=self.e_name.get(),
@@ -348,9 +351,12 @@ class ChangeDeansEmpPage(CreateDeansEmpPage):
 
 
     def set_attr_emp(self):
-        idx = self.dept_list.index(tk.ACTIVE)
-        dept = self.controller.departments[idx]
-        self.emp.set_department(dept)
+        try:
+            idx = self.dept_list.index(tk.ACTIVE)
+            dept = self.controller.departments[idx]
+            self.emp.set_department(dept)
+        except IndexError:
+            pass
 
         self.emp.set_name(self.e_name.get())
         self.emp.set_sec_name(self.e_sec_name.get())

@@ -404,6 +404,7 @@ class CreateYearSubjectPage(tk.Frame):
                     dept = "NULL"
             except AttributeError:
                 field = "NULL"
+                dept = "NULL"
 
 
             output = (
@@ -462,17 +463,29 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def create_subject(self):
-        teacher_idx = self.list_teachers.index(tk.ACTIVE)
-        teacher = self.controller.teachers[teacher_idx]
+        try:
+            teacher_idx = self.list_teachers.index(tk.ACTIVE)
+            teacher = self.controller.teachers[teacher_idx]
+        except IndexError:
+            teacher = None
 
-        room_idx = self.list_rooms.index(tk.ACTIVE)
-        room = self.controller.rooms[room_idx]
+        try:
+            room_idx = self.list_rooms.index(tk.ACTIVE)
+            room = self.controller.rooms[room_idx]
+        except IndexError:
+            room = None
 
-        field_idx = self.list_fields.index(tk.ACTIVE)
-        field = self.controller.fields[field_idx]
+        try:
+            field_idx = self.list_fields.index(tk.ACTIVE)
+            field = self.controller.fields[field_idx]
+        except IndexError:
+            field = None
 
-        group_idx = self.list_groups.index(tk.ACTIVE)
-        group = self.controller.year_groups[group_idx]
+        try:
+            group_idx = self.list_groups.index(tk.ACTIVE)
+            group = self.controller.year_groups[group_idx]
+        except IndexError:
+            group = None
 
         self.controller.subjects.append(Subject(
             teacher=teacher,
@@ -834,6 +847,7 @@ class CreateExeSubjectPage(tk.Frame):
                     dept = "NULL"
             except AttributeError:
                 field = "NULL"
+                dept = "NULL"
 
 
             output = (
@@ -892,17 +906,29 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def create_subject(self):
-        teacher_idx = self.list_teachers.index(tk.ACTIVE)
-        teacher = self.controller.teachers[teacher_idx]
+        try:
+            teacher_idx = self.list_teachers.index(tk.ACTIVE)
+            teacher = self.controller.teachers[teacher_idx]
+        except IndexError:
+            teacher = None
 
-        room_idx = self.list_rooms.index(tk.ACTIVE)
-        room = self.controller.rooms[room_idx]
+        try:
+            room_idx = self.list_rooms.index(tk.ACTIVE)
+            room = self.controller.rooms[room_idx]
+        except IndexError:
+            room = None
 
-        field_idx = self.list_fields.index(tk.ACTIVE)
-        field = self.controller.fields[field_idx]
+        try:
+            field_idx = self.list_fields.index(tk.ACTIVE)
+            field = self.controller.fields[field_idx]
+        except IndexError:
+            field = None
 
-        group_idx = self.list_groups.index(tk.ACTIVE)
-        group = self.controller.exe_groups[group_idx]
+        try:
+            group_idx = self.list_groups.index(tk.ACTIVE)
+            group = self.controller.exe_groups[group_idx]
+        except IndexError:
+            group = None
 
         self.controller.subjects.append(Subject(
             teacher=teacher,
@@ -1263,6 +1289,7 @@ class CreateLabSubjectPage(tk.Frame):
                     dept = "NULL"
             except AttributeError:
                 field = "NULL"
+                dept = "NULL"
 
 
             output = (
@@ -1321,17 +1348,29 @@ class CreateLabSubjectPage(tk.Frame):
 
 
     def create_subject(self):
-        teacher_idx = self.list_teachers.index(tk.ACTIVE)
-        teacher = self.controller.teachers[teacher_idx]
+        try:
+            teacher_idx = self.list_teachers.index(tk.ACTIVE)
+            teacher = self.controller.teachers[teacher_idx]
+        except IndexError:
+            teacher = None
 
-        room_idx = self.list_rooms.index(tk.ACTIVE)
-        room = self.controller.rooms[room_idx]
+        try:
+            room_idx = self.list_rooms.index(tk.ACTIVE)
+            room = self.controller.rooms[room_idx]
+        except IndexError:
+            room = None
 
-        field_idx = self.list_fields.index(tk.ACTIVE)
-        field = self.controller.fields[field_idx]
+        try:
+            field_idx = self.list_fields.index(tk.ACTIVE)
+            field = self.controller.fields[field_idx]
+        except IndexError:
+            field = None
 
-        group_idx = self.list_groups.index(tk.ACTIVE)
-        group = self.controller.lab_groups[group_idx]
+        try:
+            group_idx = self.list_groups.index(tk.ACTIVE)
+            group = self.controller.lab_groups[group_idx]
+        except IndexError:
+            group = None
 
         self.controller.subjects.append(Subject(
             teacher=teacher,

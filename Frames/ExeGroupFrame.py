@@ -83,8 +83,11 @@ class ExeGroupPage(tk.Frame):
         idx = self.list_groups.index(tk.ACTIVE)
         del_group = self.controller.exe_groups.pop(idx)
 
-        del_group.delete(self.controller.db)
-        self.controller.db.commit_conn()
+        try:
+            del_group.delete(self.controller.db)
+            self.controller.db.commit_conn()
+        except AttributeError:
+            pass
 
         del del_group
 
@@ -130,6 +133,7 @@ class ExeGroupPage(tk.Frame):
                     dept = "NULL"
             except AttributeError:
                 field = "NULL"
+                dept = "NULL"
 
 
             output = (
@@ -251,9 +255,11 @@ class CreateExeGroupPage(tk.Frame):
 
 
     def create_group(self):
-        idx = self.list_fields.index(tk.ACTIVE)
-        
-        field = self.controller.fields[idx]
+        try:
+            idx = self.list_fields.index(tk.ACTIVE)
+            field = self.controller.fields[idx]
+        except IndexError:
+            field = None
 
         self.controller.exe_groups.append(ExeGroup(
             number=self.e_number.get(),
@@ -352,6 +358,7 @@ class ExeStudentPage(tk.Frame):
                         department = "NULL"
                 except AttributeError:
                     field = "NULL"
+                    department = "NULL"
 
                 output = (
                     student.get_id(),
@@ -418,6 +425,8 @@ class ExeAddStudentPage(tk.Frame):
         self.controller = controller
         if self.controller.exe_groups:
             self.group = self.controller.exe_groups[0]
+        else:
+            self.group = None
 
         self.main_label()
         self.return_button()
@@ -476,6 +485,7 @@ class ExeAddStudentPage(tk.Frame):
                         department = "NULL"
                 except AttributeError:
                     field = "NULL"
+                    department = "NULL"
 
                 output = (
                     student.get_id(),
@@ -492,8 +502,10 @@ class ExeAddStudentPage(tk.Frame):
 
 
     def avi_students(self):
-        return [student for student in self.controller.students if student not in ExeGroup.all_students and student.get_field_of_study() == self.group.get_field()]
-
+        if self.group != None:
+            return [student for student in self.controller.students if student not in ExeGroup.all_students and student.get_field_of_study() == self.group.get_field()]
+        else:
+            return []
 
     def submit(self):
         sub_btn = tk.Button(
@@ -506,14 +518,17 @@ class ExeAddStudentPage(tk.Frame):
 
 
     def add_student(self):
-        idx = self.list_students.index(tk.ACTIVE)
-        student = self.avi_students()[idx]
-        self.group.insert(student, self.controller.db)
-        self.controller.db.commit_conn()
+        try:
+            idx = self.list_students.index(tk.ACTIVE)
+            student = self.avi_students()[idx]
+            self.group.insert(student, self.controller.db)
+            self.controller.db.commit_conn()
 
-        self.controller.frames["ExeSubjectPage"].refresh()
-        self.controller.frames["CreateExeSubjectPage"].refresh_exe_listbox()
+            self.controller.frames["ExeSubjectPage"].refresh()
+            self.controller.frames["CreateExeSubjectPage"].refresh_exe_listbox()
 
-        self.controller.frames["ExeStudentPage"].refresh_student_listbox()
-        self.controller.frames["ExeGroupPage"].refresh()
-        self.controller.show_frame("ExeStudentPage")
+            self.controller.frames["ExeStudentPage"].refresh_student_listbox()
+            self.controller.frames["ExeGroupPage"].refresh()
+            self.controller.show_frame("ExeStudentPage")
+        except IndexError:
+            self.controller.show_frame("ExeStudentPage")
