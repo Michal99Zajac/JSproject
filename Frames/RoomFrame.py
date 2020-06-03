@@ -31,7 +31,7 @@ class RoomPage(tk.Frame):
         #Return Home Page
         btn_return = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda: self.controller.show_frame("StartPage"),
             font=self.controller.normal_font,
         )
@@ -126,7 +126,7 @@ class RoomPage(tk.Frame):
             except AttributeError:
                 building = "NULL"
 
-            if room.get_is_dean():
+            if room.get_is_dean() == 1:
                 is_dean = "YES"
             else:
                 is_dean = "NO"
@@ -180,7 +180,7 @@ class CreateRoomPage(tk.Frame):
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.home_refresh(),
             font=self.controller.normal_font,
         )
@@ -205,7 +205,7 @@ class CreateRoomPage(tk.Frame):
         l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_number = tk.Entry(master=self)
+        self.e_number = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_number.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -259,7 +259,7 @@ class CreateRoomPage(tk.Frame):
         temp_building = self.controller.buildings[idx]
 
         temp_is_dean = None
-        if self.list_dean_off.get(tk.ACTIVE) == "YES":
+        if self.list_dean_off.index(tk.ACTIVE) == 0:
             temp_is_dean = 1
         else:
             temp_is_dean = 0

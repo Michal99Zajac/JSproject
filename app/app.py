@@ -48,10 +48,10 @@ class App(tk.Tk):
 
         self.title_font = tkfont.Font(family="Helvetica", size=20, weight="bold", slant="italic")
         self.normal_font = tkfont.Font(family="Helvetica", size=15, weight=tkfont.BOLD)
+        self.entry_font = tkfont.Font(family="Helvetica", size=20)
 
         mainframe = tk.Frame(self)
         mainframe.grid()
-        #mainframe.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
         mainframe.grid_rowconfigure(0, weight=1)
         mainframe.grid_columnconfigure(0, weight=1)
 

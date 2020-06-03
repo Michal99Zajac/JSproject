@@ -217,7 +217,7 @@ class CreateBuildingPage(tk.Frame):
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=1, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
-        self.e_name = tk.Entry(master=self)
+        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_name.grid(row=2, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
 
@@ -225,7 +225,7 @@ class CreateBuildingPage(tk.Frame):
         l_street = tk.Label(master=self, text="street name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_street.grid(row=3, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
-        self.e_street = tk.Entry(master=self)
+        self.e_street = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_street.grid(row=4, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
 
@@ -233,7 +233,7 @@ class CreateBuildingPage(tk.Frame):
         l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_number.grid(row=5, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
-        self.e_number = tk.Entry(master=self)
+        self.e_number = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_number.grid(row=6, column=0, columnspan=4, sticky="news", pady=0, padx=5)
 
 

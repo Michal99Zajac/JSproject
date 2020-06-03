@@ -226,7 +226,7 @@ class CreateDepartmentPage(tk.Frame):
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_name = tk.Entry(master=self)
+        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_name.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -234,7 +234,7 @@ class CreateDepartmentPage(tk.Frame):
         l_off_start = tk.Label(master=self, text="office start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_off_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_off_start = tk.Entry(master=self)
+        self.e_off_start = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_off_start.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -242,7 +242,7 @@ class CreateDepartmentPage(tk.Frame):
         l_off_stop = tk.Label(master=self, text="office stop", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_off_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_off_stop = tk.Entry(master=self)
+        self.e_off_stop = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_off_stop.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -335,6 +335,7 @@ class CreateDepartmentPage(tk.Frame):
 
         self.controller.departments[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
+        self.refresh()
         self.controller.frames["DepartmentPage"].restart()
 
 

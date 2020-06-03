@@ -31,7 +31,7 @@ class LabGroupPage(tk.Frame):
         #Return Home Page
         btn_return = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.controller.show_frame("StartPage"),
             font=self.controller.normal_font,
         )
@@ -181,7 +181,7 @@ class CreateLabGroupPage(tk.Frame):
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.home_refresh(),
             font=self.controller.normal_font,
         )
@@ -206,7 +206,7 @@ class CreateLabGroupPage(tk.Frame):
         l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
-        self.e_number = tk.Entry(master=self)
+        self.e_number = tk.Entry(master=self, font=self.controller.entry_font)
         self.e_number.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
 
@@ -315,7 +315,7 @@ class LabStudentPage(tk.Frame):
     def home_button(self):
         btn_home = tk.Button(
             self,
-            text="Return to Home Page",
+            text="Home",
             command=lambda : self.controller.show_frame("StartPage"),
             font=self.controller.normal_font,
         )
