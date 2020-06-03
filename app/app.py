@@ -21,7 +21,7 @@ class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.resizable(False, False)
-        self.db = TableDatabase("databases/data.db")
+        self.db = TableDatabase("data.db")
 
         #table setting
         self.buildings = self.db.fetch_buildings()
