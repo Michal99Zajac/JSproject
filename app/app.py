@@ -16,14 +16,14 @@ from Frames import YearGroupFrame
 
 from Tables.TableDatabase import TableDatabase
 
-class App(tk.Tk):
 
+class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.resizable(False, False)
         self.db = TableDatabase("data.db")
 
-        #table setting
+        # table setting
         self.buildings = self.db.fetch_buildings()
         self.deans = self.db.fetch_deans()
         self.departments = self.db.fetch_departments(self.buildings, self.deans)
