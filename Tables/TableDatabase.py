@@ -21,6 +21,11 @@ class TableDatabase(object):
     """
 
     def __init__(self, db_file):
+        """Init TableDatabse
+
+        Args:
+            db_file (str): database file
+        """
         self.conn = None
         
         #create connection
@@ -70,6 +75,8 @@ class TableDatabase(object):
         return self.conn.cursor()
 
     def create_tables(self):
+        """func create all tables
+        """
         Building.create_tab(self)
         Dean.create_tab(self)
         Room.create_tab(self)
@@ -85,6 +92,14 @@ class TableDatabase(object):
 
     #create all objects from db
     def fetch_students(self, ls_fields_of_study):
+        """fetch all student objects from db
+
+        Args:
+            ls_fields_of_study (list): list of field of study instances
+
+        Returns:
+            list: list of students obj
+        """
         ls_students = []
         row = None
         for row in Student.select_all(self):
@@ -105,12 +120,17 @@ class TableDatabase(object):
                 row[7]
             ))
         else:
-            if row != None:
+            if row is not None:
                 Student.set_idx(row[0])
 
         return ls_students
 
     def fetch_buildings(self):
+        """fetch all building objects from db
+
+        Returns:
+            list: list of buildings obj
+        """
         ls_buildings = []
         row = None
         for row in Building.select_all(self):
@@ -127,6 +147,11 @@ class TableDatabase(object):
         return ls_buildings
 
     def fetch_deans(self):
+        """fetch all deans objects from db
+
+        Returns:
+            list: list of deans obj
+        """
         ls_deans = []
         row = None
         for row in Dean.select_all(self):
@@ -146,6 +171,14 @@ class TableDatabase(object):
         return ls_deans
 
     def fetch_deans_emps(self, ls_departments):
+        """fetch all deans emp objects from db
+
+        Args:
+            ls_departments (list): list of department instances
+
+        Returns:
+            list: list of deans emps obj
+        """
         ls_deans_emps = []
         row = None
         for row in DeansEmp.select_all(self):
@@ -172,6 +205,14 @@ class TableDatabase(object):
 
 
     def fetch_rooms(self, ls_buildings):
+        """fetch all room objects from db
+
+        Args:
+            ls_buildings (list): list of building instances
+
+        Returns:
+            list: list of rooms obj
+        """
         ls_rooms = []
         row = None
         for row in Room.select_all(self):
@@ -194,6 +235,14 @@ class TableDatabase(object):
         return ls_rooms
 
     def fetch_teachers(self, ls_departments):
+        """fetch all teachers objects frob db
+
+        Args:
+            ls_departments (list): list of department instances
+
+        Returns:
+            list: list of teachers
+        """
         ls_teachers = []
         row = None
         for row in Teacher.select_all(self):
@@ -221,6 +270,15 @@ class TableDatabase(object):
         return ls_teachers
 
     def fetch_departments(self, ls_buildings, ls_deans):
+        """fetch all department objects from db
+
+        Args:
+            ls_buildings (list): list of building instances
+            ls_deans (list): list of dean instances
+
+        Returns:
+            list: list of departments obj
+        """
         ls_departments = []
 
         row = None
@@ -253,6 +311,15 @@ class TableDatabase(object):
 
 
     def fetch_fields_of_study(self, ls_departments, ls_deans_emps):
+        """fetch all field of study objects from db
+
+        Args:
+            ls_departments (list): list of department instance
+            ls_deans_emps (list): list of deans office emp instance
+
+        Returns:
+            list: list of fields of study obj
+        """
         ls_fields = []
         row = None
         for row in FieldOfStudy.select_all(self):
@@ -282,6 +349,15 @@ class TableDatabase(object):
         return ls_fields
 
     def fetch_exe_groups(self, ls_students, ls_fields_of_study):
+        """fetch all exe group objects from db
+
+        Args:
+            ls_students (list): list of student instance
+            ls_fields_of_study (list): list of field of study instance
+
+        Returns:
+            list: list of exe groups obj
+        """
         ls_exe_groups = []
         field_num = {} #field_num = {field_id: [nums]}
 
@@ -323,6 +399,15 @@ class TableDatabase(object):
         return ls_exe_groups
 
     def fetch_lab_groups(self, ls_students, ls_fields_of_study):
+        """fetch all lab group objects from db
+
+        Args:
+            ls_students (list): list of student instance
+            ls_fields_of_study (list): list of field of study instance
+
+        Returns:
+            list: list of lab groups obj
+        """
         ls_lab_groups = []
         field_num = {} #field_num = {field_id: [nums]}
 
@@ -364,6 +449,15 @@ class TableDatabase(object):
         return ls_lab_groups
 
     def fetch_year_groups(self, ls_students, ls_fields_of_study):
+        """fetch all year group objects from db
+
+        Args:
+            ls_students (list): list of student instance
+            ls_fields_of_study (list): list of field of study instance
+
+        Returns:
+            list: list of year groups obj
+        """
         ls_year_groups = []
         field_num = {} #field_num = {field_id: [nums]}
 
@@ -405,15 +499,22 @@ class TableDatabase(object):
         return ls_year_groups
 
     def fetch_subjects(self, ls_teachers, ls_lab_groups, ls_exe_groups, ls_year_groups, ls_rooms, ls_fields_of_study):
-        ls_subjects = [] #list of instances
+        """fetch all subject objects from db
 
+        Args:
+            ls_teachers (list): list of teacher instances
+            ls_lab_groups (list): list of lab group instances
+            ls_exe_groups (list): list of exe group instances
+            ls_year_groups (list): list of year group instances
+            ls_rooms (list): list of room instances
+            ls_fields_of_study (list): list of field of study instances
+
+        Returns:
+            [type]: [description]
+        """
+        ls_subjects = [] #list of instances
         subjects = [] #list of tuples
 
-        #ultra object
-        # uteacher = Teacher(999999, "-------", "--------", "---------", 00000, "--------", "acd", None, "----------")
-        # uroom = Room(999999, None, 9999999, 0)
-
-        #leter! Change to search differently in sql!
         for row in Subject.select_all(self):
             teacher_instance = None
             room_instance = None
@@ -509,6 +610,5 @@ class TableDatabase(object):
                     row[10]
                 ))
                 subjects.append(temp_subject)
-            
-        return ls_subjects         
-        
+
+        return ls_subjects

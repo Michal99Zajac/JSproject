@@ -6,6 +6,9 @@ from tk_extension.multilistBox import MultiListBox
 
 
 class LabGroupPage(tk.Frame):
+    """
+    Main Laboratory Group Page
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=240)
@@ -19,6 +22,8 @@ class LabGroupPage(tk.Frame):
 
 
     def main_label(self):
+        """create lab group main label
+        """
         label = tk.Label(
             self,
             text="Laboratory Group Page",
@@ -28,6 +33,8 @@ class LabGroupPage(tk.Frame):
 
 
     def buttons(self):
+        """create lab group page buttons
+        """
         #Return Home Page
         btn_return = tk.Button(
             self,
@@ -63,6 +70,8 @@ class LabGroupPage(tk.Frame):
 
 
     def group_listbox(self):
+        """create lab group listbox
+        """
         data = [
             ('number',10),
             ('field of study', 20),
@@ -76,10 +85,15 @@ class LabGroupPage(tk.Frame):
 
     
     def create_group(self):
+        """func change page to CreateLabGroupPage
+        """
         self.controller.show_frame("CreateLabGroupPage")
 
 
     def delete_group(self):
+        """func delete lab group from listbox and config
+        other frames
+        """
         idx = self.list_groups.index(tk.ACTIVE)
         del_group = self.controller.lab_groups.pop(idx)
 
@@ -90,15 +104,17 @@ class LabGroupPage(tk.Frame):
             pass
 
         del del_group
-
+        # config
         self.controller.frames["LabSubjectPage"].refresh()
         self.controller.frames["CreateLabSubjectPage"].refresh_lab_listbox()
-
         self.controller.frames["LabAddStudentPage"].refresh_student_listbox()
         self.restart()
 
 
     def show_group(self):
+        """func set lab group to show and change
+        page to LabStudentPage
+        """
         idx = self.list_groups.index(tk.ACTIVE)
         group = self.controller.lab_groups[idx]
 
@@ -108,11 +124,15 @@ class LabGroupPage(tk.Frame):
 
 
     def restart(self):
+        """func restart frame
+        """
         self.refresh()
         self.controller.show_frame("LabGroupPage")
 
 
     def refresh_button(self):
+        """create refresh button
+        """
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
@@ -123,6 +143,8 @@ class LabGroupPage(tk.Frame):
 
     
     def refresh(self):
+        """func refresh lab group listbox
+        """
         self.list_groups.delete(0, tk.END)
         for i, group in enumerate(self.controller.lab_groups):
             try:
@@ -148,6 +170,9 @@ class LabGroupPage(tk.Frame):
 
 
 class CreateLabGroupPage(tk.Frame):
+    """
+    Page where we can create lab group
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(9)], minsize=250)
@@ -164,6 +189,8 @@ class CreateLabGroupPage(tk.Frame):
 
 
     def main_label(self):
+        """create lab group main label
+        """
         label = tk.Label(
             self,
             text="Create Group",
@@ -173,6 +200,8 @@ class CreateLabGroupPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -183,6 +212,8 @@ class CreateLabGroupPage(tk.Frame):
 
 
     def home_button(self):
+        """create home button
+        """
         btn_home = tk.Button(
             self,
             text="Home",
@@ -193,20 +224,28 @@ class CreateLabGroupPage(tk.Frame):
 
 
     def return_refresh(self):
+        """func change page to LabGroupPage
+        """
         self.refresh()
         self.controller.show_frame("LabGroupPage")
 
 
     def home_refresh(self):
+        """func change page to StartPage
+        """
         self.refresh()
         self.controller.show_frame("StartPage")
 
 
     def refresh(self):
+        """clear all entries
+        """
         self.e_number.delete(0, tk.END)
 
 
     def number_entry(self):
+        """create entry for number with label
+        """
         l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -215,6 +254,8 @@ class CreateLabGroupPage(tk.Frame):
 
 
     def field_listbox(self):
+        """create field of study listbox for Lab Group Page
+        """
         l_field = tk.Label(master=self, text="field of study", font=self.controller.normal_font, relief=tk.RAISED)
         l_field.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
         
@@ -229,6 +270,8 @@ class CreateLabGroupPage(tk.Frame):
 
 
     def refresh_field_listbox(self):
+        """refresh field of study listbox
+        """
         self.list_fields.delete(0, tk.END)
         for i, field in enumerate(self.controller.fields):
             try:
@@ -245,6 +288,8 @@ class CreateLabGroupPage(tk.Frame):
 
     
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -255,6 +300,8 @@ class CreateLabGroupPage(tk.Frame):
 
 
     def create_group(self):
+        """func create new lab group and config other frames
+        """
         try:
             idx = self.list_fields.index(tk.ACTIVE)
             field = self.controller.fields[idx]
@@ -267,7 +314,9 @@ class CreateLabGroupPage(tk.Frame):
             students={}
         ))
 
+        # update Subject
         self.controller.frames["LabSubjectPage"].refresh()
+        self.controller.frames["CreateLabSubjectPage"].refresh_lab_listbox()
 
         self.refresh()
         self.controller.db.commit_conn()
@@ -276,6 +325,9 @@ class CreateLabGroupPage(tk.Frame):
 
 
 class LabStudentPage(tk.Frame):
+    """
+    Page where we can show all students in selected group
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
@@ -295,10 +347,17 @@ class LabStudentPage(tk.Frame):
 
 
     def set_group(self, group):
+        """set lab group instance
+
+        Args:
+            group (LabGroup): lab group which we want show
+        """
         self.group = group
 
 
     def main_label(self):
+        """create show lab group main label
+        """
         label = tk.Label(
             self,
             text="Lab Group",
@@ -308,6 +367,8 @@ class LabStudentPage(tk.Frame):
 
     
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -318,6 +379,8 @@ class LabStudentPage(tk.Frame):
 
     
     def home_button(self):
+        """create home button
+        """
         btn_home = tk.Button(
             self,
             text="Home",
@@ -328,6 +391,8 @@ class LabStudentPage(tk.Frame):
 
 
     def student_listbox(self):
+        """create student listbox for Lab Student Group Page
+        """
         data = [
             ('id', 10),
             ('name', 20),
@@ -346,6 +411,8 @@ class LabStudentPage(tk.Frame):
 
 
     def refresh_student_listbox(self):
+        """refresh student listbox
+        """
         self.list_students.delete(0, tk.END)
         try:
             for i, student in enumerate(self.group.get_students()):
@@ -376,6 +443,8 @@ class LabStudentPage(tk.Frame):
 
 
     def add_button(self):
+        """create add button
+        """
         add_btn = tk.Button(
             master=self,
             text="add Student",
@@ -386,6 +455,8 @@ class LabStudentPage(tk.Frame):
 
 
     def delete_button(self):
+        """create del button
+        """
         delete_btn = tk.Button(
             master=self,
             text="del Student",
@@ -396,12 +467,17 @@ class LabStudentPage(tk.Frame):
 
 
     def add_student(self):
+        """func set lab group and add student and change
+        page to LabAddStudentPage
+        """
         self.controller.frames["LabAddStudentPage"].set_group(self.group)
         self.controller.frames["LabAddStudentPage"].refresh_student_listbox()
         self.controller.show_frame("LabAddStudentPage")
 
 
     def del_student(self):
+        """func remove student from student listbox
+        """
         idx = self.list_students.index(tk.ACTIVE)
         student = list(self.group.get_students())[idx]
 
@@ -415,6 +491,9 @@ class LabStudentPage(tk.Frame):
 
 
 class LabAddStudentPage(tk.Frame):
+    """
+    Page where we can add student to group
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
@@ -432,10 +511,17 @@ class LabAddStudentPage(tk.Frame):
 
 
     def set_group(self, group):
+        """set lab group instance
+
+        Args:
+            group (LabGroup): lab group which we want modify
+        """
         self.group = group
 
 
     def main_label(self):
+        """create add student to group main label
+        """
         label = tk.Label(
             self,
             text="Add Student",
@@ -445,6 +531,8 @@ class LabAddStudentPage(tk.Frame):
 
 
     def student_listbox(self):
+        """create student listbox for Add Student Lab Group Page
+        """
         data = [
             ('id', 10),
             ('name', 20),
@@ -462,6 +550,8 @@ class LabAddStudentPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -471,8 +561,9 @@ class LabAddStudentPage(tk.Frame):
         btn_return.grid(row=8, column=6, sticky="news", padx=5, pady=5)
 
 
-    #high prob to err
     def refresh_student_listbox(self):
+        """refresh student listbox
+        """
         self.list_students.delete(0, tk.END)
         for i, student in enumerate(self.avi_students()):
                 try:
@@ -500,12 +591,20 @@ class LabAddStudentPage(tk.Frame):
 
     
     def avi_students(self):
-        if self.group != None:
+        """func calculate available student which
+        we can add to group
+
+        Returns:
+            List: list of available students
+        """
+        if self.group is not None:
             return [student for student in self.controller.students if student not in LabGroup.all_students and student.get_field_of_study() == self.group.get_field()]
         else:
             return []
 
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -516,6 +615,8 @@ class LabAddStudentPage(tk.Frame):
 
 
     def add_student(self):
+        """func add student to group and config other frames
+        """
         try:
             idx = self.list_students.index(tk.ACTIVE)
             student = self.avi_students()[idx]
@@ -523,7 +624,6 @@ class LabAddStudentPage(tk.Frame):
             self.controller.db.commit_conn()
 
             self.controller.frames["LabSubjectPage"].refresh()
-            self.controller.frames["CreateExeSubjectPage"].refresh_lab_listbox()
 
             self.controller.frames["LabStudentPage"].refresh_student_listbox()
             self.controller.frames["LabGroupPage"].refresh()

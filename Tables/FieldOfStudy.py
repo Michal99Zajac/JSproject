@@ -1,21 +1,37 @@
-import sqlite3
-
 class FieldOfStudy(object):
     id_field = 0
-    dep_name = {} #{dept:[names]}
+    dep_name = {}  # {dept:[names]}
 
     @staticmethod
     def set_idx(id_fie):
+        """function set var id_field
+
+        Args:
+            id_field (int): new idx for class
+        """
         FieldOfStudy.id_field = id_fie
 
 
     @staticmethod
     def status_id():
+        """func return variable id_field
+
+        Returns:
+            int: current id_field in class
+        """
         return FieldOfStudy.id_field
 
 
     @staticmethod
     def select_all(db):
+        """func return all fields of study data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM field_of_study")
         rows = cur.fetchall()
@@ -25,6 +41,14 @@ class FieldOfStudy(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """function return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            int: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM field_of_study")
         
@@ -60,6 +84,17 @@ class FieldOfStudy(object):
 
 
     def __init__(self, id_field = 0, name = '', department = None, do_emp = None):
+        """Init FieldOfStudy
+
+        Args:
+            id_field (int, optional): id of field of study. Defaults to 0.
+            name (str, optional): field of study name. Defaults to ''.
+            department (Department, optional): f department. Defaults to None.
+            do_emp (DeansEmp, optional): field of study deans off emp. Defaults to None.
+
+        Raises:
+            ValueError: if department and name was created
+        """
         FieldOfStudy.id_field += 1
         if id_field == 0:
             self.__id_field = FieldOfStudy.id_field
@@ -87,6 +122,11 @@ class FieldOfStudy(object):
 
 
     def insert(self, db):
+        """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill
+        """
         sql = """INSERT INTO field_of_study(
             name,
             id_department,
@@ -118,6 +158,11 @@ class FieldOfStudy(object):
 
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE field_of_study SET
         name = ?,
         id_department = ?,
@@ -150,6 +195,11 @@ class FieldOfStudy(object):
 
 
     def delete(self, db):
+        """function delete data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM field_of_study WHERE id_field_of_study = ?"""
 
         if db.get_conn() is not None:

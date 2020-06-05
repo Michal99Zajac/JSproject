@@ -5,6 +5,9 @@ from Tables.Student import Student
 from tk_extension.multilistBox import MultiListBox
 
 class StudentPage(tk.Frame):
+    """
+    Main Student Page
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
@@ -17,6 +20,8 @@ class StudentPage(tk.Frame):
         self.buttons()
 
     def main_label(self):
+        """create student main label
+        """
         label = tk.Label(
             self,
             text="Student Page",
@@ -25,6 +30,8 @@ class StudentPage(tk.Frame):
         label.grid(row = 0, column = 6, sticky="nsew", padx=5, pady=5)
 
     def buttons(self):
+        """create room page buttons
+        """
         #Return Home Button
         btn_return = tk.Button(
             self,
@@ -60,6 +67,8 @@ class StudentPage(tk.Frame):
 
 
     def student_listbox(self):
+        """create student listbox
+        """
         data = [
             ('id', 10),
             ('name', 15),
@@ -78,6 +87,8 @@ class StudentPage(tk.Frame):
 
 
     def delete_student(self):
+        """create student listbox
+        """
         idx = self.list_students.index(tk.ACTIVE)
         del_student = self.controller.students.pop(idx)
 
@@ -86,17 +97,19 @@ class StudentPage(tk.Frame):
         self.controller.db.commit_conn()
 
         del del_student
-
-    #    self.controller.frames["LabAddStudentPage"].refresh_student_listbox()
+        # config
         self.controller.frames["LabStudentPage"].refresh_student_listbox()
-    #    self.controller.frames["ExeAddStudentPage"].refresh_student_listbox()
         self.controller.frames["ExeStudentPage"].refresh_student_listbox()
-    #    self.controller.frames["YearAddStudentPage"].refresh_student_listbox()
         self.controller.frames["YearStudentPage"].refresh_student_listbox()
         self.restart()
 
 
     def delete_from_groups(self, student):
+        """func delete student from groups
+
+        Args:
+            student (Student): student which we want delete
+        """
         #exe group
         for exe_group in self.controller.exe_groups:
             if student in exe_group.get_students():
@@ -114,6 +127,9 @@ class StudentPage(tk.Frame):
 
 
     def update_student(self):
+        """func set student to update and change
+        page to ChangeStudentPage
+        """
         idx = self.list_students.index(tk.ACTIVE)
         student = self.controller.students[idx]
        
@@ -123,11 +139,15 @@ class StudentPage(tk.Frame):
 
 
     def restart(self):
+        """func restart frame
+        """
         self.refresh()
         self.controller.show_frame("StudentPage")
 
 
     def refresh_button(self):
+        """create refresh button
+        """
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
@@ -138,6 +158,8 @@ class StudentPage(tk.Frame):
 
 
     def refresh(self):
+        """func refresh student listbox
+        """
         self.list_students.delete(0, tk.END)
         for i, student in enumerate(self.controller.students):
             try:
@@ -166,6 +188,9 @@ class StudentPage(tk.Frame):
 
 
 class CreateStudentPage(tk.Frame):
+    """
+    Page where we can create student
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(9)], minsize=250)
@@ -186,6 +211,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def main_label(self):
+        """create student main label
+        """
         label = tk.Label(
             self,
             text="Create Student",
@@ -195,6 +222,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -205,6 +234,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def home_button(self):
+        """create home button
+        """
         btn_home = tk.Button(
             self,
             text="Home",
@@ -215,16 +246,22 @@ class CreateStudentPage(tk.Frame):
 
 
     def return_refresh(self):
+        """func change page to StudentPage
+        """
         self.refresh()
         self.controller.show_frame("StudentPage")
 
 
     def home_refresh(self):
+        """func change page to StartPage
+        """
         self.refresh()
         self.controller.show_frame("StartPage")
 
     
     def refresh(self):
+        """clear all entries
+        """
         self.e_name.delete(0, tk.END)
         self.e_lastname.delete(0, tk.END)
         self.e_email.delete(0, tk.END)
@@ -234,6 +271,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def name_entry(self):
+        """create entry for name with label
+        """
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -242,6 +281,8 @@ class CreateStudentPage(tk.Frame):
         
 
     def sec_name_entry(self):
+        """create entry for second name with label
+        """
         l_sec_name = tk.Label(master=self, text="second name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_sec_name.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -250,6 +291,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def lastname_entry(self):
+        """create entry for lastname with label
+        """
         l_lastname = tk.Label(master=self, text="lastname", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_lastname.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -258,6 +301,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def ssn_entry(self):
+        """create entry for ssn with label
+        """
         l_ssn = tk.Label(master=self, text="ssn", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_ssn.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -266,6 +311,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def email_entry(self):
+        """create entry for email with label
+        """
         l_email = tk.Label(master=self, text="email", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_email.grid(row=9, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -274,6 +321,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def place_entry(self):
+        """create entry for place of residence with label
+        """
         l_place = tk.Label(master=self, text="place of residence", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_place.grid(row=11, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -282,6 +331,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def field_listbox(self):
+        """create field of study listbox for Student Page
+        """
         l_field = tk.Label(master=self, text="field of study", font=self.controller.normal_font, relief=tk.RAISED)
         l_field.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
@@ -296,6 +347,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def refresh_field_listbox(self):
+        """refresh field of study listbox
+        """
         self.list_field.delete(0, tk.END)
         for i, field in enumerate(self.controller.fields):
             try:
@@ -312,6 +365,8 @@ class CreateStudentPage(tk.Frame):
 
 
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -322,6 +377,8 @@ class CreateStudentPage(tk.Frame):
         
 
     def create_student(self):
+        """func create new student and config other frames
+        """
         try:
             idx = self.list_field.index(tk.ACTIVE)
             temp_field = self.controller.fields[idx]
@@ -342,17 +399,23 @@ class CreateStudentPage(tk.Frame):
             field_of_study=temp_field,
             place_of_residence=self.e_place.get()
         ))
-        
+
+        # insert to db
         self.controller.students[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
+        # refresh Groups frames
         self.controller.frames["LabStudentPage"].refresh_student_listbox()
         self.controller.frames["ExeStudentPage"].refresh_student_listbox()
         self.controller.frames["YearStudentPage"].refresh_student_listbox()
+        # refresh self
         self.refresh()
         self.controller.frames["StudentPage"].restart()
 
 
 class ChangeStudentPage(CreateStudentPage):
+    """
+    Page where we can update Student
+    """
     def __init__(self, parent, controller):
         CreateStudentPage.__init__(self, parent, controller)
         if controller.students:
@@ -360,6 +423,8 @@ class ChangeStudentPage(CreateStudentPage):
 
 
     def main_label(self):
+        """create update student main label
+        """
         label = tk.Label(
             self,
             text="Change Student",
@@ -369,16 +434,20 @@ class ChangeStudentPage(CreateStudentPage):
 
 
     def submit(self):
+        """crate submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda:self.update_student(),
+            command=lambda: self.update_student(),
             font=self.controller.normal_font,
             )
         sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", padx=5, pady=5)
         
 
     def fill_entry(self):
+        """fill all entries with self attrs
+        """
         self.e_name.insert(tk.END, str(self.student.get_name()))
         self.e_lastname.insert(tk.END, str(self.student.get_lastname()))
         self.e_email.insert(tk.END, str(self.student.get_email()))
@@ -388,10 +457,17 @@ class ChangeStudentPage(CreateStudentPage):
 
 
     def set_student(self, student):
+        """set student instance
+
+        Args:
+            student (Student): student which we want update
+        """
         self.student = student
 
 
     def update_student(self):
+        """func update student and config other frames
+        """
         self.set_attr_student()
         self.student.update(self.controller.db)
         self.controller.db.commit_conn()
@@ -404,6 +480,8 @@ class ChangeStudentPage(CreateStudentPage):
         self.controller.frames["StudentPage"].restart()
 
     def set_attr_student(self):
+        """changes attrs of student
+        """
         try:
             idx = self.list_field.index(tk.ACTIVE)
             field = self.controller.fields[idx]

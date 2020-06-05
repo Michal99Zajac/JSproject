@@ -5,17 +5,32 @@ class Student(object):
 
     @staticmethod
     def set_idx(id_std):
-        """
-        when program starts
+        """function set var id_std
+
+        Args:
+            id_std (int): new idx for class
         """
         Student.id_std = id_std
 
     @staticmethod
     def status_id():
+        """func return variable id_std
+
+        Returns:
+            int: current id_std in class
+        """
         return Student.id_std
 
     @staticmethod
     def select_all(db):
+        """func return all students data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM student")
 
@@ -23,6 +38,14 @@ class Student(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """function return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            int: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM student")
 
@@ -45,18 +68,30 @@ class Student(object):
             email TEXT,
             id_field_of_study INTEGER NOT NULL,
             place_of_residence TEXT NOT NULL,
-            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            FOREIGN KEY (id_field_of_study) REFERENCES
+            field_of_study(id_field_of_study)
             ON UPDATE CASCADE
-            ON DELETE CASCADE                
+            ON DELETE CASCADE
         );
-        """  
-
+        """
         if db.get_conn() is not None:
             db.create_tab(sql)
         else:
             print("Error! Cant create student table")
 
     def __init__(self, id_student = 0, name = '', sec_name = '', lastname = '', ssn = 1000, email = '', field_of_study = None, place_of_residence = ''):
+        """Init Student
+
+        Args:
+            id_student (int, optional): id of student. Defaults to 0.
+            name (str, optional): student name. Defaults to ''.
+            sec_name (str, optional): student second name. Defaults to ''.
+            lastname (str, optional): student lastname. Defaults to ''.
+            ssn (int, optional): student ssn. Defaults to 1000.
+            email (str, optional): student email. Defaults to ''.
+            field_of_study (FieldOfStudy, optional): student field of study. Defaults to None.
+            place_of_residence (str, optional): student place of resid. Defaults to ''.
+        """
         Student.id_std += 1
         #set id_student automatically or manual
         if id_student == 0:
@@ -73,6 +108,11 @@ class Student(object):
         self.__place_of_residence = place_of_residence
 
     def insert(self, db):
+        """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill
+        """
         sql = """INSERT INTO student(
             name,
             second_name,
@@ -106,6 +146,11 @@ class Student(object):
             print("Error! Cant insert in student table")
     
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE student SET
         name = ?,
         second_name = ?,
@@ -140,6 +185,11 @@ class Student(object):
             print("Error! Cant update in student table")
 
     def delete(self, db):
+        """function delete data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM student WHERE id_student = ?"""
 
         if db.get_conn() is not None:    
@@ -148,7 +198,6 @@ class Student(object):
         else:
             print("Error! Cant delete in student table")
 
-    #getters
     def get_id(self):
         return self.__id_student
 
@@ -176,7 +225,6 @@ class Student(object):
     def get_place_of_residence(self):
         return self.__place_of_residence
 
-    #setters
     def set_id(self, id_student):
         self.__id_student = id_student
 

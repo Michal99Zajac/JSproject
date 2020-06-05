@@ -1,18 +1,34 @@
-import sqlite3
-
 class Dean(object):
     id_dean = 0
 
     @staticmethod
     def set_idx(id_dean):
+        """func set var id_dean
+
+        Args:
+            id_dean (int): new idx for class
+        """
         Dean.id_dean = id_dean
 
     @staticmethod
     def status_id():
+        """func return variable id_dean
+
+        Returns:
+            int: current id_dean in class
+        """
         return Dean.id_dean
 
     @staticmethod
     def select_all(db):
+        """func return all deans data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM dean")
 
@@ -20,6 +36,14 @@ class Dean(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """func return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            int: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM dean")
 
@@ -48,6 +72,17 @@ class Dean(object):
             print("Error! Cant create dean table")
 
     def __init__(self, id_dean = 0, name = '', lastname = '', sec_name = '', ssn = 1000, email = '', place_of_residence = ''):
+        """Init Dean
+
+        Args:
+            id_dean (int, optional): id of dean. Defaults to 0.
+            name (str, optional): dean name. Defaults to ''.
+            lastname (str, optional): dean lastname. Defaults to ''.
+            sec_name (str, optional): dean second name. Defaults to ''.
+            ssn (int, optional): dean ssn. Defaults to 1000.
+            email (str, optional): dean email. Defaults to ''.
+            place_of_residence (str, optional): dean place. Defaults to ''.
+        """
         Dean.id_dean += 1
         #set id_dean automatically or manual
         if id_dean == 0:
@@ -58,11 +93,16 @@ class Dean(object):
         self.__name = name
         self.__lastname = lastname
         self.__sec_name = sec_name
-        self.__ssn = ssn #social security number
+        self.__ssn = ssn  # social security number
         self.__email = email
         self.__place_of_residence = place_of_residence
 
     def insert(self, db):
+        """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill 
+        """
         sql = """INSERT INTO dean(
             name,
             lastname,
@@ -89,6 +129,11 @@ class Dean(object):
             print("Error! Cant insert in dean table")
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE dean SET
         name = ?,
         lastname = ?,
@@ -116,6 +161,11 @@ class Dean(object):
             print("Error! Cant update in dean table")
 
     def delete(self, db):
+        """function delete data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM dean WHERE id_dean = ?"""
 
         if db.get_conn() is not None:

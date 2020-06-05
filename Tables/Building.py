@@ -1,14 +1,22 @@
-import sqlite3
-
 class Building(object):
     id_bud = 0
 
     @staticmethod
     def set_idx(id_bud):
+        """function set var id_bud
+
+        Args:
+            id_bud (int): new idx for class
+        """
         Building.id_bud = id_bud
 
     @staticmethod
     def status_id():
+        """func return variable id_bud
+
+        Returns:
+            int: current id_bud in class
+        """
         return Building.id_bud
 
     @staticmethod
@@ -32,6 +40,14 @@ class Building(object):
 
     @staticmethod
     def select_all(db):
+        """func return all buildings data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM building")
 
@@ -39,12 +55,28 @@ class Building(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """function return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            int: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM building")
 
         return cur.lastrowid
 
     def __init__(self, id_building = 0, street_name = '', name = '', number = ''):
+        """Init Building
+
+        Args:
+            id_building (int, optional): id of building. Defaults to 0.
+            street_name (str, optional): street name. Defaults to ''.
+            name (str, optional): building name. Defaults to ''.
+            number (str, optional): building number. Defaults to ''.
+        """
         Building.id_bud += 1
         #set id_building automatically or manual
         if id_building == 0:
@@ -57,6 +89,11 @@ class Building(object):
         self.__number = number
 
     def insert(self, db):
+        """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill
+        """
         sql = """INSERT INTO building(
             street_name,
             building_name,
@@ -77,6 +114,11 @@ class Building(object):
             print("Error! Cant insert in building table")
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE building SET
         street_name = ?,
         building_name = ?,
@@ -98,6 +140,11 @@ class Building(object):
             print("Error! Cant update in building table")
 
     def delete(self, db):
+        """function delete data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM building WHERE id_building = ?"""
 
         if db.get_conn() is not None:

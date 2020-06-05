@@ -1,20 +1,35 @@
-import sqlite3
-
 class Subject(object):
-    #cant change group
-    #you must delete subject and create new
+    id_subject = 0
     group_name = {} #{group: [name]}
 
     @staticmethod
     def set_idx(id_sub):
+        """function set var id_subject
+
+        Args:
+            id_sub (int): new idx for class
+        """
         Subject.id_subject = id_sub
 
     @staticmethod
     def status_id():
+        """func return variable id_subject
+
+        Returns:
+            int: current id_subject in class
+        """
         return Subject.id_subject
 
     @staticmethod
     def select_all(db):
+        """func return all subjects data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM subject")
         
@@ -22,6 +37,14 @@ class Subject(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """function return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            int: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM subject")
 
@@ -29,6 +52,15 @@ class Subject(object):
 
     @staticmethod
     def get_groups_id(db, data):
+        """function return ids of group
+
+        Args:
+            db (TableDatabase): database that you want to search
+            data (tuple): group data
+
+        Returns:
+            List: list of ids
+        """
         sql = """SELECT id_subject FROM subject WHERE
         id_teacher=? AND
         id_room=? AND
@@ -41,10 +73,6 @@ class Subject(object):
 
         cur = db.cursor_conn()
         cur.execute(sql, data)
-
-        # id_labolatory_group=? AND
-        # id_exercise_group=? AND
-        # id_year_group=? AND
 
         return cur.fetchall()
 
@@ -98,6 +126,21 @@ class Subject(object):
             print("Error! Cant create subject table")
 
     def __init__(self, id_sub = [0,], teacher = None, lab_group = None, exe_group = None, year_group = None, room = None, field = None, day = '', start = '', end = '', name = ''):
+        """Init Subject
+
+        Args:
+            id_sub (list, optional): id of subject. Defaults to [0,].
+            teacher ([Teacher, optional): subject teacher. Defaults to None.
+            lab_group (LabGroup, optional): subject lab group. Defaults to None.
+            exe_group (ExeGroup, optional): subject exe group. Defaults to None.
+            year_group (YearGroup, optional): subject year group. Defaults to None.
+            room (Room, optional): subject room. Defaults to None.
+            field (FieldOfStudy, optional): subject field. Defaults to None.
+            day (str, optional): subject day. Defaults to ''.
+            start (str, optional): hour when subject start. Defaults to ''.
+            end (str, optional): hour when subject end. Defaults to ''.
+            name (str, optional): subject name. Defaults to ''.
+        """
         self.__lab = False
         self.__exe = False
         self.__year = False
@@ -137,6 +180,11 @@ class Subject(object):
 
     #add all rows of group
     def insert(self, db):
+         """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill
+        """
         index = Subject.get_lastrowid(db) + 1
 
         if self.__lab == True:
@@ -242,6 +290,11 @@ class Subject(object):
                 index += 1
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE subject SET
         id_teacher = ?,
         id_room = ?,
@@ -272,6 +325,11 @@ class Subject(object):
                 print("Error! Cant update in subject table")
 
     def delete(self, db):
+        """function delete data from db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM subject WHERE
         id_teacher = ? AND
         id_room = ? AND
