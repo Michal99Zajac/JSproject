@@ -78,25 +78,25 @@ class Department(object):
         else:
             print("Error! Cant create department table")
 
-    def __init__(self, id_dept = 0, building = None, name='', off_start = '', off_stop = '', dean = None):
+    def __init__(self, id_dept=0, building=None, name='', off_start='', off_stop='', dean=None):
         """Init Department
 
         Args:
             id_dept (int, optional): id of department. Defaults to 0.
-            building (Building, optional): department building. Defaults to None.
+            building (Building, optional): department building.
+            Defaults to None.
             name (str, optional): department name. Defaults to ''.
             off_start (str, optional): department office start. Defaults to ''.
             off_stop (str, optional): department office stop. Defaults to ''.
             dean (Dean, optional): department dean. Defaults to None.
         """
         Department.id_dept += 1
-        #set id_student automatically or manual
+        # set id_student automatically or manual
         if id_dept == 0:
             self.__id_dept = Department.id_dept
         else:
             self.__id_dept = id_dept
 
-        
         self.__building = building
         self.__dean = dean
         Department.buildings.append(self.__building)
@@ -185,7 +185,6 @@ class Department(object):
         else:
             print("Error! Cant update in department table")
 
-
     def delete(self, db):
         """function delete data from db
 
@@ -226,7 +225,7 @@ class Department(object):
 
     def set_off_start(self, off_start):
         self.__off_start = off_start
-    
+
     def set_off_stop(self, off_stop):
         self.__off_stop = off_stop
 

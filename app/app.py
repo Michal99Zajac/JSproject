@@ -178,7 +178,7 @@ class App(tk.Tk):
             self.year_groups,
             self.rooms,
             self.fields
-            )
+        )
 
 
 class StartPage(tk.Frame):
@@ -218,120 +218,120 @@ class StartPage(tk.Frame):
 
         # Teacher Page Button
         btn_teacher = tk.Button(
-                self,
-                text="Teacher Page",
-                command=lambda: controller.show_frame("TeacherPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Teacher Page",
+            command=lambda: controller.show_frame("TeacherPage"),
+            height=2,
+            font=font
+        )
         btn_teacher.grid(row=2, column=1, sticky="nswe", padx=5, pady=5)
 
         # Building Page Button
         btn_building = tk.Button(
-                self,
-                text="Building Page",
-                command=lambda: controller.show_frame("BuildingPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Building Page",
+            command=lambda: controller.show_frame("BuildingPage"),
+            height=2,
+            font=font
+        )
         btn_building.grid(row=5, column=1, sticky="nswe", padx=5, pady=5)
 
         # Deans Employee Page Button
         btn_deans_emp = tk.Button(
-                self,
-                text="Deans Employee Page",
-                command=lambda: controller.show_frame("DeansEmpPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Deans Employee Page",
+            command=lambda: controller.show_frame("DeansEmpPage"),
+            height=2,
+            font=font,
+        )
         btn_deans_emp.grid(row=4, column=1, sticky="nswe", padx=5, pady=5)
 
         # Dean Page Button
         btn_dean = tk.Button(
-                self,
-                text="Dean Page",
-                command=lambda: controller.show_frame("DeanPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Dean Page",
+            command=lambda: controller.show_frame("DeanPage"),
+            height=2,
+            font=font,
+        )
         btn_dean.grid(row=3, column=1, sticky="nswe", padx=5, pady=5)
 
         # Department Page Button
         btn_dept = tk.Button(
-                self,
-                text="Department Page",
-                command=lambda: controller.show_frame("DepartmentPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Department Page",
+            command=lambda: controller.show_frame("DepartmentPage"),
+            height=2,
+            font=font
+        )
         btn_dept.grid(row=1, column=0, sticky="nswe", padx=5, pady=5)
 
         # Exercise Group Page Button
         btn_exe = tk.Button(
-                self,
-                text="Exercise Group Page",
-                command=lambda: controller.show_frame("ExeGroupPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Exercise Group Page",
+            command=lambda: controller.show_frame("ExeGroupPage"),
+            height=2,
+            font=font
+        )
         btn_exe.grid(row=5, column=0, sticky="nswe", padx=5, pady=5)
 
         # Field Of Study Page
         btn_field = tk.Button(
-                self,
-                text="Field of Study Page",
-                command=lambda: controller.show_frame("FieldOfStudyPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Field of Study Page",
+            command=lambda: controller.show_frame("FieldOfStudyPage"),
+            height=2,
+            font=font
+        )
         btn_field.grid(row=2, column=0, sticky="nswe", padx=5, pady=5)
 
         # Laboratory Group Page Button
         btn_lab = tk.Button(
-                self,
-                text="Laboratory Group Page",
-                command=lambda: controller.show_frame("LabGroupPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Laboratory Group Page",
+            command=lambda: controller.show_frame("LabGroupPage"),
+            height=2,
+            font=font
+        )
         btn_lab.grid(row=6, column=0, sticky="nswe", padx=5, pady=5)
 
         # Room Page Button
         btn_room = tk.Button(
-                self,
-                text="Room Page",
-                command=lambda: controller.show_frame("RoomPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Room Page",
+            command=lambda: controller.show_frame("RoomPage"),
+            height=2,
+            font=font,
+        )
         btn_room.grid(row=6, column=1, sticky="nswe", padx=5, pady=5)
 
         # Subject Page Button
         btn_subject = tk.Button(
-                self,
-                text="Subject Page",
-                command=lambda: controller.show_frame("SubjectPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Subject Page",
+            command=lambda: controller.show_frame("SubjectPage"),
+            height=2,
+            font=font
+        )
         btn_subject.grid(row=3, column=0, sticky="nswe", padx=5, pady=5)
 
         # Year Group Page Button
         btn_year = tk.Button(
-                self,
-                text="Year Group Page",
-                command=lambda: controller.show_frame("YearGroupPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Year Group Page",
+            command=lambda: controller.show_frame("YearGroupPage"),
+            height=2,
+            font=font,
+        )
         btn_year.grid(row=4, column=0, sticky="nswe", padx=5, pady=5)
 
         # Student Page Button
         btn_student = tk.Button(
-                self,
-                text="Student Page",
-                command=lambda: controller.show_frame("StudentPage"),
-                height=2,
-                font=font
-            )
+            self,
+            text="Student Page",
+            command=lambda: controller.show_frame("StudentPage"),
+            height=2,
+            font=font,
+        )
         btn_student.grid(row=1, column=1, sticky="nswe", padx=5, pady=5)

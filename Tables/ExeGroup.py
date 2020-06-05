@@ -18,7 +18,8 @@ class ExeGroup(object):
             FOREIGN KEY (id_student) REFERENCES student(id_student)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            FOREIGN KEY (id_field_of_study)
+            REFERENCES field_of_study(id_field_of_study)
             ON UPDATE CASCADE
             ON DELETE CASCADE
         );
@@ -46,12 +47,13 @@ class ExeGroup(object):
 
         return rows
 
-    def __init__(self, number = 10, field = None, students = {}):
+    def __init__(self, number=10, field=None, students={}):
         """Init ExeGroup
 
         Args:
             number (int, optional): exe group number. Defaults to 10.
-            field (FieldOfStudy, optional): exe group field of std. Defaults to None.
+            field (FieldOfStudy, optional): exe group field of std.
+            Defaults to None.
             students (dict, optional): {student obj: id}. Defaults to {}.
 
         Raises:
@@ -98,7 +100,7 @@ class ExeGroup(object):
 
         return rows
 
-    #add student
+    # add student
     def insert(self, student, db):
         """function insert student to group
 
@@ -156,14 +158,15 @@ class ExeGroup(object):
             else:
                 print("Error! Cant update in exercise_group table")
 
-    #remove group
+    # remove group
     def delete(self, db):
         """function delete data from db
 
         Args:
             db (TableDatabase): database that you want to update
         """
-        sql = """DELETE FROM exercise_group WHERE exercise_group_number = ? AND id_field_of_study = ?"""
+        sql = """DELETE FROM exercise_group WHERE exercise_group_number = ?
+        AND id_field_of_study = ?"""
 
         if db.get_conn() is not None:
             cur = db.cursor_conn()
@@ -177,7 +180,7 @@ class ExeGroup(object):
         else:
             print("Error! Cant delete in exercise_group table")
 
-    #remove student
+    # remove student
     def delete_student(self, student, db):
         """function delete student from group
 

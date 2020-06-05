@@ -20,7 +20,6 @@ class RoomPage(tk.Frame):
         self.refresh_button()
         self.buttons()
 
-
     def main_label(self):
         """create Room main label
         """
@@ -29,13 +28,12 @@ class RoomPage(tk.Frame):
             text="Room Page",
             font=self.controller.title_font
         )
-        label.grid(row=0, column = 6, sticky="news", padx=5, pady=5)
+        label.grid(row=0, column=6, sticky="news", padx=5, pady=5)
 
-    
     def buttons(self):
         """create room page buttons
         """
-        #Return Home Page
+        # Return Home Page
         btn_return = tk.Button(
             self,
             text="Home",
@@ -43,31 +41,30 @@ class RoomPage(tk.Frame):
             font=self.controller.normal_font,
         )
         btn_return.grid(row=4, column=6, sticky="news", padx=5, pady=5)
-        #Create Room Button
+        # Create Room Button
         btn_create = tk.Button(
             self,
             text="Create Room",
-            command=lambda : self.controller.show_frame("CreateRoomPage"),
+            command=lambda: self.controller.show_frame("CreateRoomPage"),
             font=self.controller.normal_font,
         )
         btn_create.grid(row=1, column=6, sticky="news", padx=5, pady=5)
-        #Delete Room Button
+        # Delete Room Button
         btn_delete = tk.Button(
             self,
             text="Delete Room",
-            command=lambda : self.delete_room(),
+            command=lambda: self.delete_room(),
             font=self.controller.normal_font,
         )
         btn_delete.grid(row=2, column=6, sticky="news", padx=5, pady=5)
-        #Change Room Button
+        # Change Room Button
         btn_update = tk.Button(
             self,
             text="Change Room",
-            command=lambda : self.update_room(),
+            command=lambda: self.update_room(),
             font=self.controller.normal_font,
         )
         btn_update.grid(row=3, column=6, sticky="news", padx=5, pady=5)
-
 
     def room_listbox(self):
         """create room listbox
@@ -81,8 +78,15 @@ class RoomPage(tk.Frame):
 
         self.list_rooms = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_rooms.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="news", padx=5, pady=5)
-
+        self.list_rooms.grid(
+            row=0,
+            column=0,
+            columnspan=6,
+            rowspan=9,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def delete_room(self):
         """func delete room from listbox and config
@@ -104,7 +108,6 @@ class RoomPage(tk.Frame):
         self.controller.frames["CreateLabSubjectPage"].refresh_room_listbox()
         self.restart()
 
-
     def update_room(self):
         """func set room to update and change page
         to ChangeRoomPage
@@ -116,13 +119,11 @@ class RoomPage(tk.Frame):
         self.controller.frames["ChangeRoomPage"].fill_entry()
         self.controller.show_frame("ChangeRoomPage")
 
-
     def restart(self):
         """func restart frame
         """
         self.refresh()
         self.controller.show_frame("RoomPage")
-
 
     def refresh_button(self):
         """create refresh button
@@ -130,11 +131,10 @@ class RoomPage(tk.Frame):
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
-            command=lambda : self.restart(),
+            command=lambda: self.restart(),
             font=self.controller.normal_font,
         )
         btn_refresh.grid(row=8, column=6, sticky="news", padx=5, pady=5)
-
 
     def refresh(self):
         """func refresh room listbox
@@ -170,16 +170,13 @@ class CreateRoomPage(tk.Frame):
         self.columnconfigure([x for x in range(9)], minsize=250)
         self.rowconfigure([x for x in range(18)], minsize=49)
         self.controller = controller
-
         self.main_label()
         self.return_button()
         self.home_button()
-
         self.number_entry()
         self.dean_off_listbox()
         self.building_listbox()
         self.submit()
-
 
     def main_label(self):
         """create room office main label
@@ -189,8 +186,15 @@ class CreateRoomPage(tk.Frame):
             text="Create Room",
             font=self.controller.title_font
         )
-        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
-
+        label.grid(
+            row=0,
+            column=0,
+            rowspan=1,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def return_button(self):
         """create return button
@@ -198,11 +202,18 @@ class CreateRoomPage(tk.Frame):
         btn_return = tk.Button(
             self,
             text="return",
-            command=lambda : self.return_refresh(),
+            command=lambda: self.return_refresh(),
             font=self.controller.normal_font,
         )
-        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
-
+        btn_return.grid(
+            row=16,
+            column=0,
+            rowspan=2,
+            columnspan=2,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def home_button(self):
         """create home button
@@ -210,11 +221,18 @@ class CreateRoomPage(tk.Frame):
         btn_home = tk.Button(
             self,
             text="Home",
-            command=lambda : self.home_refresh(),
+            command=lambda: self.home_refresh(),
             font=self.controller.normal_font,
         )
-        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
-
+        btn_home.grid(
+            row=16,
+            column=2,
+            rowspan=2,
+            columnspan=2,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def return_refresh(self):
         """func change page to RoomPage
@@ -222,29 +240,48 @@ class CreateRoomPage(tk.Frame):
         self.refresh()
         self.controller.show_frame("RoomPage")
 
-
     def home_refresh(self):
         """func change page to StartPage
         """
         self.refresh()
         self.controller.show_frame("StartPage")
 
-    
     def refresh(self):
         """clear all entries
         """
         self.e_number.delete(0, tk.END)
 
-    
     def number_entry(self):
         """create entry for name with label
         """
-        l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_number = tk.Label(
+            master=self,
+            text="number",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_number.grid(
+            row=1,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_number = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_number.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_number = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_number.grid(
+            row=2,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def dean_off_listbox(self):
         """create listbox where you can choose whether the room is
@@ -254,27 +291,51 @@ class CreateRoomPage(tk.Frame):
             ('is dean office?', 10),
         ]
 
-
         self.list_dean_off = MultiListBox(master=self, data=data)
         self.list_dean_off.insert(0, ("YES",))
         self.list_dean_off.insert(1, ("NO",))
-        self.list_dean_off.grid(row=0, column=4, rowspan=4, columnspan=3, sticky="nswe", pady=5, padx=5)
-
+        self.list_dean_off.grid(
+            row=0,
+            column=4,
+            rowspan=4,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
 
     def building_listbox(self):
         """create building listbox for Room Page
         """
-        l_building = tk.Label(master=self, text="building", font=self.controller.normal_font, relief=tk.RAISED)
-        l_building.grid(row=4, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
+        l_building = tk.Label(
+            master=self,
+            text="building",
+            font=self.controller.normal_font,
+            relief=tk.RAISED
+        )
+        l_building.grid(
+            row=4,
+            column=4,
+            rowspan=1,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
 
-        data = [
-            ('name', 10),
-        ]
+        data = [('name', 10), ]
 
         self.list_building = MultiListBox(master=self, data=data)
-        self.list_building.grid(row=5, column=4, rowspan=13, columnspan=3, sticky="nswe", pady=5, padx=5)
+        self.list_building.grid(
+            row=5,
+            column=4,
+            rowspan=13,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
         self.refresh_building_listbox()
-
 
     def refresh_building_listbox(self):
         """refresh building listbox
@@ -284,9 +345,7 @@ class CreateRoomPage(tk.Frame):
             output = (
                 building.get_name(),
             )
-            
             self.list_building.insert(i, output)
-
 
     def submit(self):
         """create submit button
@@ -294,11 +353,18 @@ class CreateRoomPage(tk.Frame):
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.create_room(),
+            command=lambda: self.create_room(),
             font=self.controller.normal_font,
         )
-        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
-
+        sub_btn.grid(
+            row=14,
+            column=0,
+            rowspan=2,
+            columnspan=4,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
 
     def create_room(self):
         """func create new room and config other frames
@@ -346,7 +412,6 @@ class ChangeRoomPage(CreateRoomPage):
         if controller.rooms:
             self.room = controller.rooms[0]
 
-
     def main_label(self):
         """create update room main label
         """
@@ -355,8 +420,15 @@ class ChangeRoomPage(CreateRoomPage):
             text="Change Room",
             font=self.controller.title_font
         )
-        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
-
+        label.grid(
+            row=0,
+            column=0,
+            rowspan=1,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def submit(self):
         """create submit button
@@ -364,17 +436,23 @@ class ChangeRoomPage(CreateRoomPage):
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.update_room(),
+            command=lambda: self.update_room(),
             font=self.controller.normal_font,
         )
-        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", padx=5, pady=5)
-
+        sub_btn.grid(
+            row=14,
+            column=0,
+            rowspan=2,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def fill_entry(self):
         """fill all entries with self attrs
         """
         self.e_number.insert(tk.END, str(self.room.get_number()))
-
 
     def set_room(self, room):
         """set room instance
@@ -384,7 +462,6 @@ class ChangeRoomPage(CreateRoomPage):
         """
         self.room = room
 
-
     def update_room(self):
         """func update room and config other frames
         """
@@ -392,7 +469,7 @@ class ChangeRoomPage(CreateRoomPage):
         self.room.update(self.controller.db)
         self.controller.db.commit_conn()
 
-        #config after update
+        # config after update
         self.controller.frames["YearSubjectPage"].refresh()
         self.controller.frames["CreateYearSubjectPage"].refresh_room_listbox()
         self.controller.frames["ExeSubjectPage"].refresh()
@@ -401,7 +478,6 @@ class ChangeRoomPage(CreateRoomPage):
         self.controller.frames["CreateLabSubjectPage"].refresh_room_listbox()
         self.refresh()
         self.controller.frames["RoomPage"].restart()
-
 
     def set_attr_room(self):
         """change attrs of room

@@ -1,5 +1,5 @@
 class Room(object):
-    bud_num = {} #{building: [numbers]}
+    bud_num = {}  # {building: [numbers]}
     id_room = 0
 
     @staticmethod
@@ -46,7 +46,7 @@ class Room(object):
         """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM room")
-        
+
         return cur.fetchall()
 
     @staticmethod
@@ -64,7 +64,7 @@ class Room(object):
 
         return cur.lastrowid
 
-    def __init__(self, id_room = 0, building = None, number = 0, is_dean = 0):
+    def __init__(self, id_room=0, building=None, number=0, is_dean=0):
         """Init Room
 
         Args:

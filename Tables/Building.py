@@ -68,7 +68,7 @@ class Building(object):
 
         return cur.lastrowid
 
-    def __init__(self, id_building = 0, street_name = '', name = '', number = ''):
+    def __init__(self, id_building=0, street_name='', name='', number=''):
         """Init Building
 
         Args:
@@ -78,7 +78,7 @@ class Building(object):
             number (str, optional): building number. Defaults to ''.
         """
         Building.id_bud += 1
-        #set id_building automatically or manual
+        # set id_building automatically or manual
         if id_building == 0:
             self.__id_building = Building.id_bud
         else:

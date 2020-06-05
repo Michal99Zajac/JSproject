@@ -4,6 +4,7 @@ from Tables.Student import Student
 
 from tk_extension.multilistBox import MultiListBox
 
+
 class StudentPage(tk.Frame):
     """
     Main Student Page
@@ -14,7 +15,6 @@ class StudentPage(tk.Frame):
         self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
         self.main_label()
-
         self.student_listbox()
         self.refresh_button()
         self.buttons()
@@ -27,12 +27,12 @@ class StudentPage(tk.Frame):
             text="Student Page",
             font=self.controller.title_font
         )
-        label.grid(row = 0, column = 6, sticky="nsew", padx=5, pady=5)
+        label.grid(row=0, column=6, sticky="nsew", padx=5, pady=5)
 
     def buttons(self):
         """create room page buttons
         """
-        #Return Home Button
+        # Return Home Button
         btn_return = tk.Button(
             self,
             text="Home",
@@ -40,7 +40,7 @@ class StudentPage(tk.Frame):
             font=self.controller.normal_font,
         )
         btn_return.grid(row=4, column=6, sticky="nsew", padx=5, pady=5)
-        #Create Student Button
+        # Create Student Button
         btn_create = tk.Button(
             self,
             text="Create Student",
@@ -48,7 +48,7 @@ class StudentPage(tk.Frame):
             font=self.controller.normal_font,
         )
         btn_create.grid(row=1, column=6, sticky="nsew", padx=5, pady=5)
-        #Delete Student Button
+        # Delete Student Button
         btn_delete = tk.Button(
             self,
             text="Delete Student",
@@ -56,7 +56,7 @@ class StudentPage(tk.Frame):
             font=self.controller.normal_font,
         )
         btn_delete.grid(row=2, column=6, sticky="nsew", padx=5, pady=5)
-        #Change Student Button
+        # Change Student Button
         btn_change = tk.Button(
             self,
             text="Change Student",
@@ -64,7 +64,6 @@ class StudentPage(tk.Frame):
             font=self.controller.normal_font,
         )
         btn_change.grid(row=3, column=6, sticky="nsew", padx=5, pady=5)
-
 
     def student_listbox(self):
         """create student listbox
@@ -83,8 +82,15 @@ class StudentPage(tk.Frame):
 
         self.list_students = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_students.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="nswe", padx=5, pady=5)
-
+        self.list_students.grid(
+            row=0,
+            column=0,
+            columnspan=6,
+            rowspan=9,
+            sticky="nswe",
+            padx=5,
+            pady=5
+        )
 
     def delete_student(self):
         """create student listbox
@@ -103,28 +109,24 @@ class StudentPage(tk.Frame):
         self.controller.frames["YearStudentPage"].refresh_student_listbox()
         self.restart()
 
-
     def delete_from_groups(self, student):
         """func delete student from groups
 
         Args:
             student (Student): student which we want delete
         """
-        #exe group
+        # exe group
         for exe_group in self.controller.exe_groups:
             if student in exe_group.get_students():
                 exe_group.delete_student(student, self.controller.db)
-
-        #lab group
+        # lab group
         for lab_group in self.controller.lab_groups:
             if student in lab_group.get_students():
                 lab_group.delete_student(student, self.controller.db)
-
-        #year group
+        # year group
         for year_group in self.controller.year_groups:
             if student in year_group.get_students():
                 year_group.delete_student(student, self.controller.db)
-
 
     def update_student(self):
         """func set student to update and change
@@ -132,11 +134,10 @@ class StudentPage(tk.Frame):
         """
         idx = self.list_students.index(tk.ACTIVE)
         student = self.controller.students[idx]
-       
+
         self.controller.frames["ChangeStudentPage"].set_student(student)
         self.controller.frames["ChangeStudentPage"].fill_entry()
         self.controller.show_frame("ChangeStudentPage")
-
 
     def restart(self):
         """func restart frame
@@ -144,18 +145,16 @@ class StudentPage(tk.Frame):
         self.refresh()
         self.controller.show_frame("StudentPage")
 
-
     def refresh_button(self):
         """create refresh button
         """
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
-            command=lambda : self.restart(),
+            command=lambda: self.restart(),
             font=self.controller.normal_font,
         )
         btn_refresh.grid(row=8, column=6, sticky="nsew", padx=5, pady=5)
-
 
     def refresh(self):
         """func refresh student listbox
@@ -182,9 +181,8 @@ class StudentPage(tk.Frame):
                 field,
                 department,
                 student.get_place_of_residence()
-                )
-            self.list_students.insert(i,output)
-        
+            )
+            self.list_students.insert(i, output)
 
 
 class CreateStudentPage(tk.Frame):
@@ -196,7 +194,6 @@ class CreateStudentPage(tk.Frame):
         self.columnconfigure([x for x in range(9)], minsize=250)
         self.rowconfigure([x for x in range(18)], minsize=50)
         self.controller = controller
-
         self.main_label()
         self.return_button()
         self.home_button()
@@ -209,7 +206,6 @@ class CreateStudentPage(tk.Frame):
         self.field_listbox()
         self.submit()
 
-
     def main_label(self):
         """create student main label
         """
@@ -218,8 +214,15 @@ class CreateStudentPage(tk.Frame):
             text="Create Student",
             font=self.controller.title_font
         )
-        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
-
+        label.grid(
+            row=0,
+            column=0,
+            rowspan=1,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def return_button(self):
         """create return button
@@ -230,8 +233,15 @@ class CreateStudentPage(tk.Frame):
             command=lambda: self.return_refresh(),
             font=self.controller.normal_font,
         )
-        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
-
+        btn_return.grid(
+            row=16,
+            column=0,
+            rowspan=2,
+            columnspan=2,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def home_button(self):
         """create home button
@@ -242,8 +252,15 @@ class CreateStudentPage(tk.Frame):
             command=lambda: self.home_refresh(),
             font=self.controller.normal_font,
         )
-        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
-
+        btn_home.grid(
+            row=16,
+            column=2,
+            rowspan=2,
+            columnspan=2,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def return_refresh(self):
         """func change page to StudentPage
@@ -251,14 +268,12 @@ class CreateStudentPage(tk.Frame):
         self.refresh()
         self.controller.show_frame("StudentPage")
 
-
     def home_refresh(self):
         """func change page to StartPage
         """
         self.refresh()
         self.controller.show_frame("StartPage")
 
-    
     def refresh(self):
         """clear all entries
         """
@@ -269,72 +284,216 @@ class CreateStudentPage(tk.Frame):
         self.e_place.delete(0, tk.END)
         self.e_ssn.delete(0, tk.END)
 
-
     def name_entry(self):
         """create entry for name with label
         """
-        l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_name = tk.Label(
+            master=self,
+            text="name",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_name.grid(
+            row=1,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_name.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-        
+        self.e_name = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_name.grid(
+            row=2,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def sec_name_entry(self):
         """create entry for second name with label
         """
-        l_sec_name = tk.Label(master=self, text="second name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_sec_name.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_sec_name = tk.Label(
+            master=self,
+            text="second name",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_sec_name.grid(
+            row=3,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_sec_name = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_sec_name.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_sec_name = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_sec_name.grid(
+            row=4,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def lastname_entry(self):
         """create entry for lastname with label
         """
-        l_lastname = tk.Label(master=self, text="lastname", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_lastname.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_lastname = tk.Label(
+            master=self,
+            text="lastname",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_lastname.grid(
+            row=5,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_lastname = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_lastname.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_lastname = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_lastname.grid(
+            row=6,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def ssn_entry(self):
         """create entry for ssn with label
         """
-        l_ssn = tk.Label(master=self, text="ssn", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_ssn.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_ssn = tk.Label(
+            master=self,
+            text="ssn",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_ssn.grid(
+            row=7,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_ssn = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_ssn.grid(row=8, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_ssn = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_ssn.grid(
+            row=8,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def email_entry(self):
         """create entry for email with label
         """
-        l_email = tk.Label(master=self, text="email", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_email.grid(row=9, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_email = tk.Label(
+            master=self,
+            text="email",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_email.grid(
+            row=9,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_email = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_email.grid(row=10, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_email = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_email.grid(
+            row=10,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def place_entry(self):
         """create entry for place of residence with label
         """
-        l_place = tk.Label(master=self, text="place of residence", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_place.grid(row=11, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_place = tk.Label(
+            master=self,
+            text="place of residence",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_place.grid(
+            row=11,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_place = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_place.grid(row=12, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_place = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_place.grid(
+            row=12,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def field_listbox(self):
         """create field of study listbox for Student Page
         """
-        l_field = tk.Label(master=self, text="field of study", font=self.controller.normal_font, relief=tk.RAISED)
-        l_field.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
+        l_field = tk.Label(
+            master=self,
+            text="field of study",
+            font=self.controller.normal_font,
+            relief=tk.RAISED
+        )
+        l_field.grid(
+            row=0,
+            column=4,
+            rowspan=1,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
 
         data = [
             ('field of study', 20),
@@ -342,9 +501,16 @@ class CreateStudentPage(tk.Frame):
         ]
 
         self.list_field = MultiListBox(master=self, data=data)
-        self.list_field.grid(row=1, column=4, rowspan=17, columnspan=3, sticky="nswe", pady=5, padx=5)
+        self.list_field.grid(
+            row=1,
+            column=4,
+            rowspan=17,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
         self.refresh_field_listbox()
-
 
     def refresh_field_listbox(self):
         """refresh field of study listbox
@@ -360,9 +526,7 @@ class CreateStudentPage(tk.Frame):
                 field.get_name(),
                 dept
             )
-
             self.list_field.insert(i, output)
-
 
     def submit(self):
         """create submit button
@@ -370,11 +534,18 @@ class CreateStudentPage(tk.Frame):
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.create_student(),
+            command=lambda: self.create_student(),
             font=self.controller.normal_font,
-            )
-        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
-        
+        )
+        sub_btn.grid(
+            row=14,
+            column=0,
+            rowspan=2,
+            columnspan=4,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
 
     def create_student(self):
         """func create new student and config other frames
@@ -389,7 +560,7 @@ class CreateStudentPage(tk.Frame):
             ssn = int(self.e_ssn.get())
         except ValueError:
             ssn = 'NULL'
-        
+
         self.controller.students.append(Student(
             name=self.e_name.get(),
             sec_name=self.e_sec_name.get(),
@@ -421,7 +592,6 @@ class ChangeStudentPage(CreateStudentPage):
         if controller.students:
             self.student = controller.students[0]
 
-
     def main_label(self):
         """create update student main label
         """
@@ -430,8 +600,15 @@ class ChangeStudentPage(CreateStudentPage):
             text="Change Student",
             font=self.controller.title_font
         )
-        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
-
+        label.grid(
+            row=0,
+            column=0,
+            rowspan=1,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def submit(self):
         """crate submit button
@@ -441,9 +618,16 @@ class ChangeStudentPage(CreateStudentPage):
             text="submit",
             command=lambda: self.update_student(),
             font=self.controller.normal_font,
-            )
-        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", padx=5, pady=5)
-        
+        )
+        sub_btn.grid(
+            row=14,
+            column=0,
+            rowspan=2,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def fill_entry(self):
         """fill all entries with self attrs
@@ -455,7 +639,6 @@ class ChangeStudentPage(CreateStudentPage):
         self.e_place.insert(tk.END, str(self.student.get_place_of_residence()))
         self.e_ssn.insert(tk.END, str(self.student.get_ssn()))
 
-
     def set_student(self, student):
         """set student instance
 
@@ -464,7 +647,6 @@ class ChangeStudentPage(CreateStudentPage):
         """
         self.student = student
 
-
     def update_student(self):
         """func update student and config other frames
         """
@@ -472,7 +654,7 @@ class ChangeStudentPage(CreateStudentPage):
         self.student.update(self.controller.db)
         self.controller.db.commit_conn()
 
-        #config after update
+        # config after update
         self.controller.frames["LabStudentPage"].refresh_student_listbox()
         self.controller.frames["ExeStudentPage"].refresh_student_listbox()
         self.controller.frames["YearStudentPage"].refresh_student_listbox()

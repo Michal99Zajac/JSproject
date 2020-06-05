@@ -1,5 +1,3 @@
-import sqlite3
-
 class Student(object):
     id_std = 0
 
@@ -79,7 +77,7 @@ class Student(object):
         else:
             print("Error! Cant create student table")
 
-    def __init__(self, id_student = 0, name = '', sec_name = '', lastname = '', ssn = 1000, email = '', field_of_study = None, place_of_residence = ''):
+    def __init__(self, id_student=0, name='', sec_name='', lastname='', ssn=1000, email='', field_of_study=None, place_of_residence=''):
         """Init Student
 
         Args:
@@ -89,11 +87,13 @@ class Student(object):
             lastname (str, optional): student lastname. Defaults to ''.
             ssn (int, optional): student ssn. Defaults to 1000.
             email (str, optional): student email. Defaults to ''.
-            field_of_study (FieldOfStudy, optional): student field of study. Defaults to None.
-            place_of_residence (str, optional): student place of resid. Defaults to ''.
+            field_of_study (FieldOfStudy, optional): student field of study.
+            Defaults to None.
+            place_of_residence (str, optional): student place of resid.
+            Defaults to ''.
         """
         Student.id_std += 1
-        #set id_student automatically or manual
+        # set id_student automatically or manual
         if id_student == 0:
             self.__id_student = Student.id_std
         else:
@@ -102,7 +102,7 @@ class Student(object):
         self.__name = name
         self.__sec_name = sec_name
         self.__lastname = lastname
-        self.__ssn = ssn #social security number
+        self.__ssn = ssn  # social security number
         self.__email = email
         self.__field_of_study = field_of_study
         self.__place_of_residence = place_of_residence
@@ -128,7 +128,7 @@ class Student(object):
             field_id = self.__field_of_study.get_id()
         except AttributeError:
             field_id = "NULL"
-        
+
         values = (
             self.__name,
             self.__sec_name,
@@ -139,12 +139,12 @@ class Student(object):
             self.__place_of_residence
             )
 
-        if db.get_conn() is not None:    
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, values)
         else:
             print("Error! Cant insert in student table")
-    
+
     def update(self, db):
         """function update data to db
 
@@ -178,7 +178,7 @@ class Student(object):
             self.__id_student
             )
 
-        if db.get_conn() is not None:   
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, values)
         else:
@@ -192,7 +192,7 @@ class Student(object):
         """
         sql = """DELETE FROM student WHERE id_student = ?"""
 
-        if db.get_conn() is not None:    
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, (self.__id_student,))
         else:

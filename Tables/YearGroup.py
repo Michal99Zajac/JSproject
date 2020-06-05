@@ -18,7 +18,8 @@ class YearGroup(object):
             FOREIGN KEY (id_student) REFERENCES student(id_student)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            FOREIGN KEY (id_field_of_study)
+            REFERENCES field_of_study(id_field_of_study)
             ON UPDATE CASCADE
             ON DELETE CASCADE
         );
@@ -45,7 +46,7 @@ class YearGroup(object):
 
         return rows
 
-    def __init__(self, number = 10, field = None, students = {}):
+    def __init__(self, number=10, field=None, students={}):
         """Init YearGroup
 
         Args:
@@ -75,7 +76,7 @@ class YearGroup(object):
         except ValueError:
             print("Number and field_od_study in group is booked")
 
-        self.__students = students #{student: id_year}
+        self.__students = students  # {student: id_year}
 
         for student in self.__students:
             YearGroup.all_students.append(student)
@@ -99,7 +100,7 @@ class YearGroup(object):
 
         return rows
 
-    #add student
+    # add student
     def insert(self, student, db):
         """function insert student to group
 
@@ -130,7 +131,6 @@ class YearGroup(object):
         else:
             print("Error! Cant insert in year_group table")
 
-
     def update(self, db):
         """function update data to db
 
@@ -145,7 +145,7 @@ class YearGroup(object):
 
         cur = None
         cur = db.cursor_conn()
-        for student in  self.__students:
+        for student in self.__students:
             values = (
                 self.__number,
                 self.__field.get_id(),
@@ -157,14 +157,15 @@ class YearGroup(object):
             else:
                 print("Error! Cant update in year_group table")
 
-    #remove group
+    # remove group
     def delete(self, db):
         """function delete data from db
 
         Args:
             db (TableDatabase): database that you want to update
         """
-        sql = """DELETE FROM year_group WHERE year_group_number = ? AND id_field_of_study = ?"""
+        sql = """DELETE FROM year_group WHERE year_group_number = ?
+        AND id_field_of_study = ?"""
 
         if db.get_conn() is not None:
             cur = db.cursor_conn()
@@ -177,7 +178,7 @@ class YearGroup(object):
         else:
             print("Error! Cant delete in year_group table")
 
-    #remove student
+    # remove student
     def delete_student(self, student, db):
         """function delete student from group
 

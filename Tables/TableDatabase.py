@@ -13,6 +13,7 @@ from Tables.Subject import Subject
 from Tables.Teacher import Teacher
 from Tables.YearGroup import YearGroup
 
+
 class TableDatabase(object):
     """
     class TableDatabase create connection
@@ -27,8 +28,8 @@ class TableDatabase(object):
             db_file (str): database file
         """
         self.conn = None
-        
-        #create connection
+
+        # create connection
         try:
             self.conn = sqlite3.connect(db_file)
         except sqlite3.Error:
@@ -90,7 +91,7 @@ class TableDatabase(object):
         Teacher.create_tab(self)
         Subject.create_tab(self)
 
-    #create all objects from db
+    # create all objects from db
     def fetch_students(self, ls_fields_of_study):
         """fetch all student objects from db
 
@@ -141,7 +142,7 @@ class TableDatabase(object):
                 row[3]
             ))
         else:
-            if row != None:
+            if row is not None:
                 Building.set_idx(row[0])
 
         return ls_buildings
@@ -165,7 +166,7 @@ class TableDatabase(object):
                 row[6]
             ))
         else:
-            if row != None:
+            if row is not None:
                 Dean.set_idx(row[0])
 
         return ls_deans
@@ -198,11 +199,10 @@ class TableDatabase(object):
                 dept_instance
             ))
         else:
-            if row != None:
+            if row is not None:
                 DeansEmp.set_idx(row[0])
 
         return ls_deans_emps
-
 
     def fetch_rooms(self, ls_buildings):
         """fetch all room objects from db
@@ -229,7 +229,7 @@ class TableDatabase(object):
                 row[3]
             ))
         else:
-            if row != None:
+            if row is not None:
                 Room.set_idx(row[0])
 
         return ls_rooms
@@ -264,7 +264,7 @@ class TableDatabase(object):
                 row[8]
             ))
         else:
-            if row != None:
+            if row is not None:
                 Teacher.set_idx(row[0])
 
         return ls_teachers
@@ -300,15 +300,14 @@ class TableDatabase(object):
                         building_instance,
                         row[2],
                         row[3],
-                        row[4], 
+                        row[4],
                         dean_instance
                     ))
         else:
-            if row != None:
+            if row is not None:
                 Department.set_idx(row[0])
 
         return ls_departments
-
 
     def fetch_fields_of_study(self, ls_departments, ls_deans_emps):
         """fetch all field of study objects from db
@@ -335,7 +334,7 @@ class TableDatabase(object):
                 if row[3] == deans_emp.get_id():
                     deans_emp_instance = deans_emp
                     break
-            
+
             ls_fields.append(FieldOfStudy(
                 row[0],
                 row[1],
@@ -343,7 +342,7 @@ class TableDatabase(object):
                 deans_emp_instance
             ))
         else:
-            if row != None:
+            if row is not None:
                 FieldOfStudy.set_idx(row[0])
 
         return ls_fields
@@ -359,9 +358,9 @@ class TableDatabase(object):
             list: list of exe groups obj
         """
         ls_exe_groups = []
-        field_num = {} #field_num = {field_id: [nums]}
+        field_num = {}  # field_num = {field_id: [nums]}
 
-        #create dict field_num
+        # create dict field_num
         for row in ExeGroup.select_all(self):
             if row[3] not in field_num.keys():
                 field_num[row[3]] = [row[1]]
@@ -369,11 +368,11 @@ class TableDatabase(object):
                 if row[1] not in field_num[row[3]]:
                     field_num[row[3]].append(row[1])
 
-        #create instances
+        # create instances
         for field in field_num:
             field_instance = None
 
-            #attaching field_id to an instance
+            # attaching field_id to an instance
             for f in ls_fields_of_study:
                 if field == f.get_id():
                     field_instance = f
@@ -382,14 +381,14 @@ class TableDatabase(object):
             for number in field_num[field]:
                 students = {}
 
-                #create dict students = {student: id_exe_group}
+                # create dict students = {student: id_exe_group}
                 for row in ExeGroup.select_all(self):
                     if field == row[3] and number == row[1]:
                         for student in ls_students:
                             if student.get_id() == row[2]:
                                 students[student] = row[0]
                                 break
-                    
+
                 ls_exe_groups.append(ExeGroup(
                     number,
                     field_instance,
@@ -409,9 +408,9 @@ class TableDatabase(object):
             list: list of lab groups obj
         """
         ls_lab_groups = []
-        field_num = {} #field_num = {field_id: [nums]}
+        field_num = {}  # field_num = {field_id: [nums]}
 
-        #create dict field_num
+        # create dict field_num
         for row in LabGroup.select_all(self):
             if row[3] not in field_num.keys():
                 field_num[row[3]] = [row[1]]
@@ -419,11 +418,11 @@ class TableDatabase(object):
                 if row[1] not in field_num[row[3]]:
                     field_num[row[3]].append(row[1])
 
-        #create instances
+        # create instances
         for field in field_num:
             field_instance = None
 
-            #attaching field_id to an instance
+            # attaching field_id to an instance
             for f in ls_fields_of_study:
                 if field == f.get_id():
                     field_instance = f
@@ -432,14 +431,14 @@ class TableDatabase(object):
             for number in field_num[field]:
                 students = {}
 
-                #create dict students = {student: id_lab_group}
+                # create dict students = {student: id_lab_group}
                 for row in LabGroup.select_all(self):
                     if field == row[3] and number == row[1]:
                         for student in ls_students:
                             if student.get_id() == row[2]:
                                 students[student] = row[0]
                                 break
-                
+
                 ls_lab_groups.append(LabGroup(
                     number,
                     field_instance,
@@ -459,9 +458,9 @@ class TableDatabase(object):
             list: list of year groups obj
         """
         ls_year_groups = []
-        field_num = {} #field_num = {field_id: [nums]}
+        field_num = {}  # field_num = {field_id: [nums]}
 
-        #create dict field_num
+        # create dict field_num
         for row in YearGroup.select_all(self):
             if row[3] not in field_num.keys():
                 field_num[row[3]] = [row[1]]
@@ -469,11 +468,11 @@ class TableDatabase(object):
                 if row[1] not in field_num[row[3]]:
                     field_num[row[3]].append(row[1])
 
-        #create instances
+        # create instances
         for field in field_num:
             field_instance = None
 
-            #attaching field_id to an instance
+            # attaching field_id to an instance
             for f in ls_fields_of_study:
                 if field == f.get_id():
                     field_instance = f
@@ -482,14 +481,14 @@ class TableDatabase(object):
             for number in field_num[field]:
                 students = {}
 
-                #create dict students = {student: id_year_group}
+                # create dict students = {student: id_year_group}
                 for row in YearGroup.select_all(self):
                     if field == row[3] and number == row[1]:
                         for student in ls_students:
                             if student.get_id() == row[2]:
                                 students[student] = row[0]
                                 break
-                
+
                 ls_year_groups.append(YearGroup(
                     number,
                     field_instance,
@@ -512,8 +511,8 @@ class TableDatabase(object):
         Returns:
             [type]: [description]
         """
-        ls_subjects = [] #list of instances
-        subjects = [] #list of tuples
+        ls_subjects = []  # list of instances
+        subjects = []  # list of tuples
 
         for row in Subject.select_all(self):
             teacher_instance = None
@@ -523,41 +522,40 @@ class TableDatabase(object):
             exe_group_instance = None
             year_group_instance = None
 
-            #search  correct teacher
+            # search  correct teacher
             for teacher in ls_teachers:
                 if row[1] == teacher.get_id():
                     teacher_instance = teacher
                     break
-            
 
-            #search correct lab group
-            if row[2] != None:
+            # search correct lab group
+            if row[2] is not None:
                 for lab in ls_lab_groups:
                     if row[2] in lab.get_idxes():
                         lab_group_instance = lab
                         break
 
-            #search correct exe group
-            if row[3] != None:
+            # search correct exe group
+            if row[3] is not None:
                 for exe in ls_exe_groups:
                     if row[3] in exe.get_idxes():
                         exe_group_instance = exe
                         break
 
-            #search correct year group
-            if row[4] != None:
+            # search correct year group
+            if row[4] is not None:
                 for year in ls_year_groups:
                     if row[4] in year.get_idxes():
                         year_group_instance = year
                         break
 
-            #search correct room
+            # search correct room
             for room in ls_rooms:
                 if row[5] == room.get_id():
                     room_instance = room
                     break
 
-            #search correct field of study
+            # search correct field of study
             for field in ls_fields_of_study:
                 if row[6] == field.get_id():
                     field_of_study_instance = field
@@ -577,7 +575,7 @@ class TableDatabase(object):
                 field_id = field_of_study_instance.get_id()
             except AttributeError:
                 field_id = ''
-            
+
             temp_subject = (
                 teacher_id,
                 room_id,
@@ -588,11 +586,11 @@ class TableDatabase(object):
                 row[10]
             )
 
-            #chceck if this scheme has already been used
+            # chceck if this scheme has already been used
             if temp_subject not in subjects:
                 subs = Subject.get_groups_id(self, temp_subject)
                 ls_sub = []
-                
+
                 for sub in subs:
                     ls_sub.append(sub[0])
 

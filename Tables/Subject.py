@@ -1,6 +1,6 @@
 class Subject(object):
     id_subject = 0
-    group_name = {} #{group: [name]}
+    group_name = {}  # {group: [name]}
 
     @staticmethod
     def set_idx(id_sub):
@@ -99,22 +99,28 @@ class Subject(object):
             hour_start TEXT,
             hour_end TEXT,
             name TEXT NOT NULL,
-            FOREIGN KEY (id_teacher) REFERENCES teacher(id_teacher)
+            FOREIGN KEY (id_teacher)
+            REFERENCES teacher(id_teacher)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_labolatory_group) REFERENCES laboratory_group(id_labolatory_group)
+            FOREIGN KEY (id_labolatory_group)
+            REFERENCES laboratory_group(id_labolatory_group)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_exercise_group) REFERENCES exercise_group(id_exercise_group)
+            FOREIGN KEY (id_exercise_group)
+            REFERENCES exercise_group(id_exercise_group)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_year_group) REFERENCES year_group(id_year_group)
+            FOREIGN KEY (id_year_group)
+            REFERENCES year_group(id_year_group)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_room) REFERENCES room(id_room)
+            FOREIGN KEY (id_room)
+            REFERENCES room(id_room)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            FOREIGN KEY (id_field_of_study)
+            REFERENCES field_of_study(id_field_of_study)
             ON UPDATE CASCADE
             ON DELETE CASCADE
         );
@@ -125,7 +131,7 @@ class Subject(object):
         else:
             print("Error! Cant create subject table")
 
-    def __init__(self, id_sub = [0,], teacher = None, lab_group = None, exe_group = None, year_group = None, room = None, field = None, day = '', start = '', end = '', name = ''):
+    def __init__(self, id_sub=[], teacher=None, lab_group=None, exe_group=None, year_group=None, room=None, field=None, day='', start='', end='', name=''):
         """Init Subject
 
         Args:
@@ -144,7 +150,6 @@ class Subject(object):
         self.__lab = False
         self.__exe = False
         self.__year = False
-
         self.__id_sub = id_sub
         self.__teacher = teacher
         self.__room = room
@@ -178,7 +183,7 @@ class Subject(object):
         except ValueError:
             print("group of subject is booked")
 
-    #add all rows of group
+    # add all rows of group
     def insert(self, db):
          """function insert data to db
 

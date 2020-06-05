@@ -1,5 +1,5 @@
 class LabGroup(object):
-    field_num = {} #{field: [num]}
+    field_num = {}  # {field: [num]}
     all_students = []
 
     @staticmethod
@@ -18,7 +18,8 @@ class LabGroup(object):
             FOREIGN KEY (id_student) REFERENCES student(id_student)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_field_of_study) REFERENCES field_of_study(id_field_of_study)
+            FOREIGN KEY (id_field_of_study)
+            REFERENCES field_of_study(id_field_of_study)
             ON UPDATE CASCADE
             ON DELETE CASCADE
         );
@@ -46,19 +47,20 @@ class LabGroup(object):
 
         return rows
 
-    def __init__(self, number = 10, field = None, students = {}):
+    def __init__(self, number=10, field=None, students={}):
         """Init LabGroup
 
         Args:
             number (int, optional): lab group number. Defaults to 10.
-            field (FieldOfStudy, optional): lab group field of std. Defaults to None.
+            field (FieldOfStudy, optional): lab group field of std.
+            Defaults to None.
             students (dict, optional): {student obj: id}. Defaults to {}.
 
         Raises:
             ValueError: if number and field was created
         """
         self.__number = None
-        self.__field = None #object field_of_study
+        self.__field = None  # object field_of_study
         try:
             if field in LabGroup.field_num.keys():
                 if number not in LabGroup.field_num[field]:
@@ -74,7 +76,7 @@ class LabGroup(object):
         except ValueError:
             print("Number and field_od_study in group is booked")
 
-        self.__students = students #{student: id_lab}
+        self.__students = students  # {student: id_lab}
 
         for student in self.__students:
             LabGroup.all_students.append(student)
@@ -93,12 +95,12 @@ class LabGroup(object):
         """
 
         cur = db.cursor_conn()
-        cur.execute(sql, (self.__number,self.__field.get_id()))
+        cur.execute(sql, (self.__number, self.__field.get_id()))
         rows = cur.fetchall()
 
         return rows
 
-    #add student
+    # add student
     def insert(self, student, db):
         """function insert student to group
 
@@ -129,7 +131,7 @@ class LabGroup(object):
             print("Error! Cant insert in laboratory_group table")
 
         self.__students[student] = cur.lastrowid
-    
+
     def update(self, db):
         """function update data to db
 
@@ -150,22 +152,23 @@ class LabGroup(object):
                 self.__field.get_id(),
                 self.__students[student]
             )
-            
+
             if db.get_conn() is not None:
                 cur.execute(sql, values)
             else:
                 print("Error! Cant update in laboratory_group table")
 
-    #remove group
+    # remove group
     def delete(self, db):
         """function delete data from db
 
         Args:
             db (TableDatabase): database that you want to update
         """
-        sql = """DELETE FROM laboratory_group WHERE labolatory_group_number = ? AND id_field_of_study = ?"""
+        sql = """DELETE FROM laboratory_group WHERE labolatory_group_number = ?
+        AND id_field_of_study = ?"""
 
-        if db.get_conn() is not None:    
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, (self.__number, self.__field.get_id()))
             LabGroup.field_num[self.__field].remove(self.__number)
@@ -177,7 +180,7 @@ class LabGroup(object):
         else:
             print("Error! Cant delete in laboratory_group table")
 
-    #remove student
+    # remove student
     def delete_student(self, student, db):
         """function delete student from group
 

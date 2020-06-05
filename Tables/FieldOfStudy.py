@@ -11,7 +11,6 @@ class FieldOfStudy(object):
         """
         FieldOfStudy.id_field = id_fie
 
-
     @staticmethod
     def status_id():
         """func return variable id_field
@@ -20,7 +19,6 @@ class FieldOfStudy(object):
             int: current id_field in class
         """
         return FieldOfStudy.id_field
-
 
     @staticmethod
     def select_all(db):
@@ -38,7 +36,6 @@ class FieldOfStudy(object):
 
         return rows
 
-
     @staticmethod
     def get_lastrowid(db):
         """function return last row id
@@ -51,9 +48,8 @@ class FieldOfStudy(object):
         """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM field_of_study")
-        
-        return cur.lastrowid
 
+        return cur.lastrowid
 
     @staticmethod
     def create_tab(db):
@@ -71,7 +67,8 @@ class FieldOfStudy(object):
             FOREIGN KEY (id_department) REFERENCES department(id_department)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-            FOREIGN KEY (id_leader_of_field) REFERENCES deans_office_employee(id_deans_office_employee)
+            FOREIGN KEY (id_leader_of_field)
+            REFERENCES deans_office_employee(id_deans_office_employee)
             ON UPDATE CASCADE
             ON DELETE CASCADE
         );
@@ -82,15 +79,15 @@ class FieldOfStudy(object):
         else:
             print("Error! Cant create field_of_study table")
 
-
-    def __init__(self, id_field = 0, name = '', department = None, do_emp = None):
+    def __init__(self, id_field=0, name='', department=None, do_emp=None):
         """Init FieldOfStudy
 
         Args:
             id_field (int, optional): id of field of study. Defaults to 0.
             name (str, optional): field of study name. Defaults to ''.
             department (Department, optional): f department. Defaults to None.
-            do_emp (DeansEmp, optional): field of study deans off emp. Defaults to None.
+            do_emp (DeansEmp, optional): field of study deans off emp.
+            Defaults to None.
 
         Raises:
             ValueError: if department and name was created
@@ -118,8 +115,6 @@ class FieldOfStudy(object):
             print("Name of field of study in department is booked")
         finally:
             self.__do_emp = do_emp
-        
-
 
     def insert(self, db):
         """function insert data to db
@@ -150,12 +145,11 @@ class FieldOfStudy(object):
             do_emp_id
         )
 
-        if db.get_conn() is not None:    
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, values)
         else:
             print("Error! Cant insert in field_of_study table")
-
 
     def update(self, db):
         """function update data to db
@@ -187,12 +181,11 @@ class FieldOfStudy(object):
             self.__id_field
         )
 
-        if db.get_conn() is not None:   
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, values)
         else:
             print("Error! Cant update in field_of_study table")
-
 
     def delete(self, db):
         """function delete data to db
@@ -208,22 +201,17 @@ class FieldOfStudy(object):
         else:
             print("Error! Cant delete field_of_study table")
 
-
     def get_id(self):
         return self.__id_field
-
 
     def get_name(self):
         return self.__name
 
-
     def get_department(self):
         return self.__department
 
-
     def get_leader(self):
         return self.__do_emp
-
 
     def set_name(self, name):
         try:
@@ -235,7 +223,6 @@ class FieldOfStudy(object):
                 raise ValueError
         except ValueError:
             print("Name in field_of_study is booked")
-
 
     def set_department(self, department):
         try:
@@ -253,7 +240,5 @@ class FieldOfStudy(object):
         except ValueError:
             print("Name of field of study in new department is booked")
 
-
     def set_leader(self, do_emp):
         self.__do_emp = do_emp
-        
