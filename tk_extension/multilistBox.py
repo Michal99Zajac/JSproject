@@ -1,6 +1,7 @@
 import tkinter as tk
 from apply import apply
 
+
 class MultiListBox(tk.Frame):
     """
     expand the listbox class
@@ -15,7 +16,7 @@ class MultiListBox(tk.Frame):
                 side=tk.LEFT,
                 expand=tk.YES,
                 fill=tk.BOTH
-                )
+            )
 
             tk.Label(
                 master=temp_frame,
@@ -27,7 +28,6 @@ class MultiListBox(tk.Frame):
             lb = tk.Listbox(
                 master=temp_frame,
                 width=width,
-                #height=45,
                 borderwidth=0,
                 selectborderwidth=0,
                 relief=tk.FLAT,
@@ -37,15 +37,15 @@ class MultiListBox(tk.Frame):
             lb.pack(expand=tk.YES, fill=tk.BOTH)
 
             self.lists.append(lb)
-            
-            lb.bind('<B1-Motion>',lambda e, s=self: s._select(e.y))
-            lb.bind('<Button-1>',lambda e, s=self: s._select(e.y))
+
+            lb.bind('<B1-Motion>', lambda e, s=self: s._select(e.y))
+            lb.bind('<Button-1>', lambda e, s=self: s._select(e.y))
             lb.bind('<Leave>', lambda e: 'break')
             lb.bind('<B2-Motion>', lambda e, s=self: s._b2motion(e.x, e.y))
             lb.bind('<Button-2>', lambda e, s=self: s._button(e.x, e.y))
             lb.bind('<Button-4>', lambda e, s=self: s._scroll(tk.SCROLL, -1, tk.PAGES))
-            lb.bind('<Button-5>',lambda e, s=self: s._scroll(tk.SCROLL, -1, tk.PAGES))
-            
+            lb.bind('<Button-5>', lambda e, s=self: s._scroll(tk.SCROLL, -1, tk.PAGES))
+
         frame = tk.Frame(self)
         frame.pack(side=tk.LEFT, fill=tk.Y)
         tk.Label(
@@ -75,13 +75,11 @@ class MultiListBox(tk.Frame):
 
     def _scroll(self, *args):
         for li in self.lists:
-            apply(l.yview, args)
+            apply(li.yview, args)
         return 'break'
-
 
     def curselection(self):
         return self.lists[0].curselection()
-
 
     def get(self, first, last=None):
         result = []
@@ -91,16 +89,13 @@ class MultiListBox(tk.Frame):
             return apply(map, [None] + result)
         return result
 
-
     def selection_set(self, first, last=None):
         for li in self.lists:
             li.selection_set(first, last)
 
-
     def selection_clear(self, first, last=None):
         for li in self.lists:
             li.selection_clear(first, last)
-
 
     def insert(self, index, *elements):
         for e in elements:
@@ -109,19 +104,15 @@ class MultiListBox(tk.Frame):
                 li.insert(index, e[i])
                 i += 1
 
-
     def delete(self, first, last=None):
         for li in self.lists:
             li.delete(first, last)
 
-
     def index(self, index):
         return self.lists[0].index(index)
 
-
     def size(self):
         return self.lists[0].size()
-
 
     def see(self, index):
         for li in self.lists:
@@ -130,7 +121,6 @@ class MultiListBox(tk.Frame):
     def selection_anchor(self, index):
         for li in self.lists:
             li.selection_anchor(index)
-
 
     def selection_includes(self, index):
         return self.lists[0].selection_includes(index)

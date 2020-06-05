@@ -20,7 +20,6 @@ class DepartmentPage(tk.Frame):
         self.refresh_button()
         self.buttons()
 
-    
     def main_label(self):
         """create department main label
         """
@@ -29,13 +28,12 @@ class DepartmentPage(tk.Frame):
             text="Department Page",
             font=self.controller.title_font
         )
-        label.grid(row=0, column = 6, sticky="news", padx=5, pady=5)
-
+        label.grid(row=0, column=6, sticky="news", padx=5, pady=5)
 
     def buttons(self):
         """create department page buttons
         """
-        #Return Home Page
+        # Return Home Page
         btn_return = tk.Button(
             self,
             text="Home",
@@ -43,31 +41,30 @@ class DepartmentPage(tk.Frame):
             font=self.controller.normal_font
         )
         btn_return.grid(row=4, column=6, sticky="news", padx=5, pady=5)
-        #Create Department Button
+        # Create Department Button
         btn_create = tk.Button(
             self,
             text="Create Department",
-            command=lambda : self.create_dept(),
+            command=lambda: self.create_dept(),
             font=self.controller.normal_font
         )
         btn_create.grid(row=1, column=6, sticky="news", padx=5, pady=5)
-        #Delete Department Button
+        # Delete Department Button
         btn_delete = tk.Button(
             self,
             text="Delete Department",
-            command=lambda : self.delete_dept(),
+            command=lambda: self.delete_dept(),
             font=self.controller.normal_font
         )
         btn_delete.grid(row=2, column=6, sticky="news", padx=5, pady=5)
-        #Change Department Button
+        # Change Department Button
         btn_change = tk.Button(
             self,
             text="Change Department",
-            command=lambda : self.update_dept(),
+            command=lambda: self.update_dept(),
             font=self.controller.normal_font
         )
         btn_change.grid(row=3, column=6, sticky="news", padx=5, pady=5)
-
 
     def dept_listbox(self):
         """create department listbox
@@ -83,8 +80,15 @@ class DepartmentPage(tk.Frame):
 
         self.list_depts = MultiListBox(master=self, data=data)
         self.refresh()
-        self.list_depts.grid(row=0, column=0, columnspan=6, rowspan=9, sticky="news", padx=5, pady=5)
-
+        self.list_depts.grid(
+            row=0,
+            column=0,
+            columnspan=6,
+            rowspan=9,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def delete_dept(self):
         """func delete departmeny from listbox and config other frame
@@ -114,7 +118,6 @@ class DepartmentPage(tk.Frame):
         self.controller.frames["ChangeDepartmentPage"].refresh_dean_listbox()
         self.restart()
 
-
     def update_dept(self):
         """func set department to update and change page to ChangeDepartmentPage
         """
@@ -128,7 +131,6 @@ class DepartmentPage(tk.Frame):
         self.controller.frames["ChangeDepartmentPage"].fill_entry()
         self.controller.show_frame("ChangeDepartmentPage")
 
-
     def create_dept(self):
         """func change pagr to CreateDepartmentPage
         """
@@ -136,13 +138,11 @@ class DepartmentPage(tk.Frame):
         self.controller.frames["CreateDepartmentPage"].refresh_dean_listbox()
         self.controller.show_frame("CreateDepartmentPage")
 
-
     def restart(self):
         """func restart frame
         """
         self.refresh()
         self.controller.show_frame("DepartmentPage")
-
 
     def refresh_button(self):
         """create refresh button
@@ -150,7 +150,7 @@ class DepartmentPage(tk.Frame):
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
-            command=lambda : self.restart(),
+            command=lambda: self.restart(),
             font=self.controller.normal_font
         )
         btn_refresh.grid(row=8, column=6, sticky="news", padx=5, pady=5)
@@ -161,7 +161,8 @@ class DepartmentPage(tk.Frame):
         self.list_depts.delete(0, tk.END)
         for i, dept in enumerate(self.controller.departments):
             try:
-                dean = dept.get_dean().get_name() + " " + dept.get_dean().get_lastname()
+                dean = dept.get_dean().get_name()
+                + " " + dept.get_dean().get_lastname()
             except AttributeError:
                 dean = "NULL"
 
@@ -200,7 +201,6 @@ class CreateDepartmentPage(tk.Frame):
         self.building_listbox()
         self.submit()
 
-
     def main_label(self):
         """create department main label
         """
@@ -209,8 +209,15 @@ class CreateDepartmentPage(tk.Frame):
             text="Create Department",
             font=self.controller.title_font
         )
-        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
-
+        label.grid(
+            row=0,
+            column=0,
+            rowspan=1,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def return_button(self):
         """create return button
@@ -221,8 +228,15 @@ class CreateDepartmentPage(tk.Frame):
             command=lambda: self.return_refresh(),
             font=self.controller.normal_font
         )
-        btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
-
+        btn_return.grid(
+            row=16,
+            column=0,
+            rowspan=2,
+            columnspan=2,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def home_button(self):
         """create home button
@@ -233,8 +247,15 @@ class CreateDepartmentPage(tk.Frame):
             command=lambda: self.home_refresh(),
             font=self.controller.normal_font
         )
-        btn_home.grid(row=16, column=2,rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
-
+        btn_home.grid(
+            row=16,
+            column=2,
+            rowspan=2,
+            columnspan=2,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def return_refresh(self):
         """func change page to DepartmentPage
@@ -242,13 +263,11 @@ class CreateDepartmentPage(tk.Frame):
         self.refresh()
         self.controller.show_frame("DepartmentPage")
 
-
     def home_refresh(self):
         """func change page to StartPage
         """
         self.refresh()
         self.controller.show_frame("StartPage")
-
 
     def refresh(self):
         """clear all entries
@@ -257,42 +276,117 @@ class CreateDepartmentPage(tk.Frame):
         self.e_off_start.delete(0, tk.END)
         self.e_off_stop.delete(0, tk.END)
 
-
     def name_entry(self):
         """create entry for name with label
         """
-        l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_name.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_name = tk.Label(
+            master=self,
+            text="name",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_name.grid(
+            row=1,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
         self.e_name = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_name.grid(row=2, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_name.grid(
+            row=2,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def off_start_entry(self):
         """create entry for office start with label
         """
-        l_off_start = tk.Label(master=self, text="office start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_off_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_off_start = tk.Label(
+            master=self,
+            text="office start",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_off_start.grid(
+            row=3,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_off_start = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_off_start.grid(row=4, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_off_start = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_off_start.grid(
+            row=4,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def off_stop_entry(self):
         """create entry for office stop with label
         """
-        l_off_stop = tk.Label(master=self, text="office stop", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
-        l_off_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
+        l_off_stop = tk.Label(
+            master=self,
+            text="office stop",
+            font=self.controller.normal_font,
+            anchor=tk.W,
+            relief=tk.RAISED
+        )
+        l_off_stop.grid(
+            row=5,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
-        self.e_off_stop = tk.Entry(master=self, font=self.controller.entry_font)
-        self.e_off_stop.grid(row=6, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
-
+        self.e_off_stop = tk.Entry(
+            master=self,
+            font=self.controller.entry_font
+        )
+        self.e_off_stop.grid(
+            row=6,
+            column=0,
+            columnspan=4,
+            sticky="nswe",
+            pady=0,
+            padx=5
+        )
 
     def dean_listbox(self):
         """create dean listbox for department page
         """
-        l_dean = tk.Label(master=self, text="dean", font=self.controller.normal_font, relief=tk.RAISED)
-        l_dean.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
+        l_dean = tk.Label(
+            master=self,
+            text="dean",
+            font=self.controller.normal_font,
+            relief=tk.RAISED
+        )
+        l_dean.grid(
+            row=0,
+            column=4,
+            rowspan=1,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
 
         data = [
             ('name', 10),
@@ -300,9 +394,16 @@ class CreateDepartmentPage(tk.Frame):
         ]
 
         self.list_dean = MultiListBox(master=self, data=data)
-        self.list_dean.grid(row=1, column=4, rowspan=8, columnspan=3, sticky="nswe", pady=5, padx=5)
+        self.list_dean.grid(
+            row=1,
+            column=4,
+            rowspan=8,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
         self.refresh_dean_listbox()
-
 
     def refresh_dean_listbox(self):
         """refresh dean listbox
@@ -316,22 +417,41 @@ class CreateDepartmentPage(tk.Frame):
 
             self.list_dean.insert(i, output)
 
-    
     def building_listbox(self):
         """create building listbox for department
         """
-        l_building = tk.Label(master=self, text="building", font=self.controller.normal_font, relief=tk.RAISED)
-        l_building.grid(row=9, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
+        l_building = tk.Label(
+            master=self,
+            text="building",
+            font=self.controller.normal_font,
+            relief=tk.RAISED
+        )
+        l_building.grid(
+            row=9,
+            column=4,
+            rowspan=1,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
 
         data = [
             ('name', 20),
         ]
 
         self.list_building = MultiListBox(master=self, data=data)
-        self.list_building.grid(row=10, column=4, rowspan=8, columnspan=3, sticky="nswe", pady=5, padx=5)
+        self.list_building.grid(
+            row=10,
+            column=4,
+            rowspan=8,
+            columnspan=3,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
         self.refresh_building_listbox()
 
-    
     def refresh_building_listbox(self):
         """refresh building listbox
         """
@@ -343,18 +463,24 @@ class CreateDepartmentPage(tk.Frame):
 
             self.list_building.insert(i, output)
 
-
     def submit(self):
         """create submit button
         """
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.create_dept(),
+            command=lambda: self.create_dept(),
             font=self.controller.normal_font
         )
-        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="nswe", pady=5, padx=5)
-
+        sub_btn.grid(
+            row=14,
+            column=0,
+            rowspan=2,
+            columnspan=4,
+            sticky="nswe",
+            pady=5,
+            padx=5
+        )
 
     def create_dept(self):
         """func create new department and config other frames
@@ -370,7 +496,6 @@ class CreateDepartmentPage(tk.Frame):
             temp_building = self.controller.buildings[idx]
         except IndexError:
             temp_building = None
-
 
         self.controller.departments.append(Department(
             building=temp_building,
@@ -409,7 +534,6 @@ class ChangeDepartmentPage(CreateDepartmentPage):
         if controller.departments:
             self.dept = controller.departments[0]
 
-
     def main_label(self):
         """create update department main label
         """
@@ -418,8 +542,15 @@ class ChangeDepartmentPage(CreateDepartmentPage):
             text="Change Department",
             font=self.controller.title_font
         )
-        label.grid(row=0, column=0, rowspan=1, columnspan=4, sticky="news", padx=5, pady=5)
-
+        label.grid(
+            row=0,
+            column=0,
+            rowspan=1,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def submit(self):
         """create submit button
@@ -427,11 +558,18 @@ class ChangeDepartmentPage(CreateDepartmentPage):
         sub_btn = tk.Button(
             master=self,
             text="submit",
-            command=lambda : self.update_dept(),
+            command=lambda: self.update_dept(),
             font=self.controller.normal_font
         )
-        sub_btn.grid(row=14, column=0, rowspan=2, columnspan=4, sticky="news", padx=5, pady=5)
-
+        sub_btn.grid(
+            row=14,
+            column=0,
+            rowspan=2,
+            columnspan=4,
+            sticky="news",
+            padx=5,
+            pady=5
+        )
 
     def fill_entry(self):
         """fill all entries with self attrs
@@ -439,7 +577,6 @@ class ChangeDepartmentPage(CreateDepartmentPage):
         self.e_name.insert(tk.END, str(self.dept.get_name()))
         self.e_off_start.insert(tk.END, str(self.dept.get_off_start()))
         self.e_off_stop.insert(tk.END, str(self.dept.get_off_stop()))
-
 
     def set_dept(self, dept):
         """set department instance
@@ -449,7 +586,6 @@ class ChangeDepartmentPage(CreateDepartmentPage):
         """
         self.dept = dept
 
-    
     def update_dept(self):
         """func update department and config other frames
         """
@@ -473,7 +609,6 @@ class ChangeDepartmentPage(CreateDepartmentPage):
         self.refresh()
         self.controller.frames["DepartmentPage"].restart()
 
-
     def set_attr_dept(self):
         """change attrs of department
         """
@@ -490,7 +625,7 @@ class ChangeDepartmentPage(CreateDepartmentPage):
             self.dept.set_building(temp_building)
         except IndexError:
             pass
-        
+
         self.dept.set_name(self.e_name.get())
         self.dept.set_off_start(self.e_off_start.get())
         self.dept.set_off_stop(self.e_off_stop.get())

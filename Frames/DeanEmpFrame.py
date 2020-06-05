@@ -309,8 +309,8 @@ class CreateDeansEmpPage(tk.Frame):
             columnspan=4,
             sticky="nswe",
             pady=0,
-            padx=5
-            )
+            padx=5,
+        )
 
         self.e_sec_name = tk.Entry(
             master=self,

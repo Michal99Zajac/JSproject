@@ -71,7 +71,7 @@ class Dean(object):
         else:
             print("Error! Cant create dean table")
 
-    def __init__(self, id_dean = 0, name = '', lastname = '', sec_name = '', ssn = 1000, email = '', place_of_residence = ''):
+    def __init__(self, id_dean=0, name='', lastname='', sec_name='', ssn=1000, email='', place_of_residence=''):
         """Init Dean
 
         Args:
@@ -84,7 +84,7 @@ class Dean(object):
             place_of_residence (str, optional): dean place. Defaults to ''.
         """
         Dean.id_dean += 1
-        #set id_dean automatically or manual
+        # set id_dean automatically or manual
         if id_dean == 0:
             self.__id_dean = Dean.id_dean
         else:
@@ -101,7 +101,7 @@ class Dean(object):
         """function insert data to db
 
         Args:
-            db (TableDatabase): database that you want to fill 
+            db (TableDatabase): database that you want to fill
         """
         sql = """INSERT INTO dean(
             name,
@@ -182,7 +182,7 @@ class Dean(object):
 
     def get_lastname(self):
         return self.__lastname
-    
+
     def get_sec_name(self):
         return self.__sec_name
 

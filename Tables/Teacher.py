@@ -1,5 +1,3 @@
-import sqlite3
-
 class Teacher(object):
     id_tea = 0
     acd_degrees = {'dr', 'mgr', 'prof', }
@@ -81,7 +79,7 @@ class Teacher(object):
         else:
             print("Error! Cant create teacher table")
 
-    def __init__(self, id_teacher = 0, name = '', sec_name = '', lastname = '', ssn = 1000, email = '', acd_degree = '', department = None, place_of_residence = ''):
+    def __init__(self, id_teacher=0, name='', sec_name='', lastname='', ssn=1000, email='', acd_degree='', department=None, place_of_residence=''):
         """Init Teacher
 
         Args:
@@ -93,10 +91,11 @@ class Teacher(object):
             email (str, optional): teacher email. Defaults to ''.
             acd_degree (str, optional): teacher acd. Defaults to ''.
             department ([Department, optional): teacher dept. Defaults to None.
-            place_of_residence (str, optional): teacher place of residence. Defaults to ''.
+            place_of_residence (str, optional): teacher place of residence.
+            Defaults to ''.
         """
         Teacher.id_tea += 1
-        #set id_student automatically or manual
+        # set id_student automatically or manual
         if id_teacher == 0:
             self.__id_teacher = Teacher.id_tea
         else:
@@ -113,7 +112,7 @@ class Teacher(object):
         if acd_degree in Teacher.acd_degrees:
             self.__acd_degree = acd_degree
         else:
-            self.__acd_degree = 'acd' #deegre const
+            self.__acd_degree = 'acd'  # deegre const
 
     def insert(self, db):
         """function insert data to db
@@ -149,7 +148,7 @@ class Teacher(object):
             self.__place_of_residenece
         )
 
-        if db.get_conn() is not None:    
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, values)
         else:

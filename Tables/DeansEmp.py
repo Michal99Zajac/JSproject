@@ -77,7 +77,7 @@ class DeansEmp(object):
         else:
             print("Error! Cant create deans_office_employee table")
 
-    def __init__(self, id_emp = 0, name = '', sec_name = '', lastname = '', ssn = 1000, email = '', department = None):
+    def __init__(self, id_emp=0, name='', sec_name='', lastname='', ssn=1000, email='', department=None):
         """Init Deans Office Employee
 
         Args:
@@ -87,10 +87,11 @@ class DeansEmp(object):
             lastname (str, optional): deans emp lastname. Defaults to ''.
             ssn (int, optional): deans emp ssn. Defaults to 1000.
             email (str, optional): deans emp email. Defaults to ''.
-            department ([Department], optional): deans emp department. Defaults to None.
+            department ([Department], optional): deans emp department.
+            Defaults to None.
         """
         DeansEmp.id_emp += 1
-        #set id_student automatically or manual
+        # set id_student automatically or manual
         if id_emp == 0:
             self.__id_emp = DeansEmp.id_emp
         else:
@@ -123,7 +124,7 @@ class DeansEmp(object):
             department_id = self.__department.get_id()
         except AttributeError:
             department_id = "NULL"
-        
+
         values = (
             self.__name,
             self.__sec_name,
@@ -170,7 +171,7 @@ class DeansEmp(object):
             self.__id_emp
         )
 
-        if db.get_conn() is not None:   
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, values)
         else:
@@ -221,7 +222,7 @@ class DeansEmp(object):
 
     def set_sec_name(self, sec_name):
         self.__sec_name = sec_name
-    
+
     def set_lastname(self, lastname):
         self.__lastname = lastname
 
