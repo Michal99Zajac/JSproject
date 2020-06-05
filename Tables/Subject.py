@@ -32,7 +32,7 @@ class Subject(object):
         """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM subject")
-        
+
         return cur.fetchall()
 
     @staticmethod
@@ -61,6 +61,7 @@ class Subject(object):
         Returns:
             List: list of ids
         """
+
         sql = """SELECT id_subject FROM subject WHERE
         id_teacher=? AND
         id_room=? AND
@@ -75,7 +76,6 @@ class Subject(object):
         cur.execute(sql, data)
 
         return cur.fetchall()
-
 
     @staticmethod
     def create_tab(db):
@@ -137,9 +137,12 @@ class Subject(object):
         Args:
             id_sub (list, optional): id of subject. Defaults to [0,].
             teacher ([Teacher, optional): subject teacher. Defaults to None.
-            lab_group (LabGroup, optional): subject lab group. Defaults to None.
-            exe_group (ExeGroup, optional): subject exe group. Defaults to None.
-            year_group (YearGroup, optional): subject year group. Defaults to None.
+            lab_group (LabGroup, optional): subject lab group.
+            Defaults to None.
+            exe_group (ExeGroup, optional): subject exe group.
+            Defaults to None.
+            year_group (YearGroup, optional): subject year group.
+            Defaults to None.
             room (Room, optional): subject room. Defaults to None.
             field (FieldOfStudy, optional): subject field. Defaults to None.
             day (str, optional): subject day. Defaults to ''.
@@ -160,15 +163,15 @@ class Subject(object):
         self.__group = None
 
         for i, group in enumerate([lab_group, exe_group, year_group]):
-            if group != None:
+            if group is not None:
                 self.__group = group
-                
+
                 if i == 0:
                     self.__lab = True
                 elif i == 1:
                     self.__exe = True
                 elif i == 2:
-                    self.__year = True            
+                    self.__year = True
 
         try:
             if self.__group in Subject.group_name.keys():
@@ -185,24 +188,25 @@ class Subject(object):
 
     # add all rows of group
     def insert(self, db):
-         """function insert data to db
+        """function insert data to db
 
         Args:
-            db (TableDatabase): database that you want to fill
+        db (TableDatabase): database that you want to fill
         """
+
         index = Subject.get_lastrowid(db) + 1
 
-        if self.__lab == True:
+        if self.__lab is True:
             for idx in self.__group.get_idxes():
                 sql = """INSERT INTO subject(
-                    id_teacher,
-                    id_labolatory_group,
-                    id_room,
-                    day,
-                    hour_start,
-                    hour_end,
-                    id_field_of_study,
-                    name
+                id_teacher,
+                id_labolatory_group,
+                id_room,
+                day,
+                hour_start,
+                hour_end,
+                id_field_of_study,
+                name
                 ) VALUES (?,?,?,?,?,?,?,?)
                 """
 
@@ -217,7 +221,7 @@ class Subject(object):
                     self.__name
                 )
 
-                if db.get_conn() is not None:    
+                if db.get_conn() is not None:
                     cur = db.cursor_conn()
                     cur.execute(sql, values)
                 else:
@@ -226,17 +230,17 @@ class Subject(object):
                 self.__id_sub.append(index)
                 index += 1
 
-        if self.__exe == True:
+        if self.__exe is True:
             for idx in self.__group.get_idxes():
                 sql = """INSERT INTO subject(
-                    id_teacher,
-                    id_exercise_group,
-                    id_room,
-                    day,
-                    hour_start,
-                    hour_end,
-                    id_field_of_study,
-                    name
+                id_teacher,
+                id_exercise_group,
+                id_room,
+                day,
+                hour_start,
+                hour_end,
+                id_field_of_study,
+                name
                 ) VALUES (?,?,?,?,?,?,?,?)
                 """
 
@@ -251,7 +255,7 @@ class Subject(object):
                     self.__name
                 )
 
-                if db.get_conn() is not None:    
+                if db.get_conn() is not None:
                     cur = db.cursor_conn()
                     cur.execute(sql, values)
                 else:
@@ -260,17 +264,17 @@ class Subject(object):
                 self.__id_sub.append(index)
                 index += 1
 
-        if self.__year == True:
+        if self.__year is True:
             for idx in self.__group.get_idxes():
                 sql = """INSERT INTO subject(
-                    id_teacher,
-                    id_year_group,
-                    id_room,
-                    day,
-                    hour_start,
-                    hour_end,
-                    id_field_of_study,
-                    name
+                id_teacher,
+                id_year_group,
+                id_room,
+                day,
+                hour_start,
+                hour_end,
+                id_field_of_study,
+                name
                 ) VALUES (?,?,?,?,?,?,?,?)
                 """
 
@@ -285,7 +289,7 @@ class Subject(object):
                     self.__name
                 )
 
-                if db.get_conn() is not None:    
+                if db.get_conn() is not None:
                     cur = db.cursor_conn()
                     cur.execute(sql, values)
                 else:
@@ -323,7 +327,7 @@ class Subject(object):
                 idx
             )
 
-            if db.get_conn() is not None:   
+            if db.get_conn() is not None:
                 cur = db.cursor_conn()
                 cur.execute(sql, values)
             else:
@@ -380,7 +384,7 @@ class Subject(object):
 
     def get_start(self):
         return self.__start
-    
+
     def get_end(self):
         return self.__end
 
