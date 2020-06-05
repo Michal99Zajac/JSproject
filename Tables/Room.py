@@ -1,5 +1,3 @@
-import sqlite3
-
 class Room(object):
     bud_num = {} #{building: [numbers]}
     id_room = 0
@@ -29,10 +27,23 @@ class Room(object):
 
     @staticmethod
     def set_idx(id_room):
+        """function set var id_room
+
+        Args:
+            id_room (int): new idx for class
+        """
         Room.id_room = id_room
 
     @staticmethod
     def select_all(db):
+        """func return all rooms data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM room")
         
@@ -40,12 +51,31 @@ class Room(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """function return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            int: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM room")
 
         return cur.lastrowid
 
     def __init__(self, id_room = 0, building = None, number = 0, is_dean = 0):
+        """Init Room
+
+        Args:
+            id_room (int, optional): id of room. Defaults to 0.
+            building (Building, optional): room building. Defaults to None.
+            number (int, optional): room number. Defaults to 0.
+            is_dean (int, optional): bool is dean office room. Defaults to 0.
+
+        Raises:
+            ValueError: if Building and number of room was created
+        """
         Room.id_room += 1
         if id_room == 0:
             self.__id_room = Room.id_room
@@ -73,6 +103,11 @@ class Room(object):
             self.__is_dean = 0
 
     def insert(self, db):
+        """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill
+        """
         sql = """INSERT INTO room(
             id_building,
             room_number,
@@ -98,6 +133,11 @@ class Room(object):
             print("Error! Cant insert in room table")
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE room SET
         id_building = ?,
         room_number = ?,
@@ -124,6 +164,11 @@ class Room(object):
             print("Error! Cant update in room table")
 
     def delete(self, db):
+        """function delete data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM room WHERE id_room = ?"""
 
         if db.get_conn() is not None:

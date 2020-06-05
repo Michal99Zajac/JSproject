@@ -6,6 +6,9 @@ from tk_extension.multilistBox import MultiListBox
 
 
 class ExeGroupPage(tk.Frame):
+    """
+    Main Exercise Group Page
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=245)
@@ -19,6 +22,8 @@ class ExeGroupPage(tk.Frame):
 
 
     def main_label(self):
+        """create exe group main label
+        """
         label = tk.Label(
             self,
             text="Exercise Group Page",
@@ -28,6 +33,8 @@ class ExeGroupPage(tk.Frame):
 
     
     def buttons(self):
+        """create exe group page buttons 
+        """
         #Return Home Page
         btn_return = tk.Button(
             self,
@@ -63,6 +70,8 @@ class ExeGroupPage(tk.Frame):
 
 
     def group_listbox(self):
+        """create exe group listbox
+        """
         data = [
             ('number',10),
             ('field of study', 20),
@@ -76,10 +85,15 @@ class ExeGroupPage(tk.Frame):
 
 
     def create_group(self):
+        """func change page to CreateExeGroupPage
+        """
         self.controller.show_frame("CreateExeGroupPage")
 
 
     def delete_group(self):
+        """func delete exe group from listbox and config
+        other frames
+        """
         idx = self.list_groups.index(tk.ACTIVE)
         del_group = self.controller.exe_groups.pop(idx)
 
@@ -90,15 +104,17 @@ class ExeGroupPage(tk.Frame):
             pass
 
         del del_group
-
+        # config
         self.controller.frames["ExeSubjectPage"].refresh()
         self.controller.frames["CreateExeSubjectPage"].refresh_exe_listbox()
-
         self.controller.frames["ExeAddStudentPage"].refresh_student_listbox()
         self.restart()
 
 
     def show_group(self):
+        """func set exe group to show and change
+        page to ExeStudentPage
+        """
         idx = self.list_groups.index(tk.ACTIVE)
         group = self.controller.exe_groups[idx]
 
@@ -108,11 +124,15 @@ class ExeGroupPage(tk.Frame):
 
 
     def restart(self):
+        """func restart frame
+        """
         self.refresh()
         self.controller.show_frame("ExeGroupPage")
 
     
     def refresh_button(self):
+        """create refresh button
+        """
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
@@ -123,6 +143,8 @@ class ExeGroupPage(tk.Frame):
 
 
     def refresh(self):
+        """func refresh exe group listbox
+        """
         self.list_groups.delete(0, tk.END)
         for i, group in enumerate(self.controller.exe_groups):
             try:
@@ -134,7 +156,6 @@ class ExeGroupPage(tk.Frame):
             except AttributeError:
                 field = "NULL"
                 dept = "NULL"
-
 
             output = (
                 group.get_number(),
@@ -148,22 +169,25 @@ class ExeGroupPage(tk.Frame):
 
 
 class CreateExeGroupPage(tk.Frame):
+    """
+    Page where we can create exe group
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(9)], minsize=250)
         self.rowconfigure([x for x in range(18)], minsize=50)
         self.controller = controller
-        
         self.main_label()
         self.return_button()
         self.home_button()
-
         self.number_entry()
         self.field_listbox()
         self.submit()
 
 
     def main_label(self):
+        """create exe group main label
+        """
         label = tk.Label(
             self,
             text="Create Group",
@@ -173,6 +197,8 @@ class CreateExeGroupPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -183,6 +209,8 @@ class CreateExeGroupPage(tk.Frame):
 
 
     def home_button(self):
+        """create home button
+        """
         btn_home = tk.Button(
             self,
             text="Home",
@@ -193,20 +221,28 @@ class CreateExeGroupPage(tk.Frame):
 
 
     def return_refresh(self):
+        """func change page to ExeGroupPage
+        """
         self.refresh()
         self.controller.show_frame("ExeGroupPage")
 
 
     def home_refresh(self):
+        """func change page to StartPage
+        """
         self.refresh()
         self.controller.show_frame("StartPage")
 
 
     def refresh(self):
+        """clear all entries
+        """
         self.e_number.delete(0, tk.END)
 
 
     def number_entry(self):
+        """create entry for number with label
+        """
         l_number = tk.Label(master=self, text="number",font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -215,6 +251,8 @@ class CreateExeGroupPage(tk.Frame):
 
 
     def field_listbox(self):
+        """create field of study listbox for Exe Group Page
+        """
         l_field = tk.Label(master=self, text="field of study", font=self.controller.normal_font, relief=tk.RAISED)
         l_field.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
         
@@ -229,6 +267,8 @@ class CreateExeGroupPage(tk.Frame):
 
 
     def refresh_field_listbox(self):
+        """refresh field of study listbox
+        """
         self.list_fields.delete(0, tk.END)
         for i, field in enumerate(self.controller.fields):
             try:
@@ -245,6 +285,8 @@ class CreateExeGroupPage(tk.Frame):
 
 
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -255,6 +297,8 @@ class CreateExeGroupPage(tk.Frame):
 
 
     def create_group(self):
+        """func create new exe group and config other frames
+        """
         try:
             idx = self.list_fields.index(tk.ACTIVE)
             field = self.controller.fields[idx]
@@ -267,16 +311,19 @@ class CreateExeGroupPage(tk.Frame):
             students={}
         ))
 
+        # update Subject
         self.controller.frames["ExeSubjectPage"].refresh()
-        #self.controller.frames["CreateExeSubjectPage"].refresh_exe_listbox()
-
+        self.controller.frames["CreateExeSubjectPage"].refresh_exe_listbox()
+        # self config
         self.refresh()
         self.controller.db.commit_conn()
         self.controller.frames["ExeGroupPage"].restart()
 
 
-
 class ExeStudentPage(tk.Frame):
+    """
+    Page where we can show all students in selected group
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
@@ -285,21 +332,26 @@ class ExeStudentPage(tk.Frame):
             self.group = controller.exe_groups[0]
 
         self.controller = controller
-        
         self.main_label()
         self.return_button()
         self.home_button()
-
         self.add_button()
         self.delete_button()
         self.student_listbox()
 
 
     def set_group(self, group):
+        """set exe group instance
+
+        Args:
+            group (ExeGroup): exe group which we want show
+        """
         self.group = group
 
 
     def main_label(self):
+        """create show exe group main label
+        """
         label = tk.Label(
             self,
             text="Exe Group",
@@ -309,6 +361,8 @@ class ExeStudentPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -319,6 +373,8 @@ class ExeStudentPage(tk.Frame):
 
 
     def home_button(self):
+        """create home button
+        """
         btn_home = tk.Button(
             self,
             text="Home",
@@ -329,6 +385,8 @@ class ExeStudentPage(tk.Frame):
 
 
     def student_listbox(self):
+        """create student listbox for Exe Student Group Page
+        """
         data = [
             ('id', 10),
             ('name', 20),
@@ -347,6 +405,8 @@ class ExeStudentPage(tk.Frame):
 
 
     def refresh_student_listbox(self):
+        """refresh student listbox
+        """
         self.list_students.delete(0, tk.END)
         try:
             for i, student in enumerate(self.group.get_students()):
@@ -377,6 +437,8 @@ class ExeStudentPage(tk.Frame):
 
 
     def add_button(self):
+        """create add button
+        """
         add_btn = tk.Button(
             master=self,
             text="add Student",
@@ -387,6 +449,8 @@ class ExeStudentPage(tk.Frame):
 
 
     def delete_button(self):
+        """create del button
+        """
         delete_btn = tk.Button(
             master=self,
             text="del Student",
@@ -397,6 +461,9 @@ class ExeStudentPage(tk.Frame):
 
 
     def add_student(self):
+        """func set exe group to add student and change
+        page to ExeAddStudentPage
+        """
         self.controller.frames["ExeSubjectPage"].refresh()
         self.controller.frames["CreateExeSubjectPage"].refresh_exe_listbox()
 
@@ -406,9 +473,10 @@ class ExeStudentPage(tk.Frame):
 
 
     def del_student(self):
+        """func remove student from student listbox
+        """
         idx = self.list_students.index(tk.ACTIVE)
         student = list(self.group.get_students())[idx]
-
 
         self.group.delete_student(student, self.controller.db)
         self.controller.db.commit_conn()
@@ -418,11 +486,15 @@ class ExeStudentPage(tk.Frame):
 
 
 class ExeAddStudentPage(tk.Frame):
+    """
+    Page where we can add student to group
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
         self.rowconfigure([x for x in range(9)], minsize=100)
         self.controller = controller
+
         if self.controller.exe_groups:
             self.group = self.controller.exe_groups[0]
         else:
@@ -435,10 +507,17 @@ class ExeAddStudentPage(tk.Frame):
 
 
     def set_group(self, group):
+        """set exe group instance
+
+        Args:
+            group (ExeGroup): exe group which we want modify
+        """
         self.group = group
 
 
     def main_label(self):
+        """create add student to group main label
+        """
         label = tk.Label(
             self,
             text="Add Student",
@@ -448,6 +527,8 @@ class ExeAddStudentPage(tk.Frame):
 
 
     def student_listbox(self):
+        """create student listbox for Add Student Exe Group Page
+        """
         data = [
             ('id', 10),
             ('name', 20),
@@ -465,6 +546,8 @@ class ExeAddStudentPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -475,6 +558,8 @@ class ExeAddStudentPage(tk.Frame):
 
 
     def refresh_student_listbox(self):
+        """refresh student listbox
+        """
         self.list_students.delete(0, tk.END)
         for i, student in enumerate(self.avi_students()):
                 try:
@@ -502,12 +587,20 @@ class ExeAddStudentPage(tk.Frame):
 
 
     def avi_students(self):
-        if self.group != None:
+        """func calculate available student which
+        we can add to group
+
+        Returns:
+            List: list of available students
+        """
+        if self.group is not None:
             return [student for student in self.controller.students if student not in ExeGroup.all_students and student.get_field_of_study() == self.group.get_field()]
         else:
             return []
 
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -518,6 +611,8 @@ class ExeAddStudentPage(tk.Frame):
 
 
     def add_student(self):
+        """func add student to group and config other frames
+        """
         try:
             idx = self.list_students.index(tk.ACTIVE)
             student = self.avi_students()[idx]

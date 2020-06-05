@@ -6,6 +6,9 @@ from tk_extension.multilistBox import MultiListBox
 
 
 class RoomPage(tk.Frame):
+    """
+    Main Room Page
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
@@ -19,6 +22,8 @@ class RoomPage(tk.Frame):
 
 
     def main_label(self):
+        """create Room main label
+        """
         label = tk.Label(
             self,
             text="Room Page",
@@ -28,6 +33,8 @@ class RoomPage(tk.Frame):
 
     
     def buttons(self):
+        """create room page buttons
+        """
         #Return Home Page
         btn_return = tk.Button(
             self,
@@ -63,6 +70,8 @@ class RoomPage(tk.Frame):
 
 
     def room_listbox(self):
+        """create room listbox
+        """
         data = [
             ('id', 10),
             ('building', 20),
@@ -76,6 +85,9 @@ class RoomPage(tk.Frame):
 
 
     def delete_room(self):
+        """func delete room from listbox and config
+        other frames
+        """
         idx = self.list_rooms.index(tk.ACTIVE)
         del_room = self.controller.rooms.pop(idx)
 
@@ -83,18 +95,20 @@ class RoomPage(tk.Frame):
         self.controller.db.commit_conn()
 
         del del_room
-
+        # config
         self.controller.frames["YearSubjectPage"].refresh()
         self.controller.frames["CreateYearSubjectPage"].refresh_room_listbox()
         self.controller.frames["ExeSubjectPage"].refresh()
         self.controller.frames["CreateExeSubjectPage"].refresh_room_listbox()
         self.controller.frames["LabSubjectPage"].refresh()
         self.controller.frames["CreateLabSubjectPage"].refresh_room_listbox()
-
         self.restart()
 
 
     def update_room(self):
+        """func set room to update and change page
+        to ChangeRoomPage
+        """
         idx = self.list_rooms.index(tk.ACTIVE)
         room = self.controller.rooms[idx]
 
@@ -104,11 +118,15 @@ class RoomPage(tk.Frame):
 
 
     def restart(self):
+        """func restart frame
+        """
         self.refresh()
         self.controller.show_frame("RoomPage")
 
 
     def refresh_button(self):
+        """create refresh button
+        """
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
@@ -119,6 +137,8 @@ class RoomPage(tk.Frame):
 
 
     def refresh(self):
+        """func refresh room listbox
+        """
         self.list_rooms.delete(0, tk.END)
         for i, room in enumerate(self.controller.rooms):
             try:
@@ -142,6 +162,9 @@ class RoomPage(tk.Frame):
 
 
 class CreateRoomPage(tk.Frame):
+    """
+    Page where we can create room
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(9)], minsize=250)
@@ -159,6 +182,8 @@ class CreateRoomPage(tk.Frame):
 
 
     def main_label(self):
+        """create room office main label
+        """
         label = tk.Label(
             self,
             text="Create Room",
@@ -168,6 +193,8 @@ class CreateRoomPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -178,6 +205,8 @@ class CreateRoomPage(tk.Frame):
 
 
     def home_button(self):
+        """create home button
+        """
         btn_home = tk.Button(
             self,
             text="Home",
@@ -188,20 +217,28 @@ class CreateRoomPage(tk.Frame):
 
 
     def return_refresh(self):
+        """func change page to RoomPage
+        """
         self.refresh()
         self.controller.show_frame("RoomPage")
 
 
     def home_refresh(self):
+        """func change page to StartPage
+        """
         self.refresh()
         self.controller.show_frame("StartPage")
 
     
     def refresh(self):
+        """clear all entries
+        """
         self.e_number.delete(0, tk.END)
 
     
     def number_entry(self):
+        """create entry for name with label
+        """
         l_number = tk.Label(master=self, text="number", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_number.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -210,6 +247,9 @@ class CreateRoomPage(tk.Frame):
 
 
     def dean_off_listbox(self):
+        """create listbox where you can choose whether the room is
+        deans office or not
+        """
         data = [
             ('is dean office?', 10),
         ]
@@ -222,6 +262,8 @@ class CreateRoomPage(tk.Frame):
 
 
     def building_listbox(self):
+        """create building listbox for Room Page
+        """
         l_building = tk.Label(master=self, text="building", font=self.controller.normal_font, relief=tk.RAISED)
         l_building.grid(row=4, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
@@ -235,6 +277,8 @@ class CreateRoomPage(tk.Frame):
 
 
     def refresh_building_listbox(self):
+        """refresh building listbox
+        """
         self.list_building.delete(0, tk.END)
         for i, building in enumerate(self.controller.buildings):
             output = (
@@ -245,6 +289,8 @@ class CreateRoomPage(tk.Frame):
 
 
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -255,6 +301,8 @@ class CreateRoomPage(tk.Frame):
 
 
     def create_room(self):
+        """func create new room and config other frames
+        """
         try:
             idx = self.list_building.index(tk.ACTIVE)
             temp_building = self.controller.buildings[idx]
@@ -273,22 +321,26 @@ class CreateRoomPage(tk.Frame):
             is_dean=temp_is_dean
         ))
 
-        #config after create
+        # config after create
+        # inser to db
+        self.controller.rooms[-1].insert(self.controller.db)
+        self.controller.db.commit_conn()
+        # refresh Subject frames
         self.controller.frames["YearSubjectPage"].refresh()
         self.controller.frames["CreateYearSubjectPage"].refresh_room_listbox()
         self.controller.frames["ExeSubjectPage"].refresh()
         self.controller.frames["CreateExeSubjectPage"].refresh_room_listbox()
         self.controller.frames["LabSubjectPage"].refresh()
         self.controller.frames["CreateLabSubjectPage"].refresh_room_listbox()
-
-        self.controller.rooms[-1].insert(self.controller.db)
-        self.controller.db.commit_conn()
+        # refresh self
         self.refresh()
         self.controller.frames["RoomPage"].restart()
 
 
-
 class ChangeRoomPage(CreateRoomPage):
+    """
+    Page where we can update room
+    """
     def __init__(self, parent, controller):
         CreateRoomPage.__init__(self, parent, controller)
         if controller.rooms:
@@ -296,6 +348,8 @@ class ChangeRoomPage(CreateRoomPage):
 
 
     def main_label(self):
+        """create update room main label
+        """
         label = tk.Label(
             self,
             text="Change Room",
@@ -305,6 +359,8 @@ class ChangeRoomPage(CreateRoomPage):
 
 
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -315,14 +371,23 @@ class ChangeRoomPage(CreateRoomPage):
 
 
     def fill_entry(self):
+        """fill all entries with self attrs
+        """
         self.e_number.insert(tk.END, str(self.room.get_number()))
 
 
     def set_room(self, room):
+        """set room instance
+
+        Args:
+            room (Room): room which we want update
+        """
         self.room = room
 
 
     def update_room(self):
+        """func update room and config other frames
+        """
         self.set_attr_room()
         self.room.update(self.controller.db)
         self.controller.db.commit_conn()
@@ -334,12 +399,13 @@ class ChangeRoomPage(CreateRoomPage):
         self.controller.frames["CreateExeSubjectPage"].refresh_room_listbox()
         self.controller.frames["LabSubjectPage"].refresh()
         self.controller.frames["CreateLabSubjectPage"].refresh_room_listbox()
-        
         self.refresh()
         self.controller.frames["RoomPage"].restart()
 
 
     def set_attr_room(self):
+        """change attrs of room
+        """
         try:
             idx = self.list_building.index(tk.ACTIVE)
             temp_building = self.controller.buildings[idx]

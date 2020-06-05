@@ -1,9 +1,3 @@
-import sqlite3
-
-#what you do when you start applications?
-#---> create all group (get all groups from sql)
-#---> set self.__students (before config all info)
-
 class LabGroup(object):
     field_num = {} #{field: [num]}
     all_students = []
@@ -37,13 +31,32 @@ class LabGroup(object):
 
     @staticmethod
     def select_all(db):
+        """func return all lab group data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
-        cur.execute("SELECT * FROM laboratory_group ORDER BY labolatory_group_number")
+        cur.execute("""SELECT * FROM laboratory_group
+            ORDER BY labolatory_group_number""")
         rows = cur.fetchall()
 
         return rows
 
-    def __init__(self, number = 10, field = None, students = {}): #name ---> field_of_study object
+    def __init__(self, number = 10, field = None, students = {}):
+        """Init LabGroup
+
+        Args:
+            number (int, optional): lab group number. Defaults to 10.
+            field (FieldOfStudy, optional): lab group field of std. Defaults to None.
+            students (dict, optional): {student obj: id}. Defaults to {}.
+
+        Raises:
+            ValueError: if number and field was created
+        """
         self.__number = None
         self.__field = None #object field_of_study
         try:
@@ -67,6 +80,14 @@ class LabGroup(object):
             LabGroup.all_students.append(student)
 
     def show_group(self, db):
+        """func return lab group data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         sql = """SELECT * FROM laboratory_group
         WHERE labolatory_group_number = ? AND id_field_of_study = ?
         """
@@ -79,6 +100,12 @@ class LabGroup(object):
 
     #add student
     def insert(self, student, db):
+        """function insert student to group
+
+        Args:
+            db (TableDatabase): database that you want to search
+            student (Student): student you want to insert
+        """
         sql = """INSERT INTO laboratory_group(
             labolatory_group_number,
             id_student,
@@ -104,6 +131,11 @@ class LabGroup(object):
         self.__students[student] = cur.lastrowid
     
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE laboratory_group SET
         labolatory_group_number = ?,
         id_field_of_study = ?
@@ -126,6 +158,11 @@ class LabGroup(object):
 
     #remove group
     def delete(self, db):
+        """function delete data from db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM laboratory_group WHERE labolatory_group_number = ? AND id_field_of_study = ?"""
 
         if db.get_conn() is not None:    
@@ -142,6 +179,12 @@ class LabGroup(object):
 
     #remove student
     def delete_student(self, student, db):
+        """function delete student from group
+
+        Args:
+            db (TableDatabase): database that you want to use
+            student (Student): student you want to delete
+        """
         sql = """DELETE FROM laboratory_group WHERE id_student = ?"""
 
         if db.get_conn() is not None:

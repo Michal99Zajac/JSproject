@@ -1,7 +1,3 @@
-import sqlite3
-
-#add name state
-
 class Department(object):
     id_dept = 0
     buildings = []
@@ -9,14 +5,32 @@ class Department(object):
 
     @staticmethod
     def set_idx(id_dept):
+        """function set var id_dept
+
+        Args:
+            id_dept (int): new idx for class
+        """
         Department.id_dept = id_dept
 
     @staticmethod
     def status_id():
+        """func return variable id_dept
+
+        Returns:
+            int: current id_dept in class
+        """
         return Department.id_dept
 
     @staticmethod
     def select_all(db):
+        """func return all departments data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM department")
 
@@ -24,6 +38,14 @@ class Department(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """function return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            int: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM department")
 
@@ -57,6 +79,16 @@ class Department(object):
             print("Error! Cant create department table")
 
     def __init__(self, id_dept = 0, building = None, name='', off_start = '', off_stop = '', dean = None):
+        """Init Department
+
+        Args:
+            id_dept (int, optional): id of department. Defaults to 0.
+            building (Building, optional): department building. Defaults to None.
+            name (str, optional): department name. Defaults to ''.
+            off_start (str, optional): department office start. Defaults to ''.
+            off_stop (str, optional): department office stop. Defaults to ''.
+            dean (Dean, optional): department dean. Defaults to None.
+        """
         Department.id_dept += 1
         #set id_student automatically or manual
         if id_dept == 0:
@@ -75,6 +107,11 @@ class Department(object):
         self.__off_stop = off_stop
 
     def insert(self, db):
+        """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill
+        """
         sql = """INSERT INTO department(
             id_building,
             name,
@@ -109,6 +146,11 @@ class Department(object):
             print("Error! Cant insert in department table")
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE department SET
         id_building = ?,
         name = ?,
@@ -145,6 +187,11 @@ class Department(object):
 
 
     def delete(self, db):
+        """function delete data from db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM department WHERE id_department = ?"""
 
         Department.buildings.remove(self.__building)

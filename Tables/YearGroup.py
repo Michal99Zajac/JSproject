@@ -1,5 +1,3 @@
-import sqlite3
-
 class YearGroup(object):
     field_num = {}
     all_students = []
@@ -33,6 +31,14 @@ class YearGroup(object):
 
     @staticmethod
     def select_all(db):
+        """func return all year group data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM year_group ORDER BY year_group_number")
         rows = cur.fetchall()
@@ -40,6 +46,17 @@ class YearGroup(object):
         return rows
 
     def __init__(self, number = 10, field = None, students = {}):
+        """Init YearGroup
+
+        Args:
+            number (int, optional): year group number. Defaults to 10.
+            field (FieldOfStudy, optional): year group field of std.
+            Defaults to None.
+            students (dict, optional): {student obj: id}. Defaults to {}.
+
+        Raises:
+            ValueError: if number and field was created
+        """
         self.__number = None
         self.__field = None
         self.__students = None
@@ -64,6 +81,14 @@ class YearGroup(object):
             YearGroup.all_students.append(student)
 
     def show_group(self, db):
+        """func return year group data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         sql = """SELECT * FROM year_group
         WHERE year_group_number = ? AND id_field_of_study = ?
         """
@@ -76,6 +101,12 @@ class YearGroup(object):
 
     #add student
     def insert(self, student, db):
+        """function insert student to group
+
+        Args:
+            db (TableDatabase): database that you want to search
+            student (Student): student you want to insert
+        """
         sql = """INSERT INTO year_group(
             year_group_number,
             id_student,
@@ -101,6 +132,11 @@ class YearGroup(object):
 
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE year_group SET
         year_group_number = ?,
         id_field_of_study = ?
@@ -123,6 +159,11 @@ class YearGroup(object):
 
     #remove group
     def delete(self, db):
+        """function delete data from db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM year_group WHERE year_group_number = ? AND id_field_of_study = ?"""
 
         if db.get_conn() is not None:
@@ -138,6 +179,12 @@ class YearGroup(object):
 
     #remove student
     def delete_student(self, student, db):
+        """function delete student from group
+
+        Args:
+            db (TableDatabase): database that you want to use
+            student (Student): student you want to delete
+        """
         sql = """DELETE FROM year_group WHERE id_student = ?"""
 
         if db.get_conn() is not None:

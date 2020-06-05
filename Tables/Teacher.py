@@ -6,14 +6,32 @@ class Teacher(object):
 
     @staticmethod
     def set_idx(id_tea):
+        """function set var id_tea
+
+        Args:
+            id_tea (int): new idx for class
+        """
         Teacher.id_tea = id_tea
 
     @staticmethod
     def status_id():
+        """func return variable id_tea
+
+        Returns:
+            int: current id_tea in class
+        """
         return Teacher.id_tea
 
     @staticmethod
     def select_all(db):
+        """func return all teachers data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM teacher")
 
@@ -21,6 +39,14 @@ class Teacher(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """function return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            int: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM teacher")
 
@@ -56,6 +82,19 @@ class Teacher(object):
             print("Error! Cant create teacher table")
 
     def __init__(self, id_teacher = 0, name = '', sec_name = '', lastname = '', ssn = 1000, email = '', acd_degree = '', department = None, place_of_residence = ''):
+        """Init Teacher
+
+        Args:
+            id_teacher (int, optional): id of teacher. Defaults to 0.
+            name (str, optional): [teacher name. Defaults to ''.
+            sec_name (str, optional): teacher second name. Defaults to ''.
+            lastname (str, optional): teacher lastname. Defaults to ''.
+            ssn (int, optional): teacher ssn. Defaults to 1000.
+            email (str, optional): teacher email. Defaults to ''.
+            acd_degree (str, optional): teacher acd. Defaults to ''.
+            department ([Department, optional): teacher dept. Defaults to None.
+            place_of_residence (str, optional): teacher place of residence. Defaults to ''.
+        """
         Teacher.id_tea += 1
         #set id_student automatically or manual
         if id_teacher == 0:
@@ -77,6 +116,11 @@ class Teacher(object):
             self.__acd_degree = 'acd' #deegre const
 
     def insert(self, db):
+        """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill
+        """
         sql = """INSERT INTO teacher(
             name,
             second_name,
@@ -112,6 +156,11 @@ class Teacher(object):
             print("Error! Cant insert in teacher table")
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE teacher SET
         name = ?,
         second_name = ?,
@@ -141,13 +190,18 @@ class Teacher(object):
             self.__id_teacher
         )
 
-        if db.get_conn() is not None:   
+        if db.get_conn() is not None:
             cur = db.cursor_conn()
             cur.execute(sql, values)
         else:
             print("Error! Cant update in teacher table")
 
     def delete(self, db):
+        """function delete data from db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """DELETE FROM teacher WHERE id_teacher = ?"""
 
         if db.get_conn() is not None:

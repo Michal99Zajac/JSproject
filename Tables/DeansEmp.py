@@ -1,18 +1,35 @@
-import sqlite3
-
 class DeansEmp(object):
     id_emp = 0
 
     @staticmethod
     def set_idx(id_emp):
+        """function set var id_emp
+
+        Args:
+            id_emp (int): new idx for class
+        """
         DeansEmp.id_emp = id_emp
 
     @staticmethod
     def status_id():
+        """func return variable id_emp
+
+        Returns:
+            int: [description]
+        """
         return DeansEmp.id_emp
 
     @staticmethod
     def select_all(db):
+        """func return all deans office employees
+        data from db
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            List: list of tuples of data
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM deans_office_employee")
 
@@ -20,6 +37,14 @@ class DeansEmp(object):
 
     @staticmethod
     def get_lastrowid(db):
+        """function return last row id
+
+        Args:
+            db (TableDatabase): database that you want to search
+
+        Returns:
+            [int]: last row id
+        """
         cur = db.cursor_conn()
         cur.execute("SELECT * FROM deans_office_employee")
 
@@ -53,6 +78,17 @@ class DeansEmp(object):
             print("Error! Cant create deans_office_employee table")
 
     def __init__(self, id_emp = 0, name = '', sec_name = '', lastname = '', ssn = 1000, email = '', department = None):
+        """Init Deans Office Employee
+
+        Args:
+            id_emp (int, optional): if of deans emp. Defaults to 0.
+            name (str, optional): deans emp name. Defaults to ''.
+            sec_name (str, optional): deans emp second name. Defaults to ''.
+            lastname (str, optional): deans emp lastname. Defaults to ''.
+            ssn (int, optional): deans emp ssn. Defaults to 1000.
+            email (str, optional): deans emp email. Defaults to ''.
+            department ([Department], optional): deans emp department. Defaults to None.
+        """
         DeansEmp.id_emp += 1
         #set id_student automatically or manual
         if id_emp == 0:
@@ -68,6 +104,11 @@ class DeansEmp(object):
         self.__department = department
 
     def insert(self, db):
+        """function insert data to db
+
+        Args:
+            db (TableDatabase): database that you want to fill
+        """
         sql = """INSERT INTO deans_office_employee(
             name,
             second_name,
@@ -99,6 +140,11 @@ class DeansEmp(object):
             print("Error! Cant insert in deans_office_employee table")
 
     def update(self, db):
+        """function update data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
         sql = """UPDATE deans_office_employee SET
         name = ?,
         second_name = ?,
@@ -131,7 +177,14 @@ class DeansEmp(object):
             print("Error! Cant update in deans_office_employee table")
 
     def delete(self, db):
-        sql = """DELETE FROM deans_office_employee WHERE id_deans_office_employee = ?"""
+        """function delete data to db
+
+        Args:
+            db (TableDatabase): database that you want to update
+        """
+        sql = """
+        DELETE FROM deans_office_employee WHERE
+        id_deans_office_employee = ?"""
 
         if db.get_conn() is not None:
             cur = db.cursor_conn()

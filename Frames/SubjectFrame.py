@@ -5,6 +5,9 @@ from Tables.Subject import Subject
 from tk_extension.multilistBox import MultiListBox
 
 class SubjectPage(tk.Frame):
+    """
+    Main Subject Page
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(2)], minsize=875)
@@ -18,6 +21,8 @@ class SubjectPage(tk.Frame):
 
 
     def year_button(self):
+        """create year button and change frame to YearSubjectPage
+        """
         year_btn = tk.Button(
             master=self,
             text="Show Year Subject",
@@ -28,6 +33,8 @@ class SubjectPage(tk.Frame):
 
 
     def exe_button(self):
+        """create exe button and change frame to ExeSubjectPage
+        """
         exe_btn = tk.Button(
             master=self,
             text="Show Exe Subject",
@@ -38,6 +45,8 @@ class SubjectPage(tk.Frame):
 
 
     def lab_button(self):
+        """create lab button and change frame to LabSubjectPage
+        """
         lab_btn = tk.Button(
             master=self,
             text="Show Lab Subject",
@@ -48,6 +57,8 @@ class SubjectPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         return_btn = tk.Button(
             self,
             text="Home",
@@ -58,6 +69,9 @@ class SubjectPage(tk.Frame):
         
 
 class YearSubjectPage(tk.Frame):
+    """
+    Page show subject for year groups
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
@@ -71,6 +85,8 @@ class YearSubjectPage(tk.Frame):
 
 
     def main_label(self):
+        """create year subjects main label
+        """
         label = tk.Label(
             master=self,
             text="Year Subjects",
@@ -80,6 +96,8 @@ class YearSubjectPage(tk.Frame):
 
     
     def buttons(self):
+        """create year subjects buttons
+        """
         #Return Home Page
         btn_home = tk.Button(
             self,
@@ -115,7 +133,8 @@ class YearSubjectPage(tk.Frame):
 
 
     def subject_listbox(self):
-
+        """create year subjects listbox
+        """
         data = [
             ('name', 10),
             ('teacher', 10),
@@ -135,10 +154,14 @@ class YearSubjectPage(tk.Frame):
 
     
     def create_subject(self):
+        """func change frame to CreateYearSubjectPage
+        """
         self.controller.show_frame("CreateYearSubjectPage")
 
 
     def delete_subject(self):
+        """func delete subject from listbox and config other frames
+        """
         idx = self.list_subjects.index(tk.ACTIVE)
         del_subject = self.year_subjects()[idx]
 
@@ -152,6 +175,8 @@ class YearSubjectPage(tk.Frame):
 
 
     def refresh_button(self):
+        """create refresh button
+        """
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
@@ -162,11 +187,15 @@ class YearSubjectPage(tk.Frame):
 
 
     def restart(self):
+        """func restart frame
+        """
         self.refresh()
         self.controller.show_frame("YearSubjectPage")
 
 
     def refresh(self):
+        """func refresh year subjects listbox
+        """
         self.list_subjects.delete(0, tk.END)
         subjects = self.year_subjects()
         for i, subject in enumerate(subjects):
@@ -211,11 +240,19 @@ class YearSubjectPage(tk.Frame):
             self.list_subjects.insert(i, output)
 
     def year_subjects(self):
+        """func return all year subjects
+
+        Returns:
+            List: list of year subjects
+        """
         return [subject for subject in self.controller.subjects if subject.is_year_subject()]
     
 
 
 class CreateYearSubjectPage(tk.Frame):
+    """
+    Page where we can create year subject
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(9)], minsize=250)
@@ -238,6 +275,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def main_label(self):
+        """create year subject main label
+        """
         label = tk.Label(
             self,
             text="Create Subject",
@@ -247,6 +286,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -256,6 +297,8 @@ class CreateYearSubjectPage(tk.Frame):
         btn_return.grid(row=16, column=0, rowspan=2, columnspan=2, sticky="news", padx=5, pady=5)
 
     def home_button(self):
+        """create home button
+        """
         btn_home = tk.Button(
             self,
             text="Home",
@@ -266,16 +309,22 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def return_refresh(self):
+        """func change page to YearSubjectPage
+        """
         self.refresh()
         self.controller.show_frame("YearSubjectPage")
 
 
     def home_refresh(self):
+        """func change page to StartPage
+        """
         self.refresh()
         self.controller.show_frame("StartPage")
 
 
     def refresh(self):
+        """func clear all entries
+        """
         self.e_day.delete(0, tk.END)
         self.e_start.delete(0, tk.END)
         self.e_stop.delete(0, tk.END)
@@ -283,6 +332,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def day_entry(self):
+        """create entry for day with label
+        """
         l_day = tk.Label(master=self, text="day", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_day.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -291,6 +342,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def start_entry(self):
+        """create entry for start hour with label
+        """
         l_start = tk.Label(master=self, text="start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -299,6 +352,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def stop_entry(self):
+        """create entry for stop hour with label
+        """
         l_stop = tk.Label(master=self, text="stop",font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -307,6 +362,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def name_entry(self):
+        """create entry for name with label
+        """
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -315,6 +372,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def field_listbox(self):
+        """create field of study listbox for Year Subject Page
+        """
         l_field = tk.Label(master=self, text="field", font=self.controller.normal_font, relief=tk.RAISED)
         l_field.grid(row=9, column=0, rowspan=1, columnspan=4, sticky="nswe", pady=5, padx=5)
         
@@ -328,6 +387,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def refresh_field_listbox(self):
+        """refresh field of study listbox
+        """
         self.list_fields.delete(0, tk.END)
         for i, field in enumerate(self.controller.fields):
             try:
@@ -344,6 +405,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def room_listbox(self):
+        """create room listbox for Year Subject Page
+        """
         l_room = tk.Label(master=self, text="room", font=self.controller.normal_font, relief=tk.RAISED)
         l_room.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
@@ -357,6 +420,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def refresh_room_listbox(self):
+        """refresh room listbox
+        """
         self.list_rooms.delete(0, tk.END)
         for i, room in enumerate(self.controller.rooms):
             try:
@@ -378,6 +443,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def year_listbox(self):
+        """create year group listbox for Year Subject Page
+        """
         l_group = tk.Label(master=self, text="year groups", font=self.controller.normal_font, relief=tk.RAISED)
         l_group.grid(row=6, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
         
@@ -394,6 +461,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def refresh_year_listbox(self):
+        """refresh year group listbox
+        """
         self.list_groups.delete(0, tk.END)
         for i, group in enumerate(self.controller.year_groups):
             try:
@@ -418,6 +487,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def teacher_listbox(self):
+        """create teacher listbox for year subject listbox
+        """
         l_teacher = tk.Label(master=self, text="teacher", font=self.controller.normal_font, relief=tk.RAISED)
         l_teacher.grid(row=12, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
@@ -432,6 +503,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def refresh_teacher_listbox(self):
+        """refresh teacher listbox
+        """
         self.list_teachers.delete(0, tk.END)
         for i, teacher in enumerate(self.controller.teachers):
             try:
@@ -453,6 +526,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -463,6 +538,8 @@ class CreateYearSubjectPage(tk.Frame):
 
 
     def create_subject(self):
+        """func create new subject
+        """
         try:
             teacher_idx = self.list_teachers.index(tk.ACTIVE)
             teacher = self.controller.teachers[teacher_idx]
@@ -498,13 +575,18 @@ class CreateYearSubjectPage(tk.Frame):
             name=self.e_name.get()
         ))
 
-        self.refresh()
+        # insert to db
         self.controller.subjects[-1].insert(self.controller.db)
         self.controller.db.commit_conn()
+        # refresh self
+        self.refresh()
         self.controller.frames["YearSubjectPage"].restart()
 
 
 class ExeSubjectPage(tk.Frame):
+    """
+    Page show subject for exe groups
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
@@ -518,6 +600,8 @@ class ExeSubjectPage(tk.Frame):
 
 
     def main_label(self):
+        """create exe subjects main label
+        """
         label = tk.Label(
             master=self,
             text="Exe Subjects Page",
@@ -527,6 +611,8 @@ class ExeSubjectPage(tk.Frame):
 
 
     def buttons(self):
+        """create exe subjects buttons
+        """
         #Return Home Page
         btn_home = tk.Button(
             self,
@@ -562,6 +648,8 @@ class ExeSubjectPage(tk.Frame):
 
 
     def subject_listbox(self):
+        """create exe subjects listbox
+        """
         data = [
             ('name', 20),
             ('teacher', 20),
@@ -581,10 +669,14 @@ class ExeSubjectPage(tk.Frame):
 
 
     def create_subject(self):
+        """func change frame to CreateExeSubjectPage
+        """
         self.controller.show_frame("CreateExeSubjectPage")
 
     
     def delete_subject(self):
+        """func delete subject from listbox and config other frames
+        """
         idx = self.list_subjects.index(tk.ACTIVE)
         del_subject = self.exe_subjects()[idx]
 
@@ -598,6 +690,8 @@ class ExeSubjectPage(tk.Frame):
 
 
     def refresh_button(self):
+        """create refresh button
+        """
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
@@ -608,11 +702,15 @@ class ExeSubjectPage(tk.Frame):
 
 
     def restart(self):
+        """func restart frame
+        """
         self.refresh()
         self.controller.show_frame("ExeSubjectPage")
 
 
     def refresh(self):
+        """func refresh year subjects listbox
+        """
         self.list_subjects.delete(0, tk.END)
         subjects = self.exe_subjects()
         for i, subject in enumerate(subjects):
@@ -658,10 +756,18 @@ class ExeSubjectPage(tk.Frame):
 
 
     def exe_subjects(self):
+        """func return all exe subjects
+
+        Returns:
+            List: list of exe subjects
+        """
         return [subject for subject in self.controller.subjects if subject.is_exe_subject()]    
 
 
 class CreateExeSubjectPage(tk.Frame):
+    """
+    Page where we can create exe subject
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(9)], minsize=250)
@@ -684,6 +790,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def main_label(self):
+        """create exe subject main label
+        """
         label = tk.Label(
             self,
             text="Create Subject",
@@ -693,6 +801,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def return_button(self):
+        """create return button
+        """
         btn_return = tk.Button(
             self,
             text="return",
@@ -703,6 +813,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def home_button(self):
+        """create home button
+        """
         btn_home = tk.Button(
             self,
             text="Home",
@@ -713,16 +825,22 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def return_refresh(self):
+        """func change page to ExeSubjectPage
+        """
         self.refresh()
         self.controller.show_frame("ExeSubjectPage")
 
 
     def home_refresh(self):
+        """func change page to StartPage
+        """
         self.refresh()
         self.controller.show_frame("StartPage")
 
 
     def refresh(self):
+        """func clear all entries
+        """
         self.e_day.delete(0, tk.END)
         self.e_start.delete(0, tk.END)
         self.e_stop.delete(0, tk.END)
@@ -730,6 +848,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def day_entry(self):
+        """create entry for day with label
+        """
         l_day = tk.Label(master=self, text="day", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_day.grid(row=1, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -738,6 +858,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def start_entry(self):
+        """create entry for start hour with label
+        """
         l_start = tk.Label(master=self, text="start", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_start.grid(row=3, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -746,6 +868,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def stop_entry(self):
+        """create entry for stop hour with label
+        """
         l_stop = tk.Label(master=self, text="stop", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_stop.grid(row=5, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -754,6 +878,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def name_entry(self):
+        """create entry for name with label
+        """
         l_name = tk.Label(master=self, text="name", font=self.controller.normal_font, anchor=tk.W, relief=tk.RAISED)
         l_name.grid(row=7, column=0, columnspan=4, sticky="nswe", pady=0, padx=5)
 
@@ -762,6 +888,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def field_listbox(self):
+        """create field of study listbox for Exe Subject Page
+        """
         l_field = tk.Label(master=self, text="field", font=self.controller.normal_font, relief=tk.RAISED)
         l_field.grid(row=9, column=0, rowspan=1, columnspan=4, sticky="nswe", pady=5, padx=5)
         
@@ -776,6 +904,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def refresh_field_listbox(self):
+        """refresh field of study listbox
+        """
         self.list_fields.delete(0, tk.END)
         for i, field in enumerate(self.controller.fields):
             try:
@@ -792,6 +922,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def room_listbox(self):
+        """create room listbox for Exe Subject Page
+        """
         l_room = tk.Label(master=self, text="room", font=self.controller.normal_font, relief=tk.RAISED)
         l_room.grid(row=0, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
@@ -805,6 +937,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def refresh_room_listbox(self):
+        """refresh room listbox
+        """
         self.list_rooms.delete(0, tk.END)
         for i, room in enumerate(self.controller.rooms):
             try:
@@ -821,6 +955,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def exe_listbox(self):
+        """create exe group listbox for Exe Subject Page
+        """
         l_group = tk.Label(master=self, text="exe groups", font=self.controller.normal_font, relief=tk.RAISED)
         l_group.grid(row=6, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
         
@@ -837,6 +973,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def refresh_exe_listbox(self):
+        """refresh exe group listbox
+        """
         self.list_groups.delete(0, tk.END)
         for i, group in enumerate(self.controller.exe_groups):
             try:
@@ -861,6 +999,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def teacher_listbox(self):
+        """create teacher listbox for exe subject listbox
+        """
         l_teacher = tk.Label(master=self, text="teacher", font=self.controller.normal_font, relief=tk.RAISED)
         l_teacher.grid(row=12, column=4, rowspan=1, columnspan=3, sticky="nswe", pady=5, padx=5)
 
@@ -875,6 +1015,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def refresh_teacher_listbox(self):
+        """refresh teacher listbox
+        """
         self.list_teachers.delete(0, tk.END)
         for i, teacher in enumerate(self.controller.teachers):
             try:
@@ -896,6 +1038,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def submit(self):
+        """create submit button
+        """
         sub_btn = tk.Button(
             master=self,
             text="submit",
@@ -906,6 +1050,8 @@ class CreateExeSubjectPage(tk.Frame):
 
 
     def create_subject(self):
+        """func create new exe subject
+        """
         try:
             teacher_idx = self.list_teachers.index(tk.ACTIVE)
             teacher = self.controller.teachers[teacher_idx]
@@ -948,6 +1094,9 @@ class CreateExeSubjectPage(tk.Frame):
         
 
 class LabSubjectPage(tk.Frame):
+    """
+    Page show subject for lab groups
+    """
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.columnconfigure([x for x in range(7)], minsize=250)
@@ -961,6 +1110,8 @@ class LabSubjectPage(tk.Frame):
 
 
     def main_label(self):
+        """create lab subjects main label
+        """
         label = tk.Label(
             master=self,
             text="Lab Subjects Page",
@@ -970,6 +1121,8 @@ class LabSubjectPage(tk.Frame):
 
 
     def buttons(self):
+        """create lab subjects buttons
+        """
         #Return Home Page
         btn_home = tk.Button(
             self,
@@ -1005,6 +1158,8 @@ class LabSubjectPage(tk.Frame):
 
 
     def subject_listbox(self):
+        """create lab subjects listbox
+        """
         data = [
             ('name', 20),
             ('teacher', 20),
@@ -1024,10 +1179,14 @@ class LabSubjectPage(tk.Frame):
 
 
     def create_subject(self):
+        """func change frame to CreateLabSubjectPage
+        """
         self.controller.show_frame("CreateLabSubjectPage")
 
 
     def delete_subject(self):
+        """func delete subject from listbox and config other frames
+        """
         idx = self.list_subjects.index(tk.ACTIVE)
         del_subject = self.lab_subjects()[idx]
 
@@ -1041,6 +1200,8 @@ class LabSubjectPage(tk.Frame):
 
 
     def refresh_button(self):
+        """create refresh button
+        """
         btn_refresh = tk.Button(
             master=self,
             text="refresh",
@@ -1051,6 +1212,8 @@ class LabSubjectPage(tk.Frame):
 
 
     def restart(self):
+        """func restart frame
+        """
         self.refresh()
         self.controller.show_frame("LabSubjectPage")
 
